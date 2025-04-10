@@ -15,13 +15,11 @@ export default function Custom404() {
       <main className={styles.main}>
         <div className={styles.header}>
           <Link href="/">
-            <a>
-              <img 
-                src="/logo-ai-meetup-biella.svg" 
-                alt="AI Meetup Logo" 
-                className={styles.logo} 
-              />
-            </a>
+            <img 
+              src="/logo-ai-meetup-biella.svg" 
+              alt="AI Meetup Logo" 
+              className={styles.logo} 
+            />
           </Link>
         </div>
         
@@ -32,8 +30,8 @@ export default function Custom404() {
             La pagina che stai cercando non esiste o è stata spostata.
           </p>
           <div className={styles.actions}>
-            <Link href="/">
-              <a className={styles.button}>Torna alla Home</a>
+            <Link href="/" className={styles.button}>
+              Torna alla Home
             </Link>
           </div>
         </div>

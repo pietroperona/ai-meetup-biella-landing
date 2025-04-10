@@ -76,8 +76,8 @@ export default function PrivacyPolicy() {
       </Head>
       <main className={styles.main}>
         <div className={styles.header}>
-          <Link href="/">
-            <a className={styles.backLink}>← Torna alla home</a>
+          <Link href="/" className={styles.backLink}>
+            ← Torna alla home
           </Link>
           <h1 className={styles.title}>Privacy Policy</h1>
         </div>
