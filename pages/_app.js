@@ -1,6 +1,7 @@
 // pages/_app.js
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import CookieBanner from '../components/CookieBanner';
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
@@ -21,7 +22,12 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router.events]);
 
-  return <Component {...pageProps} />
+  return (
+    <>
+      <CookieBanner />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp
