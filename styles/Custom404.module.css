@@ -1,0 +1,128 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #F5F5F5;
+    color: #2B2828;
+    font-family: 'Azeret Mono', monospace;
+  }
+  
+  .main {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+  
+  .logo {
+    height: auto;
+    max-width: 200px;
+  }
+  
+  .content {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-size: 6rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+    color: #D43D3D;
+  }
+  
+  .subtitle {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 1rem 0 2rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .actions {
+    margin-top: 2rem;
+  }
+  
+  .button {
+    background-color: #2B2828;
+    color: #F5F5F5;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #D43D3D;
+  }
+  
+  .footer {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid rgba(43, 40, 40, 0.1);
+  }
+  
+  .footerLinks {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .footerLink {
+    color: #2B2828;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+  
+  .footerLink:hover {
+    color: #D43D3D;
+  }
+  
+  .copyright {
+    font-size: 0.8rem;
+    color: #2B2828;
+    opacity: 0.7;
+  }
+  
+  @media (max-width: 600px) {
+    .main {
+      padding: 1rem;
+    }
+    
+    .title {
+      font-size: 4rem;
+    }
+    
+    .subtitle {
+      font-size: 1.4rem;
+    }
+    
+    .footerLinks {
+      gap: 1rem;
+    }
+  }
+  
