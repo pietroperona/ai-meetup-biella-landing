@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     // Configura le tue credenziali Mailchimp
     const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
-    const MAILCHIMP_SERVER = process.env.MAILCHIMP_SERVER; // es. us1, us2, etc.
+    const MAILCHIMP_SERVER = process.env.MAILCHIMP_SERVER;
     const MAILCHIMP_AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
 
     // Verifica che tutte le variabili d'ambiente siano definite
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     // Prepara i dati per l'API di Mailchimp
     const data = {
       email_address: email,
-      status: 'subscribed', // Puoi cambiare in 'pending' se vuoi conferma via email
+      status: 'subscribed',
       merge_fields: {}
     };
 
@@ -60,4 +60,11 @@ export default async function handler(req, res) {
     console.error('Errore durante l\'iscrizione:', error);
     return res.status(500).json({ message: 'Si è verificato un errore. Riprova più tardi.' });
   }
+}
+
+// Aggiungi questa configurazione per evitare la pre-rendering dell'endpoint API
+export const config = {
+  api: {
+    bodyParser: true,
+  },
 }
