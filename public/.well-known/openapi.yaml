@@ -1,0 +1,42 @@
+openapi: 3.0.1
+info:
+  title: AI Meetup Italia API
+  description: API per informazioni sulla community italiana AI Meetup
+  version: 'v1'
+servers:
+  - url: https://biella.aimeetup.it
+paths:
+  /api/info:
+    get:
+      operationId: getInfo
+      summary: Ottieni informazioni su AI Meetup
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Nome dell'organizzazione
+                  description:
+                    type: string
+                    description: Descrizione dell'organizzazione
+                  website:
+                    type: string
+                    description: URL del sito web
+                  social:
+                    type: object
+                    properties:
+                      linkedin:
+                        type: string
+                      instagram:
+                        type: string
+                  location:
+                    type: string
+                    description: Città attuale (Biella)
+                  format:
+                    type: string
+                    description: Informazioni sul format che si espanderà in altre città

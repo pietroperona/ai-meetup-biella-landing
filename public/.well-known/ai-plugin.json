@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "AI Meetup Italia",
+    "name_for_model": "AIMeetupItalia",
+    "description_for_human": "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Partendo da Biella e crescendo in tutta Italia.",
+    "description_for_model": "AI Meetup è una community italiana dedicata a rendere l'intelligenza artificiale accessibile a tutti. Il format parte da Biella ed è progettato per espandersi in altre città italiane. Offre eventi, newsletter e risorse per chi vuole scoprire, capire e usare l'IA nella vita quotidiana e professionale.",
+    "auth": {
+      "type": "none"
+    },
+    "api": {
+      "type": "openapi",
+      "url": "https://biella.aimeetup.it/.well-known/openapi.yaml"
+    },
+    "logo_url": "https://biella.aimeetup.it/logo-ai-meetup-biella.svg",
+    "contact_email": "biella@aimeetup.it",
+    "legal_info_url": "https://biella.aimeetup.it/privacy-policy"
+  }
