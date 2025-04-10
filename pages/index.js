@@ -2,6 +2,8 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
+import SubscribeForm from '../components/SubscribeForm';
+
 
 export default function Home() {
   const [email, setEmail] = useState('');
