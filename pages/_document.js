@@ -92,6 +92,7 @@ export default class CustomDocument extends Document {
               __html: `
                 window.addEventListener('ccReady', function () {
                   const cc = window.initCookieConsent();
+                  console.log('✅ Libreria CookieConsent caricata', window.initCookieConsent);
                   cc.run({
                     current_lang: 'it',
                     autoclear_cookies: true,
