@@ -9,15 +9,27 @@ const nextConfig = {
     domains: [],
   },
   poweredByHeader: false,
-  // Aggiungi questa configurazione per escludere le API routes dalla generazione statica
-  exportPathMap: async function (
-    defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
-  ) {
-    // Rimuovi le API routes dal pathMap
-    const pathMap = { ...defaultPathMap };
-    delete pathMap['/api/subscribe'];
+  
+  // Disabilita la generazione statica per le API
+  trailingSlash: false,
+  
+  // Escludi esplicitamente le API dalla generazione statica
+  exportPathMap: async function (defaultPathMap) {
+    const pathMap = {};
+    
+    // Copia solo le pagine non-API
+    Object.keys(defaultPathMap).forEach(path => {
+      if (!path.includes('/api/')) {
+        pathMap[path] = defaultPathMap[path];
+      }
+    });
+    
     return pathMap;
+  },
+  
+  // Configurazione per l'ambiente di produzione
+  env: {
+    NEXT_PUBLIC_DEPLOYMENT: 'production'
   }
 }
 
