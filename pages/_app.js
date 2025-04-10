@@ -8,7 +8,6 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      // Invia un evento pageview a Google Tag Manager
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         'event': 'pageview',
@@ -16,10 +15,7 @@ function MyApp({ Component, pageProps }) {
       });
     };
 
-    // Aggiungi l'event listener per il cambio pagina
     router.events.on('routeChangeComplete', handleRouteChange);
-
-    // Rimuovi l'event listener quando il componente viene smontato
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
