@@ -82,11 +82,11 @@ export default function Home() {
         </div>
         
         <p className={styles.description}>
-          Siamo la community che connette le persone che vogliono scoprire, capire e usare l'intelligenza artificiale nella vita e nel lavoro.
+          Siamo la community che connette le persone che vogliono scoprire, capire e usare l'intelligenza artificiale 🤖 nella vita e nel lavoro.
         </p>
         
         <div className={styles.formContainer}>
-          <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.</h2>
+          <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
           
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputGroup}>
