@@ -1,0 +1,36 @@
+/* styles/globals.css */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Azeret Mono', monospace;
+  background-color: #F5F5F5;
+  color: #2B2828;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, 
+input, 
+textarea {
+  font-family: 'Azeret Mono', monospace;
+}
+
+/* Reset */
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
