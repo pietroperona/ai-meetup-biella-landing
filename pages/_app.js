@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import CookieBanner from '../components/CookieBanner';
 import '../styles/globals.css'
-import consentModule from './consent-module'; // Correct import
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
