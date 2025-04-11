@@ -30,7 +30,7 @@ const nextConfig = {
   // Configurazione per l'ambiente di produzione
   env: {
     NEXT_PUBLIC_DEPLOYMENT: 'production',
-    NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || ''
+    NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XXXXXXX' // ID predefinito per l'ambiente di sviluppo
   }
 }
 
