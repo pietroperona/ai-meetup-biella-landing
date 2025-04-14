@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import SubscribeForm from '../components/SubscribeForm';
-
+import Manifesto from '../components/Manifesto'; // Import the Manifesto component
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -213,6 +213,11 @@ export default function Home() {
           </form>
         </div>
       </main>
+      
+      {/* Manifesto posizionato tra main e footer */}
+      <div className={styles.manifestoWrapper}>
+        <Manifesto />
+      </div>
 
       <footer className={styles.footer}>
         <div className={styles.footerLinks}>

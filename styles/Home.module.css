@@ -1,203 +1,222 @@
 /* styles/Home.module.css */
 .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #F5F5F5;
-    color: #2B2828;
-    font-family: 'Azeret Mono', monospace;
-  }
-  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #F5F5F5;
+  color: #2B2828;
+  font-family: 'Azeret Mono', monospace;
+}
+
+.main {
+  padding: 5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  gap: 1rem; /* Ridotto spazio tra gli elementi */
+}
+
+.logo {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 240px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.description {
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 1rem 0 3rem;
+  max-width: 600px;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 1rem; /* Ridotto il margine inferiore */
+  padding: 1rem;
+}
+
+.formTitle {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.inputGroup {
+  width: 100%;
+}
+
+.emailInput {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #2B2828;
+  background-color: transparent;
+  font-family: 'Azeret Mono', monospace;
+  font-size: 1rem;
+  color: #2B2828;
+}
+
+.emailInput::placeholder {
+  color: #2B2828;
+  opacity: 0.7;
+}
+
+.emailInput:focus {
+  outline: none;
+  border-color: #D43D3D;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.checkbox {
+  margin-top: 0.3rem;
+  cursor: pointer;
+}
+
+.privacyLabel {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.privacyLink {
+  color: #D43D3D;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.privacyLink:hover {
+  opacity: 0.8;
+}
+
+.formMessage {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.errorMessage {
+  color: #D43D3D;
+}
+
+.successMessage {
+  color: #2B2828;
+}
+
+.submitButton {
+  background-color: #2B2828;
+  color: #F5F5F5;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-family: 'Azeret Mono', monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  align-self: center;
+  min-width: 150px;
+}
+
+.submitButton:hover {
+  background-color: #D43D3D;
+  transform: translateY(-2px); /* Piccolo effetto di sollevamento */
+}
+
+.submitButton:disabled {
+  background-color: #2B2828;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Nuovo wrapper per il manifesto */
+.manifestoWrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #F5F5F5;
+}
+
+.footer {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid rgba(43, 40, 40, 0.1);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footerLink {
+  color: #2B2828;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+  color: #D43D3D;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  color: #2B2828;
+  opacity: 0.7;
+}
+
+/* Media queries per responsività */
+@media (max-width: 600px) {
   .main {
-    padding: 5rem 2rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  
-  .logo {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 240px;
-  }
-  
-  .logo img {
-    width: 100%;
-    height: auto;
+    padding: 3rem 1rem;
+    gap: 1.5rem;
   }
   
   .description {
-    text-align: center;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin: 1rem 0 3rem;
-    max-width: 600px;
-  }
-  
-  .formContainer {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+    font-size: 1rem;
   }
   
   .formTitle {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    font-weight: 500;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-  }
-  
-  .inputGroup {
-    width: 100%;
-  }
-  
-  .emailInput {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid #2B2828;
-    background-color: transparent;
-    font-family: 'Azeret Mono', monospace;
     font-size: 1rem;
-    color: #2B2828;
   }
-  
-  .emailInput::placeholder {
-    color: #2B2828;
-    opacity: 0.7;
-  }
-  
-  .emailInput:focus {
-    outline: none;
-    border-color: #D43D3D;
-  }
-  
-  .checkboxGroup {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  
-  .checkbox {
-    margin-top: 0.3rem;
-    cursor: pointer;
-  }
-  
-  .privacyLabel {
-    font-size: 0.8rem;
-    line-height: 1.4;
-  }
-  
-  .privacyLink {
-    color: #D43D3D;
-    text-decoration: underline;
-    transition: opacity 0.2s ease;
-  }
-  
-  .privacyLink:hover {
-    opacity: 0.8;
-  }
-  
-  .formMessage {
+
+  .formContainer {
+    margin: 0 auto 1rem;
     padding: 0.5rem;
-    font-size: 0.8rem;
-    text-align: center;
-  }
-  
-  .errorMessage {
-    color: #D43D3D;
-  }
-  
-  .successMessage {
-    color: #2B2828;
-  }
-  
-  .submitButton {
-    background-color: #2B2828;
-    color: #F5F5F5;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-family: 'Azeret Mono', monospace;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    align-self: center;
-    min-width: 150px;
-  }
-  
-  .submitButton:hover {
-    background-color: #D43D3D;
-  }
-  
-  .submitButton:disabled {
-    background-color: #2B2828;
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  
-  .footer {
-    width: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    border-top: 1px solid rgba(43, 40, 40, 0.1);
   }
   
   .footerLinks {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 1rem;
   }
-  
-  .footerLink {
-    color: #2B2828;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-  }
-  
-  .footerLink:hover {
-    color: #D43D3D;
-  }
-  
-  .copyright {
-    font-size: 0.8rem;
-    color: #2B2828;
-    opacity: 0.7;
-  }
-  
-  /* Media queries per responsività */
-  @media (max-width: 600px) {
-    .main {
-      padding: 3rem 1rem;
-    }
-    
-    .description {
-      font-size: 1rem;
-    }
-    
-    .formTitle {
-      font-size: 1rem;
-    }
-    
-    .footerLinks {
-      gap: 1rem;
-    }
-  }
+}
