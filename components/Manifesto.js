@@ -31,7 +31,7 @@ const Manifesto = () => {
   return (
     <section ref={manifestoRef} className="manifesto-section">
       <div className="manifesto-container">
-        <h2 className="manifesto-title">Il nostro manifesto</h2>
+        <h2 className="manifesto-title">Il nostro manifesto</h2><h4 className="manifesto-subtitle">v0.1 Beta</h4>
         
         <div className="manifesto-content">
           <p>L'intelligenza artificiale è già parte della nostra vita.<br />

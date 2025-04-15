@@ -220,3 +220,32 @@
     gap: 1rem;
   }
 }
+
+/* Nuovo wrapper per il manifesto */
+.manifestoWrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #F5F5F5;
+}
+
+/* Nuovo wrapper per la roadmap */
+.roadmapWrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #F5F5F5;
+  position: relative;
+}
+
+.roadmapWrapper:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, rgba(43, 40, 40, 0), rgba(43, 40, 40, 0.1) 20%, rgba(43, 40, 40, 0.1) 80%, rgba(43, 40, 40, 0));
+}

@@ -3,7 +3,9 @@ import Head from 'next/head';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
 import SubscribeForm from '../components/SubscribeForm';
-import Manifesto from '../components/Manifesto'; // Import the Manifesto component
+import Manifesto from '../components/Manifesto';
+import Roadmap from '../components/Roadmap';
+import Footer from '../components/Footer'; // Importazione del componente Footer
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -219,22 +221,12 @@ export default function Home() {
         <Manifesto />
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerLinks}>
-          <a href="https://www.linkedin.com/groups/10083428/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
-            LinkedIn
-          </a>
-          <a href="https://www.instagram.com/biella.aimeetup/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>
-            Instagram
-          </a>
-          <a href="mailto:biella@aimeetup.it" className={styles.footerLink}>
-            Become a partner
-          </a>
-        </div>
-        <div className={styles.copyright}>
-          © {new Date().getFullYear()} AI Meetup Biella
-        </div>
-      </footer>
+      {/* Roadmap posizionata dopo il manifesto */}
+      <div className={styles.roadmapWrapper}>
+        <Roadmap />
+      </div>
+
+      {/* Sostituiamo il vecchio footer con il nuovo componente Footer */}
     </div>
   );
 }
