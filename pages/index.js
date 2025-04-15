@@ -227,6 +227,7 @@ export default function Home() {
       </div>
 
       {/* Sostituiamo il vecchio footer con il nuovo componente Footer */}
+      <Footer />
     </div>
   );
 }

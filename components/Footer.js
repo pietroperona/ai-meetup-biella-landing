@@ -17,12 +17,11 @@ const Footer = () => {
       </div>
 
       <div className="copyright">
-        © {new Date().getFullYear()} AI Meetup Biella
+        © {new Date().getFullYear()} AI Meetup Biella è un'iniziativa di AI Meetup.
       </div>
 
       <div className="footer-info">
-        <p className="initiative-text">AI Meetup Biella è un'iniziativa di AI Meetup.</p>
-        <p className="mission-text">Una community no-profit dedicata a rendere l'intelligenza artificiale accessibile a tutti.</p>
+        <p className="mission-text">Costruiamo ponti tra le persone e l'AI, abbattendo barriere tecniche e culturali.</p>
         <p className="disclaimer-text">I nomi di prodotti, servizi e aziende citati possono essere marchi registrati dei rispettivi proprietari. Il loro utilizzo è a scopo informativo e non implica alcuna affiliazione o endorsement.</p>
       </div>
 

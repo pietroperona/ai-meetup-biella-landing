@@ -45,7 +45,7 @@ const Manifesto = () => {
           esperti, studenti, imprenditori, artigiani, genitori, sindaci, docenti, freelance, curiosi.<br />
           Se vuoi capire e condividere, sei dei nostri.</p>
           
-          <p><span className="highlight">Scegliamo l'AI europea.</span><br />
+          <p><span className="highlight">Scegliamo l'AI Europea.</span><br />
           Un'AI etica, trasparente, accessibile, al servizio delle persone.<br />
           Per questo promuoviamo l'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" className="ai-pact-link"><span className="highlight-green">AI Pact dell'Unione Europea</span></a>:<br />
           perché servono scelte chiare per generare fiducia.</p>
