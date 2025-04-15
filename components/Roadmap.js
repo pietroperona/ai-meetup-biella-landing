@@ -28,7 +28,7 @@ const Roadmap = () => {
       date: 'Aprile 2025', 
       title: 'Firma AI Pact EU Commission', 
       status: 'in-progress',
-      description: "Adesione all'iniziativa europea che promuove l'implementazione responsabile della normativa sull'IA e l'etica digitale.",
+      description: `Adesione all'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">iniziativa europea</a> che promuove l'implementazione responsabile della normativa sull'IA e l'etica digitale. Adesione al Pillar I e II.`,
       hasDetails: true
     },
     { 
@@ -114,7 +114,7 @@ const Roadmap = () => {
                 
                 {event.hasDetails && (
                   <div className={`event-description ${expandedItems[index] ? 'visible' : ''}`}>
-                    <p>{event.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: event.description }} />
                   </div>
                 )}
               </div>
