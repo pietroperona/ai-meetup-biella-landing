@@ -11,7 +11,7 @@
       "type": "openapi",
       "url": "https://biella.aimeetup.it/.well-known/openapi.yaml"
     },
-    "logo_url": "https://biella.aimeetup.it/logo-ai-meetup-biella.svg",
+    "logo_url": "https://biella.aimeetup.it/logo-ai-meetup.svg",
     "contact_email": "biella@aimeetup.it",
     "legal_info_url": "https://biella.aimeetup.it/privacy-policy"
   }

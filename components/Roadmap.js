@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// components/Roadmap.js
+import React, { useState, useEffect, useRef } from 'react';
 
 const Roadmap = () => {
   // Dati della roadmap con descrizioni
@@ -62,6 +63,7 @@ const Roadmap = () => {
 
   // Stato per tenere traccia degli elementi espansi
   const [expandedItems, setExpandedItems] = useState({});
+  const roadmapRef = useRef(null);
 
   // Funzione per cambiare lo stato di espansione di un elemento
   const toggleExpand = (index) => {
@@ -71,8 +73,32 @@ const Roadmap = () => {
     }));
   };
 
+  // Semplice fade-in effect quando si fa lo scrolling alla roadmap
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (roadmapRef.current) {
+      observer.observe(roadmapRef.current);
+    }
+    
+    return () => {
+      if (roadmapRef.current) {
+        observer.unobserve(roadmapRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="roadmap-section">
+    <section ref={roadmapRef} className="roadmap-section">
       <div className="roadmap-container">
         <h2 className="roadmap-title">La nostra roadmap</h2>
         
@@ -131,6 +157,14 @@ const Roadmap = () => {
           margin: 0 auto;
           width: 100%;
           background-color: #F5F5F5;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .roadmap-section.visible {
+          opacity: 1;
+          transform: translateY(0);
         }
         
         .roadmap-container {
@@ -186,24 +220,6 @@ const Roadmap = () => {
           margin-bottom: 0;
         }
         
-        .timeline-item:after {
-          content: '';
-          position: absolute;
-          top: 1.8rem;
-          left: 1.25rem;
-          height: calc(100% + 2.5rem);
-          width: 2px;
-          z-index: 1;
-        }
-        
-        .timeline-item.completed:after {
-          background-color: #4BB543;
-        }
-        
-        .timeline-item.in-progress:after {
-          background-color: #F2C94C;
-        }
-        
         .timeline-marker {
           flex: 0 0 2.5rem;
           position: relative;
@@ -254,22 +270,6 @@ const Roadmap = () => {
           position: relative;
           transition: all 0.3s ease;
         }
-        
-        /* Rimuovo l'elemento triangolare che sporge */
-        /* .timeline-content:before {
-          content: '';
-          position: absolute;
-          left: -0.75rem;
-          top: 1rem;
-          width: 1.5rem;
-          height: 1.5rem;
-          background-color: white;
-          transform: rotate(45deg);
-          border-radius: 2px;
-          z-index: -1;
-          box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.04);
-        } */
-        
         
         .timeline-item.completed .timeline-content {
           border-left: 4px solid #4BB543; /* Verde per completato */
@@ -404,16 +404,27 @@ const Roadmap = () => {
           opacity: 0.9;
         }
         
-        /* Effetto hover */
-        .timeline-item:hover .timeline-content {
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .timeline-item:hover .marker-outer {
-          transform: scale(1.1);
-        }
-        
         /* Media query per schermi più piccoli */
+        @media (max-width: 768px) {
+          .roadmap-container {
+            padding: 2rem 1.5rem;
+          }
+          
+          .roadmap-title {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+          }
+          
+          .roadmap-title:after {
+            width: 60px;
+            height: 3px;
+          }
+          
+          .timeline-item {
+            margin-bottom: 2rem;
+          }
+        }
+        
         @media (max-width: 600px) {
           .roadmap-container {
             padding: 2rem 1rem;
@@ -424,6 +435,12 @@ const Roadmap = () => {
             margin-bottom: 2.5rem;
           }
           
+          .roadmap-title:after {
+            width: 50px;
+            height: 2px;
+          }
+          
+          /* Aggiustamenti specifici per mobile */
           .timeline-line {
             left: 1rem;
           }
@@ -451,14 +468,20 @@ const Roadmap = () => {
             font-size: 1rem;
           }
           
-          .timeline-item:after {
-            left: 1rem;
-          }
-          
           .expand-button {
             width: 24px;
             height: 24px;
             font-size: 1.2rem;
+          }
+          
+          .status-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+          }
+          
+          .event-description p {
+            font-size: 0.85rem;
+            line-height: 1.5;
           }
         }
       `}</style>

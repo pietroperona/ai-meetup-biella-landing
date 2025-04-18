@@ -54,7 +54,7 @@ Per configurare correttamente l'integrazione con Mailchimp:
 
 Assicurati di inserire nella cartella `public` i seguenti file:
 
-- `logo-ai-meetup-biella.svg` - Il logo principale
+- `logo-ai-meetup.svg` - Il logo principale
 - `ai-meetup.ico` - La favicon
 - `apple-touch-icon.png` - Icona per dispositivi Apple (180x180px)
 - `favicon-32x32.png` - Favicon 32x32

@@ -1,0 +1,122 @@
+/* styles/mobileFixStyles.css */
+
+/* Fix per il titolo del manifesto su mobile */
+@media (max-width: 600px) {
+    .manifesto-section .manifesto-title {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .manifesto-section .manifesto-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      width: 40px !important;
+      height: 3px !important;
+      background-color: #D43D3D;
+      margin: 0 auto;
+    }
+    
+    /* Miglioramento spaziatura contenuti manifesto */
+    .manifesto-section .manifesto-content p {
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    /* Miglioramento highlight su mobile */
+    .manifesto-section .highlight:after,
+    .manifesto-section .highlight-green:after {
+      height: 6px;
+      bottom: 1px;
+    }
+  }
+  
+  /* Fix per la roadmap su mobile */
+  @media (max-width: 600px) {
+    /* Allineamento corretto timeline */
+    .roadmap-section .timeline-line {
+      left: 1rem !important;
+    }
+    
+    .roadmap-section .timeline-marker {
+      flex: 0 0 2rem !important; 
+    }
+    
+    /* Dimensione corretta per i marker colorati */
+    .roadmap-section .marker-outer {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+    }
+    
+    .roadmap-section .marker-inner {
+      width: 0.4rem !important;
+      height: 0.4rem !important;
+    }
+    
+    /* Miglioramento spaziatura e margini */
+    .roadmap-section .timeline-content {
+      margin-left: 1rem !important;
+      padding: 1rem !important;
+    }
+    
+    /* Fix colori status badge */
+    .roadmap-section .status-badge.completed {
+      background-color: rgba(75, 181, 67, 0.1) !important;
+      color: #4BB543 !important;
+    }
+    
+    .roadmap-section .status-badge.in-progress {
+      background-color: rgba(242, 201, 76, 0.1) !important;
+      color: #D4A03D !important;
+    }
+    
+    /* Sistema titoli e date */
+    .roadmap-section .event-title {
+      font-size: 1rem !important;
+    }
+    
+    .roadmap-section .event-date {
+      margin-bottom: 0.4rem !important;
+    }
+    
+    /* Fix al bottone espandi */
+    .roadmap-section .expand-button {
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 1.2rem !important;
+    }
+  }
+  
+  /* Fix per il footer su mobile */
+  @media (max-width: 600px) {
+    .footer {
+      padding: 1.5rem 1rem !important;
+    }
+    
+    .footer-links {
+      gap: 1rem !important;
+    }
+    
+    .copyright {
+      font-size: 0.75rem !important;
+    }
+    
+    .footer-info {
+      font-size: 0.9rem !important;
+    }
+  }
+  
+  /* Miglioramenti per viewport intermedi (tablet) */
+  @media (min-width: 601px) and (max-width: 900px) {
+    .manifesto-section .manifesto-container,
+    .roadmap-section .roadmap-container {
+      padding: 2.5rem 1.5rem !important;
+    }
+    
+    .roadmap-section .timeline-line {
+      left: 1.1rem !important;
+    }
+  }

@@ -16,7 +16,7 @@ export default function Custom404() {
         <div className={styles.header}>
           <Link href="/">
             <img 
-              src="/logo-ai-meetup-biella.svg" 
+              src="/logo-ai-meetup.svg" 
               alt="AI Meetup Logo" 
               className={styles.logo} 
             />

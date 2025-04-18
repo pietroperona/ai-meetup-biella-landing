@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 const Manifesto = () => {
   const manifestoRef = useRef(null);
   
-  // Simple fade-in effect when scrolling to the manifesto
+  // Fade-in effect when scrolling to the manifesto
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,7 +31,11 @@ const Manifesto = () => {
   return (
     <section ref={manifestoRef} className="manifesto-section">
       <div className="manifesto-container">
-        <h2 className="manifesto-title">Il nostro manifesto</h2><h4 className="manifesto-subtitle">v0.1 Beta</h4>
+        <div className="title-wrapper">
+          <h2 className="manifesto-title">Il nostro manifesto</h2>
+          <div className="title-underline"></div>
+          <h4 className="manifesto-subtitle">v0.1 Beta</h4>
+        </div>
         
         <div className="manifesto-content">
           <p>L'intelligenza artificiale è già parte della nostra vita.<br />
@@ -55,7 +59,7 @@ const Manifesto = () => {
           Condividiamo idee.<br />
           Un meetup alla volta.</p>
           
-          <p className="manifesto-conclusion"><span className="highlight">AI Meetup è dove la tecnologia incontra la comunità.</span><br /></p>
+          <p className="manifesto-conclusion"><span className="highlight">AI Meetup è dove la tecnologia incontra la comunità.</span></p>
         </div>
       </div>
       
@@ -79,27 +83,38 @@ const Manifesto = () => {
           padding: 3rem 2rem;
           border-radius: 4px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-          max-width: 900px; /* Dimensione ottimale per desktop */
+          max-width: 900px;
           margin: 0 auto;
         }
         
-        .manifesto-title {
+        .title-wrapper {
           text-align: center;
-          font-size: 1.6rem;
           margin-bottom: 2.5rem;
-          font-weight: 500;
           position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         
-        .manifesto-title:after {
-          content: '';
-          position: absolute;
-          bottom: -0.8rem;
-          left: 50%;
-          transform: translateX(-50%);
+        .manifesto-title {
+          font-size: 1.6rem;
+          margin-bottom: 0.75rem;
+          font-weight: 500;
+          display: inline-block;
+        }
+        
+        .title-underline {
           width: 60px;
           height: 3px;
           background-color: #D43D3D;
+          margin: 0 auto;
+          margin-bottom: 1.2rem;
+        }
+        
+        .manifesto-subtitle {
+          font-size: 1rem;
+          font-weight: normal;
+          opacity: 0.7;
         }
         
         .manifesto-content {
@@ -160,7 +175,7 @@ const Manifesto = () => {
           font-size: 1.1rem;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
           .manifesto-section {
             padding: 2rem 1rem;
           }
@@ -170,7 +185,31 @@ const Manifesto = () => {
           }
           
           .manifesto-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+          }
+          
+          .title-underline {
+            width: 50px;
+            height: 3px;
+            margin-bottom: 1rem;
+          }
+        }
+        
+        @media (max-width: 600px) {
+          .manifesto-container {
+            padding: 1.75rem 1.25rem;
+          }
+          
+          .manifesto-title {
             font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+          }
+          
+          .title-underline {
+            width: 40px;
+            height: 2px;
+            margin-bottom: 0.8rem;
           }
           
           .manifesto-content {
