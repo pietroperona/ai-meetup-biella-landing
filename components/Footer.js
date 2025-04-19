@@ -21,7 +21,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-info">
-        <p className="mission-text">Costruiamo ponti tra le persone e l'AI, abbattendo barriere tecniche e culturali.</p>
+        <p className="mission-text">Costruiamo ponti tra le persone e l'AI abbattendo barriere tecniche e culturali.</p>
         <p className="disclaimer-text">I nomi di prodotti, servizi e aziende citati possono essere marchi registrati dei rispettivi proprietari. Il loro utilizzo è a scopo informativo e non implica alcuna affiliazione o endorsement.</p>
       </div>
 
