@@ -15,6 +15,23 @@ export default function DiventaPartner() {
   // State per la tabella di confronto
   const [activeTab, setActiveTab] = useState('sponsor');
 
+  // Ref per la hero section
+  const heroRef = useRef(null);
+
+  // State per la posizione del mouse
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Handler per il movimento del mouse
+  const handleMouseMove = (e) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
+  };
+
   // Configurazione delle animazioni allo scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,7 +72,12 @@ export default function DiventaPartner() {
       </Head>
 
       <div className="partner-page">
-        <div className="hero-section">
+        {/* Hero Section Aggiornata */}
+        <div
+          className="hero-section"
+          ref={heroRef}
+          onMouseMove={handleMouseMove}
+        >
           <div className="hero-content">
             <h1 className="hero-title">Diventa Partner</h1>
             <p className="hero-description">
@@ -338,37 +360,56 @@ export default function DiventaPartner() {
           background-color: #F5F5F5;
         }
         
+        /* Hero Section Aggiornata */
         .hero-section {
-          background: linear-gradient(to right, #2B2828, #555);
-          color: white;
+          background: linear-gradient(to right, #E0F7FA, #ECEFF1); /* Blu Fresco - Grigio Chiaro */
+          color: #2B2828;
           padding: 6rem 2rem;
           text-align: center;
+          position: relative;
+          overflow: hidden; /* Necessario per il posizionamento assoluto degli elementi parallax */
+          z-index: 1; /* Imposta uno z-index basso */
         }
-        
+
+        .hero-section::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cdefs%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); /* Noise SVG */
+          opacity: 0.15;
+          z-index: -1; /* Poni il noise dietro al contenuto dell'hero */
+          pointer-events: none; /* Assicura che non interferisca con gli eventi del mouse */
+        }
+
         .hero-content {
           max-width: 900px;
           margin: 0 auto;
+          position: relative;
+          z-index: 2; /* Pone il contenuto sopra il gradiente e il noise */
         }
-        
+
         .hero-title {
           font-size: 2.5rem;
           margin-bottom: 1.5rem;
           font-weight: 500;
         }
-        
+
         .hero-description {
           font-size: 1.3rem;
           line-height: 1.6;
           max-width: 700px;
           margin: 0 auto;
         }
-        
+
         .highlight {
           position: relative;
           display: inline-block;
           z-index: 1;
         }
-        
+
         .highlight::after {
           content: '';
           position: absolute;
@@ -379,11 +420,30 @@ export default function DiventaPartner() {
           background-color: rgba(212, 61, 61, 0.4);
           z-index: -1;
         }
-        
+
+        /* Effetto Parallax */
+        // .hero-title {
+        //   transform: translate(
+        //     ${(mousePosition.x - 150) / 30}px,
+        //     ${(mousePosition.y - 50) / 30}px
+        //   );
+        //   transition: transform 0.1s ease-out;
+        // }
+
+        // .hero-description {
+        //   transform: translate(
+        //     ${(mousePosition.x - 150) / 40}px,
+        //     ${(mousePosition.y - 50) / 40}px
+        //   );
+        //   transition: transform 0.1s ease-out;
+        // }
+
         .container {
           max-width: 1100px;
           margin: 0 auto;
           padding: 4rem 2rem;
+          position: relative; /* Crea un contesto di stacking */
+          z-index: 2; /* Assicurati che sia sopra la hero section */
         }
         
         .section-title {
