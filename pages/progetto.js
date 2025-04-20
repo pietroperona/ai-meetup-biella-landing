@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
+import Hero from '../components/Hero'; // Importa il componente Hero
 
 export default function Progetto() {
   // Riferimenti per le animazioni al momento dello scroll
@@ -53,15 +54,10 @@ export default function Progetto() {
 
       <div className="project-page">
         {/* Hero Section */}
-        <div className="hero-section">
-          <div className="hero-content">
-            <h1 className="hero-title">Il Progetto AI Meetup</h1>
-            <p className="hero-description">
-              Costruiamo ponti tra le persone e l'intelligenza artificiale, abbattendo barriere 
-              <span className="highlight"> tecniche e culturali</span>.
-            </p>
-          </div>
-        </div>
+        <Hero
+          title="Scopri AI Meetup"
+          description="Costruiamo ponti tra le persone e l'intelligenza artificiale, abbattendo barriere tecniche e culturali."
+        />
 
         <div className="container">
           {/* Sezione Storia */}
@@ -319,48 +315,6 @@ export default function Progetto() {
       <style jsx>{`
         .project-page {
           background-color: #F5F5F5;
-        }
-        
-        .hero-section {
-          background: linear-gradient(to right, #2B2828, #555);
-          color: white;
-          padding: 6rem 2rem;
-          text-align: center;
-        }
-        
-        .hero-content {
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        
-        .hero-title {
-          font-size: 2.5rem;
-          margin-bottom: 1.5rem;
-          font-weight: 500;
-        }
-        
-        .hero-description {
-          font-size: 1.3rem;
-          line-height: 1.6;
-          max-width: 700px;
-          margin: 0 auto;
-        }
-        
-        .highlight {
-          position: relative;
-          display: inline-block;
-          z-index: 1;
-        }
-        
-        .highlight::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 10px;
-          background-color: rgba(212, 61, 61, 0.4);
-          z-index: -1;
         }
         
         .container {
@@ -747,18 +701,6 @@ export default function Progetto() {
         
         /* Media queries */
         @media (max-width: 768px) {
-          .hero-section {
-            padding: 4rem 1.5rem;
-          }
-          
-          .hero-title {
-            font-size: 2rem;
-          }
-          
-          .hero-description {
-            font-size: 1.1rem;
-          }
-          
           .container {
             padding: 3rem 1.5rem;
           }
@@ -793,14 +735,6 @@ export default function Progetto() {
         }
         
         @media (max-width: 480px) {
-          .hero-title {
-            font-size: 1.8rem;
-          }
-          
-          .hero-description {
-            font-size: 1rem;
-          }
-          
           .timeline {
             padding-left: 1rem;
           }

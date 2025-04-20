@@ -13,15 +13,14 @@ export default function Contatti() {
       <div className="contatti-page">
         <Hero
           title="Contatti"
-          description="Hai domande? Vuoi collaborare? Contattaci!"
+          description="Entra in contatto con la community AI Meetup"
         />
 
         <div className="container">
-          {/* Inserisci qui il resto del contenuto della pagina contatti */}
-          <p>
-            Questa è la pagina dei contatti. Puoi inserire qui un form di contatto,
-            informazioni di contatto, una mappa, ecc.
-          </p>
+          {/* Link email centrale */}
+          <div className="email-container">
+            <a href="mailto:contact@aimeetup.it">contact@aimeetup.it</a>
+          </div>
         </div>
       </div>
 
@@ -34,11 +33,21 @@ export default function Contatti() {
           max-width: 1100px;
           margin: 0 auto;
           padding: 4rem 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 200px; /* Assicura un'altezza minima per centrare verticalmente */
         }
 
-        p {
-          font-size: 1.1rem;
-          line-height: 1.7;
+        .email-container {
+          text-align: center;
+          margin: 4rem 0; /* Aggiunto margine sopra e sotto */
+        }
+
+        .email-container a {
+          font-size: 3rem; /* Testo gigante */
+          color: #2B2828;
+          text-decoration: none;
         }
       `}</style>
     </Layout>

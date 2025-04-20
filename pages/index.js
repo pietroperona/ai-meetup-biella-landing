@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css';
 import SubscribeForm from '../components/SubscribeForm';
 import Manifesto from '../components/Manifesto';
 import Roadmap from '../components/Roadmap';
-import Layout from '../components/Layout'; // Importazione del nuovo Layout
+import Layout from '../components/Layout';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -163,13 +163,20 @@ export default function Home() {
         </Head>
 
         <main className={styles.main}>
-          <div className={styles.logo}>
-            <img src="/logo-ai-meetup.svg" alt="AI Meetup Biella Logo" />
+          {/* Hero Section con frase principale in evidenza */}
+          <div className="hero-section">
+            <div className="hero-content">
+              <h1 className="hero-heading">
+                <span>Costruiamo</span> 
+                <span className="highlight">ponti</span> 
+                <span>tra le persone e</span> 
+                <span className="highlight">l'intelligenza artificiale</span>
+                <span>, abbattendo</span> 
+                <span className="highlight">barriere</span> 
+                <span>tecniche e culturali.</span>
+              </h1>
+            </div>
           </div>
-
-          <p className={styles.description}>
-            Siamo la community che connette le persone che vogliono scoprire, capire e usare l'intelligenza artificiale 🤖 nella vita e nel lavoro.
-          </p>
 
           <div className={styles.formContainer}>
             <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
@@ -226,6 +233,73 @@ export default function Home() {
         <div id="roadmap-section" className={styles.roadmapWrapper}>
           <Roadmap />
         </div>
+
+        <style jsx>{`
+          .hero-section {
+            padding: 3rem 2rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+          }
+          
+          .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+          }
+          
+          .hero-heading {
+            font-size: 2.5rem;
+            line-height: 1.4;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+          }
+          
+          .hero-heading span {
+            display: inline;
+            margin: 0 0.2rem;
+          }
+          
+          .highlight {
+            position: relative;
+            z-index: 1;
+          }
+          
+          .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(212, 61, 61, 0.2);
+            z-index: -1;
+          }
+          
+          @media (max-width: 768px) {
+            .hero-section {
+              padding: 4rem 1.5rem;
+            }
+            
+            .hero-heading {
+              font-size: 2rem;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .hero-section {
+              padding: 3rem 1rem;
+            }
+            
+            .hero-heading {
+              font-size: 1.5rem;
+            }
+            
+            .highlight::after {
+              height: 6px;
+              bottom: 3px;
+            }
+          }
+        `}</style>
       </div>
     </Layout>
   );

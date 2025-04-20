@@ -99,9 +99,9 @@ const Layout = ({ children }) => {
                   Roadmap
                 </a>
               </li>
-              <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
                 <Link href="/progetto" className="nav-link">Progetto</Link>
-              </li>
+              </li> */}
               <li className={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
                 <button 
                   className={`nav-link dropdown-trigger ${isMeetupOpen ? 'open' : ''}`}
@@ -118,9 +118,9 @@ const Layout = ({ children }) => {
                   </li>
                 </ul>
               </li>
-              <li className={`nav-item ${isActive('/diventa-partner') ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${isActive('/diventa-partner') ? 'active' : ''}`}>
                 <Link href="/diventa-partner" className="nav-link">Diventa Partner</Link>
-              </li>
+              </li> */}
               <li className={`nav-item ${isActive('/contatti') ? 'active' : ''}`}>
                 <Link href="/contatti" className="nav-link">Contatti</Link>
               </li>

@@ -1,72 +1,58 @@
 // pages/meetup/biella.js
 import Head from 'next/head';
-import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Layout from '../../components/Layout';
-import SubscribeForm from '../../components/SubscribeForm';
+import styles from '../../styles/Home.module.css';
 
 export default function MeetupBiella() {
-  const [countdown, setCountdown] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-  
-  // Riferimenti per l'animazione al momento dello scroll
-  const infoRef = useRef(null);
-  const formRef = useRef(null);
-  const mapRef = useRef(null);
+  const [email, setEmail] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [formStatus, setFormStatus] = useState({ message: '', isError: false });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Data del primo evento (esempio - da aggiornare con la data effettiva)
-  const firstEventDate = new Date('September 15, 2025 18:30:00');
-  
-  // Calcola il countdown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = firstEventDate - now;
-      
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        
-        setCountdown({ days, hours, minutes, seconds });
-      } else {
-        clearInterval(interval);
-        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    }, 1000);
-    
-    return () => clearInterval(interval);
-  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Configurazione delle animazioni allo scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    const elements = [infoRef.current, formRef.current, mapRef.current];
-    elements.forEach(el => {
-      if (el) observer.observe(el);
-    });
-    
-    return () => {
-      elements.forEach(el => {
-        if (el) observer.unobserve(el);
+    if (!email || !privacyAccepted) {
+      setFormStatus({
+        message: 'Per favore, inserisci l\'email e accetta la privacy policy.',
+        isError: true
       });
-    };
-  }, []);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setFormStatus({
+          message: 'Grazie per l\'iscrizione! Ti terremo aggiornato sui prossimi eventi.',
+          isError: false
+        });
+        setEmail('');
+        setPrivacyAccepted(false);
+      } else {
+        throw new Error(data.message || 'Si è verificato un errore durante l\'iscrizione.');
+      }
+    } catch (error) {
+      setFormStatus({
+        message: error.message || 'Si è verificato un errore. Riprova più tardi.',
+        isError: true
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Layout>
@@ -83,147 +69,61 @@ export default function MeetupBiella() {
       </Head>
 
       <div className="meetup-page">
-        <div className="hero-section">
-          <div className="hero-content">
-            <h1 className="hero-title">AI Meetup Biella</h1>
-            <p className="hero-description">
-              Il primo appuntamento italiano con la community che connette le persone e l'intelligenza artificiale.
-            </p>
-            
-            <div className="hero-cta">
-              <Link href="#subscribe" className="cta-button">Iscriviti alla newsletter</Link>
-            </div>
-            
-            <div className="countdown-container">
-              <div className="countdown-title">Primo evento tra:</div>
-              <div className="countdown">
-                <div className="countdown-item">
-                  <div className="countdown-number">{countdown.days}</div>
-                  <div className="countdown-label">Giorni</div>
+        <main className="main-content">
+          {/* Hero Section con titolo grande */}
+          <div className="hero-section">
+            <h1 className="hero-title">Ehi Biella, stiamo arrivando! 🤩</h1>
+            <h2 className="hero-subtitle">Stiamo creando la prima community AI di Biella. Aiutaci a costruire ponti tra le persone e l'intelligenza artificiale, <a href="/contatti" className="contact-link">contattaci</a>.</h2>
+          </div>
+
+          {/* Form Section - stesso della home */}
+          <div className="form-section">
+            <div className="form-container">
+              <h2 className="form-title">Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
+
+              <form onSubmit={handleSubmit} className="form">
+                <div className="input-group">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="La tua email"
+                    className="email-input"
+                    required
+                  />
                 </div>
-                <div className="countdown-item">
-                  <div className="countdown-number">{countdown.hours}</div>
-                  <div className="countdown-label">Ore</div>
+
+                <div className="checkbox-group">
+                  <input
+                    type="checkbox"
+                    id="privacy"
+                    checked={privacyAccepted}
+                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                    className="checkbox"
+                    required
+                  />
+                  <label htmlFor="privacy" className="privacy-label">
+                    Acconsento al trattamento dei miei dati personali come descritto nella <a href="/privacy-policy" className="privacy-link">Privacy Policy</a>
+                  </label>
                 </div>
-                <div className="countdown-item">
-                  <div className="countdown-number">{countdown.minutes}</div>
-                  <div className="countdown-label">Minuti</div>
-                </div>
-                <div className="countdown-item">
-                  <div className="countdown-number">{countdown.seconds}</div>
-                  <div className="countdown-label">Secondi</div>
-                </div>
-              </div>
+
+                {formStatus.message && (
+                  <div className={`form-message ${formStatus.isError ? 'error-message' : 'success-message'}`}>
+                    {formStatus.message}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="submit-button"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
+                </button>
+              </form>
             </div>
           </div>
-        </div>
-
-        <div className="container">
-          <section ref={infoRef} className="info-section fade-in">
-            <h2 className="section-title">Stiamo arrivando a Biella!</h2>
-            
-            <div className="info-content">
-              <div className="info-text">
-                <p className="info-intro">
-                  Siamo entusiasti di annunciare che il <strong>primo AI Meetup ufficiale</strong> si terrà a <strong>Biella</strong>, città che fa da apripista al nostro progetto di community nazionale.
-                </p>
-                
-                <div className="event-details">
-                  <div className="detail-item">
-                    <div className="detail-icon">📅</div>
-                    <div className="detail-text">
-                      <strong>Quando:</strong> 15 settembre 2025, ore 18:30
-                    </div>
-                  </div>
-                  
-                  <div className="detail-item">
-                    <div className="detail-icon">📍</div>
-                    <div className="detail-text">
-                      <strong>Dove:</strong> Palazzo Ferrero, Corso del Piazzo, 25, Biella
-                    </div>
-                  </div>
-                  
-                  <div className="detail-item">
-                    <div className="detail-icon">💡</div>
-                    <div className="detail-text">
-                      <strong>Tema:</strong> "Introduzione all'AI: capire le basi per usarla nella vita quotidiana"
-                    </div>
-                  </div>
-                  
-                  <div className="detail-item">
-                    <div className="detail-icon">🎯</div>
-                    <div className="detail-text">
-                      <strong>Per chi:</strong> Aperto a tutti, dai curiosi ai professionisti
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="info-description">
-                  <h3 className="info-subtitle">Cosa aspettarsi</h3>
-                  <p>
-                    Ogni incontro di AI Meetup è pensato per essere accessibile, interessante e pratico. Durante l'evento:
-                  </p>
-                  <ul className="info-list">
-                    <li>Introdurremo i concetti base dell'intelligenza artificiale in modo comprensibile</li>
-                    <li>Vedremo esempi pratici di applicazione dell'AI nella vita quotidiana e professionale</li>
-                    <li>Parleremo dell'evoluzione dell'AI e delle sue prospettive future</li>
-                    <li>Ci sarà spazio per domande, networking e scambio di idee</li>
-                  </ul>
-                  <p>
-                    Non è richiesta alcuna conoscenza tecnica preliminare, solo curiosità e voglia di imparare!
-                  </p>
-                </div>
-              </div>
-              
-              <div className="info-image">
-                <img src="/images/biella-panorama.jpg" alt="Panorama di Biella" className="city-image" />
-                <div className="image-caption">Biella, prima città italiana ad ospitare AI Meetup</div>
-              </div>
-            </div>
-          </section>
-
-          <section ref={formRef} id="subscribe" className="subscribe-section fade-in">
-            <div className="subscribe-box">
-              <h2 className="subscribe-title">Ricevi aggiornamenti sul primo Meetup</h2>
-              <p className="subscribe-text">
-                La data finale e i dettagli dell'evento saranno confermati presto. Iscriviti alla nostra newsletter per rimanere aggiornato e assicurarti un posto.
-              </p>
-              
-              <div className="subscribe-form-container">
-                <SubscribeForm />
-              </div>
-            </div>
-          </section>
-
-          <section ref={mapRef} className="map-section fade-in">
-            <h2 className="section-title">Dove ci troveremo</h2>
-            
-            <div className="map-container">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2818.1290538201!2d8.053492115752767!3d45.56678917910276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478624e2742f5fe3%3A0x1bf8c8c4c8c8c8c8!2sPalazzo%20Ferrero!5e0!3m2!1sit!2sit!4v1617358972961!5m2!1sit!2sit" 
-                width="100%" 
-                height="450" 
-                style={{ border: 0 }}
-                allowFullScreen="" 
-                loading="lazy" 
-                title="Mappa di Palazzo Ferrero, Biella"
-                className="map-iframe"
-              ></iframe>
-            </div>
-            
-            <div className="location-info">
-              <div className="location-address">
-                <h3>Palazzo Ferrero</h3>
-                <p>Corso del Piazzo, 25<br />13900 Biella BI</p>
-              </div>
-              
-              <div className="location-directions">
-                <h3>Come arrivare</h3>
-                <p>Il Palazzo Ferrero è facilmente raggiungibile dal centro città. Dalla stazione ferroviaria, prendere il bus n.1 fino alla fermata "Piazzo" o utilizzare la funicolare che collega la città bassa con il borgo storico del Piazzo.</p>
-              </div>
-            </div>
-          </section>
-        </div>
+        </main>
       </div>
 
       <style jsx>{`
@@ -231,345 +131,190 @@ export default function MeetupBiella() {
           background-color: #F5F5F5;
         }
         
-        .hero-section {
-          background: linear-gradient(to right, #2B2828, #555);
-          background-size: cover;
-          position: relative;
-          color: white;
-          padding: 6rem 2rem;
-          text-align: center;
-        }
-        
-        .hero-content {
-          position: relative;
-          z-index: 2;
-          max-width: 800px;
+        .main-content {
+          max-width: 900px;
           margin: 0 auto;
-        }
-        
-        .hero-title {
-          font-size: 2.8rem;
-          margin-bottom: 1.5rem;
-          font-weight: 500;
-        }
-        
-        .hero-description {
-          font-size: 1.3rem;
-          line-height: 1.6;
-          margin-bottom: 2rem;
-        }
-        
-        .hero-cta {
-          margin-bottom: 3rem;
-        }
-        
-        .cta-button {
-          display: inline-block;
-          background-color: #D43D3D;
-          color: white;
-          padding: 1rem 2rem;
-          font-size: 1rem;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: 500;
-          transition: background-color 0.2s ease, transform 0.2s ease;
-          text-decoration: none;
-          font-family: 'Azeret Mono', monospace;
-        }
-        
-        .cta-button:hover {
-          background-color: #C13434;
-          transform: translateY(-3px);
-        }
-        
-        .countdown-container {
-          background-color: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(10px);
-          padding: 2rem;
-          border-radius: 8px;
-          max-width: 600px;
-          margin: 0 auto;
-        }
-        
-        .countdown-title {
-          font-size: 1.2rem;
-          margin-bottom: 1.5rem;
-          opacity: 0.9;
-        }
-        
-        .countdown {
+          padding: 3rem 2rem;
           display: flex;
-          justify-content: center;
-          gap: 1.5rem;
-        }
-        
-        .countdown-item {
-          min-width: 70px;
-        }
-        
-        .countdown-number {
-          font-size: 2.5rem;
-          font-weight: 700;
-          background-color: rgba(255, 255, 255, 0.15);
-          padding: 0.5rem;
-          border-radius: 6px;
-          margin-bottom: 0.5rem;
-        }
-        
-        .countdown-label {
-          font-size: 0.9rem;
-          opacity: 0.8;
-        }
-        
-        .container {
-          max-width: 1000px;
-          margin: 0 auto;
-          padding: 4rem 2rem;
-        }
-        
-        .section-title {
-          font-size: 1.8rem;
-          margin-bottom: 2.5rem;
-          text-align: center;
-          position: relative;
-          font-weight: 500;
-        }
-        
-        .section-title::after {
-          content: '';
-          position: absolute;
-          bottom: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 70px;
-          height: 3px;
-          background-color: #D43D3D;
-        }
-        
-        /* Info section styles */
-        .info-section {
-          margin-bottom: 5rem;
-        }
-        
-        .info-content {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 3rem;
-        }
-        
-        .info-text {
-          flex: 1;
-          min-width: 300px;
-        }
-        
-        .info-intro {
-          font-size: 1.2rem;
-          line-height: 1.7;
-          margin-bottom: 2rem;
-        }
-        
-        .event-details {
-          margin-bottom: 2rem;
-        }
-        
-        .detail-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-          margin-bottom: 1.2rem;
-        }
-        
-        .detail-icon {
-          font-size: 1.5rem;
-        }
-        
-        .detail-text {
-          flex: 1;
-        }
-        
-        .info-subtitle {
-          font-size: 1.3rem;
-          margin-bottom: 1rem;
-          font-weight: 500;
-        }
-        
-        .info-list {
-          padding-left: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-        
-        .info-list li {
-          margin-bottom: 0.8rem;
-          line-height: 1.6;
-        }
-        
-        .info-image {
-          flex: 1;
-          min-width: 300px;
-          max-width: 500px;
-        }
-        
-        .city-image {
-          width: 100%;
-          height: auto;
-          border-radius: 8px;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .image-caption {
-          text-align: center;
-          margin-top: 1rem;
-          font-size: 0.9rem;
-          opacity: 0.8;
-        }
-        
-        /* Subscribe section styles */
-        .subscribe-section {
-          margin-bottom: 5rem;
-        }
-        
-        .subscribe-box {
-          background-color: white;
-          padding: 3rem;
-          border-radius: 8px;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-          text-align: center;
-        }
-        
-        .subscribe-title {
-          font-size: 1.8rem;
-          margin-bottom: 1.5rem;
-          font-weight: 500;
-        }
-        
-        .subscribe-text {
-          font-size: 1.1rem;
-          line-height: 1.6;
-          margin-bottom: 2rem;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        
-        .subscribe-form-container {
-          max-width: 500px;
-          margin: 0 auto;
-        }
-        
-        /* Map section styles */
-        .map-section {
-          margin-bottom: 5rem;
-        }
-        
-        .map-container {
-          margin-bottom: 2rem;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .map-iframe {
-          display: block;
-        }
-        
-        .location-info {
-          display: flex;
-          flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
           gap: 2rem;
         }
         
-        .location-address, .location-directions {
-          flex: 1;
-          min-width: 300px;
+        .hero-section {
+          width: 100%;
+          padding: 3rem 1rem;
+          text-align: center;
         }
         
-        .location-address h3, .location-directions h3 {
+        .hero-title {
+          font-size: 3.5rem;
+          line-height: 1.2;
+          font-weight: 500;
+          margin: 0 0 1.5rem 0;
+        }
+        
+        .hero-subtitle {
+          font-size: 1.3rem;
+          line-height: 1.5;
+          font-weight: 400;
+          max-width: 700px;
+          margin: 0 auto;
+        }
+        
+        .contact-link {
+          color: #D43D3D;
+          text-decoration: underline;
+          transition: opacity 0.2s ease;
+        }
+        
+        .contact-link:hover {
+          opacity: 0.8;
+        }
+        
+        .form-section {
+          width: 100%;
+          max-width: 500px;
+        }
+        
+        .form-container {
+          width: 100%;
+          padding: 1.5rem;
+          border-radius: 8px;
+        }
+        
+        .form-title {
+          text-align: center;
           font-size: 1.2rem;
-          margin-bottom: 1rem;
+          margin-bottom: 2rem;
           font-weight: 500;
         }
         
-        .location-address p, .location-directions p {
-          line-height: 1.6;
+        .form {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          width: 100%;
         }
         
-        /* Animation styles */
-        .fade-in {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.8s ease, transform 0.8s ease;
+        .input-group {
+          width: 100%;
         }
         
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
+        .email-input {
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border: 1px solid #2B2828;
+          background-color: transparent;
+          font-family: 'Azeret Mono', monospace;
+          font-size: 1rem;
+          color: #2B2828;
         }
         
-        /* Media queries */
+        .email-input::placeholder {
+          color: #2B2828;
+          opacity: 0.7;
+        }
+        
+        .email-input:focus {
+          outline: none;
+          border-color: #D43D3D;
+        }
+        
+        .checkbox-group {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+        
+        .checkbox {
+          margin-top: 0.3rem;
+          cursor: pointer;
+        }
+        
+        .privacy-label {
+          font-size: 0.8rem;
+          line-height: 1.4;
+        }
+        
+        .privacy-link {
+          color: #D43D3D;
+          text-decoration: underline;
+          transition: opacity 0.2s ease;
+        }
+        
+        .privacy-link:hover {
+          opacity: 0.8;
+        }
+        
+        .form-message {
+          padding: 0.5rem;
+          font-size: 0.8rem;
+          text-align: center;
+        }
+        
+        .error-message {
+          color: #D43D3D;
+        }
+        
+        .success-message {
+          color: #2B2828;
+        }
+        
+        .submit-button {
+          background-color: #2B2828;
+          color: #F5F5F5;
+          border: none;
+          padding: 0.8rem 1.5rem;
+          font-family: 'Azeret Mono', monospace;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background-color 0.2s ease, transform 0.2s ease;
+          align-self: center;
+          min-width: 150px;
+        }
+        
+        .submit-button:hover {
+          background-color: #D43D3D;
+          transform: translateY(-2px);
+        }
+        
+        .submit-button:disabled {
+          background-color: #2B2828;
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none;
+        }
+        
         @media (max-width: 768px) {
-          .hero-section {
-            padding: 4rem 1.5rem;
+          .main-content {
+            padding: 2rem 1.5rem;
+          }
+          
+          .hero-title {
+            font-size: 2.8rem;
+          }
+          
+          .hero-subtitle {
+            font-size: 1.2rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .main-content {
+            padding: 1.5rem 1rem;
           }
           
           .hero-title {
             font-size: 2.2rem;
           }
           
-          .hero-description {
+          .hero-subtitle {
             font-size: 1.1rem;
           }
           
-          .countdown {
-            gap: 1rem;
-          }
-          
-          .countdown-item {
-            min-width: 60px;
-          }
-          
-          .countdown-number {
-            font-size: 2rem;
-          }
-          
-          .container {
-            padding: 3rem 1.5rem;
-          }
-          
-          .section-title {
-            font-size: 1.5rem;
-          }
-          
-          .subscribe-box {
-            padding: 2rem 1.5rem;
-          }
-          
-          .subscribe-title {
-            font-size: 1.5rem;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .hero-title {
-            font-size: 1.8rem;
-          }
-          
-          .hero-description {
-            font-size: 1rem;
-          }
-          
-          .countdown {
-            flex-wrap: wrap;
-            justify-content: space-around;
-          }
-          
-          .countdown-item {
-            margin-bottom: 1rem;
-          }
-          
-          .cta-button {
-            width: 100%;
-            text-align: center;
+          .form-title {
+            font-size: 1.1rem;
           }
         }
       `}</style>

@@ -10,44 +10,24 @@
 }
 
 .main {
-  padding: 5rem 2rem;
+  padding: 3rem 2rem 4rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 800px;
+  justify-content: flex-start;
+  max-width: 900px;
   margin: 0 auto;
   width: 100%;
-  gap: 1rem; /* Ridotto spazio tra gli elementi */
-}
-
-.logo {
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 240px;
-}
-
-.logo img {
-  width: 100%;
-  height: auto;
-}
-
-.description {
-  text-align: center;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin: 1rem 0 3rem;
-  max-width: 600px;
+  gap: 1.5rem; /* Ridotto lo spazio tra gli elementi principali */
 }
 
 .formContainer {
   width: 100%;
   max-width: 500px;
-  margin: 0 auto 1rem; /* Ridotto il margine inferiore */
-  padding: 1rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: 8px;
 }
 
 .formTitle {
@@ -162,74 +142,6 @@
   background-color: #F5F5F5;
 }
 
-.footer {
-  width: 100%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  border-top: 1px solid rgba(43, 40, 40, 0.1);
-}
-
-.footerLinks {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.footerLink {
-  color: #2B2828;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
-}
-
-.footerLink:hover {
-  color: #D43D3D;
-}
-
-.copyright {
-  font-size: 0.8rem;
-  color: #2B2828;
-  opacity: 0.7;
-}
-
-/* Media queries per responsività */
-@media (max-width: 600px) {
-  .main {
-    padding: 3rem 1rem;
-    gap: 1.5rem;
-  }
-  
-  .description {
-    font-size: 1rem;
-  }
-  
-  .formTitle {
-    font-size: 1rem;
-  }
-
-  .formContainer {
-    margin: 0 auto 1rem;
-    padding: 0.5rem;
-  }
-  
-  .footerLinks {
-    gap: 1rem;
-  }
-}
-
-/* Nuovo wrapper per il manifesto */
-.manifestoWrapper {
-  width: 100%;
-  max-width: 100%;
-  padding: 0;
-  margin: 0;
-  background-color: #F5F5F5;
-}
-
 /* Nuovo wrapper per la roadmap */
 .roadmapWrapper {
   width: 100%;
@@ -248,4 +160,41 @@
   right: 0;
   height: 1px;
   background: linear-gradient(to right, rgba(43, 40, 40, 0), rgba(43, 40, 40, 0.1) 20%, rgba(43, 40, 40, 0.1) 80%, rgba(43, 40, 40, 0));
+}
+
+.footer {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid rgba(43, 40, 40, 0.1);
+}
+
+/* Media queries per responsività */
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1.5rem 3rem;
+    gap: 2.5rem;
+  }
+  
+  .formContainer {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1.5rem 1rem 2rem;
+    gap: 2rem;
+  }
+  
+  .formTitle {
+    font-size: 1.1rem;
+  }
+  
+  .formContainer {
+    padding: 1rem;
+  }
 }
