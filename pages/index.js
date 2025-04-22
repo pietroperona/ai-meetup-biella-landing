@@ -1,17 +1,3 @@
-// Aggiornamento di pages/index.js per utilizzare FontAwesome
-// Prima di tutto, dovremmo aggiungere FontAwesome al progetto
-// Nel file _document.js aggiungiamo questo nella sezione Head:
-
-// <link
-//   rel="stylesheet"
-//   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-//   integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-//   crossorigin="anonymous"
-//   referrerpolicy="no-referrer"
-// />
-
-// Poi nel file pages/index.js modifichiamo l'indicatore di scroll:
-
 import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Home.module.css';
@@ -80,15 +66,41 @@ export default function Home() {
     manifestoRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Dati strutturati specifici per la homepage
+  const homeStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AI Meetup | Community italiana sull'Intelligenza Artificiale",
+    "description": "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane. Unisciti al movimento.",
+    "url": "https://www.aimeetup.it/",
+    "isPartOf": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    },
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "description": "Community italiana sull'intelligenza artificiale con presenza in diverse città",
+      "url": "https://www.aimeetup.it",
+      "location": {
+        "@type": "Country",
+        "name": "Italia"
+      }
+    }
+  };
+
   return (
-    <Layout>
+    <Layout
+      title="AI Meetup | Community italiana sull'Intelligenza Artificiale"
+      description="La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane. Unisciti al movimento."
+      canonicalUrl="https://www.aimeetup.it/"
+      ogImage="https://www.aimeetup.it/social-card.png"
+      structuredData={homeStructuredData}
+    >
       <div className={styles.container}>
         <Head>
           {/* I meta tag esistenti rimangono uguali */}
-          <title>AI Meetup | La community italiana sull'Intelligenza Artificiale a Biella</title>
-          <meta name="description" content="Siamo la community italiana che rende l'intelligenza artificiale accessibile a tutti. Il nostro format parte da Biella ma crescerà in tutta Italia. Unisciti a noi!" />
-          
-          {/* Aggiungiamo FontAwesome */}
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -96,7 +108,6 @@ export default function Home() {
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
           />
-
           {/* Il resto degli head tag rimane lo stesso */}
         </Head>
 

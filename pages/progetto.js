@@ -72,13 +72,45 @@ export default function Progetto() {
     };
   }, []);
 
-  return (
-    <Layout>
-      <Head>
-        <title>Il Progetto | AI Meetup - La community italiana sull'Intelligenza Artificiale</title>
-        <meta name="description" content="AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale. Inclusivo, aperto, locale." />
-      </Head>
+  // Dati strutturati specifici per la pagina progetto
+  const progettoStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Il nostro Progetto | AI Meetup Italia",
+    "description": "Scopri la missione e i valori di AI Meetup: costruiamo ponti tra persone e intelligenza artificiale, abbattendo barriere tecniche e culturali in tutta Italia.",
+    "url": "https://www.aimeetup.it/progetto",
+    "isPartOf": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    },
+    "mainEntity": {
+      "@type": "Article",
+      "headline": "AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale",
+      "description": "Costruiamo ponti tra le persone e l'intelligenza artificiale, abbattendo barriere tecniche e culturali in tutta Italia.",
+      "author": {
+        "@type": "Organization",
+        "name": "AI Meetup Italia"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AI Meetup Italia",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.aimeetup.it/logo-ai-meetup.svg"
+        }
+      }
+    }
+  };
 
+  return (
+    <Layout
+      title="Il nostro Progetto | AI Meetup Italia"
+      description="Scopri la missione e i valori di AI Meetup: costruiamo ponti tra persone e intelligenza artificiale, abbattendo barriere tecniche e culturali in tutta Italia."
+      canonicalUrl="https://www.aimeetup.it/progetto"
+      ogImage="https://www.aimeetup.it/social-card.png"
+      structuredData={progettoStructuredData}
+    >
       <div className="project-page">
         {/* SEZIONE 1 - HERO/MANIFESTO */}
         <section ref={heroRef} className="section hero-section fade-in">

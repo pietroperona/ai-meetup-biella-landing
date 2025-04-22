@@ -3,13 +3,33 @@ import Layout from '../components/Layout';
 import Hero from '../components/Hero'; // Importa il componente Hero
 
 export default function Contatti() {
-  return (
-    <Layout>
-      <Head>
-        <title>Contatti | AI Meetup - La community italiana sull'Intelligenza Artificiale</title>
-        <meta name="description" content="Contatta AI Meetup per informazioni, partnership o per proporre un evento nella tua città." />
-      </Head>
+  // Dati strutturati specifici per la pagina contatti
+  const contattiStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contattaci | AI Meetup Italia",
+    "description": "Vuoi portare AI Meetup nella tua città o collaborare con noi? Contatta la community italiana sull'intelligenza artificiale per informazioni e partnership.",
+    "url": "https://www.aimeetup.it/contatti",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "email": "contact@aimeetup.it",
+      "url": "https://www.aimeetup.it",
+      "sameAs": [
+        "https://www.linkedin.com/company/ai-meetup-italia/",
+        "https://www.instagram.com/aimeetupitalia/"
+      ]
+    }
+  };
 
+  return (
+    <Layout
+      title="Contattaci | AI Meetup Italia"
+      description="Vuoi portare AI Meetup nella tua città o collaborare con noi? Contatta la community italiana sull'intelligenza artificiale per informazioni e partnership."
+      canonicalUrl="https://www.aimeetup.it/contatti"
+      ogImage="https://www.aimeetup.it/social-card.png"
+      structuredData={contattiStructuredData}
+    >
       <div className="contatti-page">
         <Hero
           title="Contatti"

@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from './Footer';
+import Head from 'next/head';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title, description, canonicalUrl, ogImage, structuredData }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMeetupOpen, setIsMeetupOpen] = useState(false);
@@ -29,7 +30,7 @@ const Layout = ({ children }) => {
   // Gestisce il click sul link Roadmap per scorrere alla sezione
   const handleRoadmapClick = (e) => {
     e.preventDefault();
-    
+
     // Se siamo nella home, scorriamo alla sezione roadmap
     if (router.pathname === '/') {
       const roadmapSection = document.getElementById('roadmap-section');
@@ -69,8 +70,63 @@ const Layout = ({ children }) => {
     };
   }, [isMeetupOpen]);
 
+  const defaultTitle = "AI Meetup | Community italiana sull'Intelligenza Artificiale";
+  const defaultDescription = "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane.";
+  const defaultOgImage = "https://www.aimeetup.it/social-card.png";
+  const defaultCanonical = "https://www.aimeetup.it" + router.pathname;
+
+  // Crea lo structured data di base (con fallback al default)
+  const baseStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AI Meetup Italia",
+    "url": "https://www.aimeetup.it",
+    "logo": "https://www.aimeetup.it/logo-ai-meetup.svg",
+    "sameAs": [
+      "https://www.linkedin.com/company/ai-meetup-italia/",
+      "https://www.instagram.com/aimeetupitalia/"
+    ],
+    "description": "Community italiana che rende l'intelligenza artificiale accessibile a tutti attraverso eventi sul territorio nazionale.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Support",
+      "email": "contact@aimeetup.it"
+    }
+  };
+
+  // Unisce i dati strutturati personalizzati con quelli di default
+  const finalStructuredData = structuredData || baseStructuredData;
+
   return (
     <div className="layout">
+      <Head>
+        <title>{title || defaultTitle}</title>
+        <meta name="description" content={description || defaultDescription} />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={canonicalUrl || defaultCanonical} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl || defaultCanonical} />
+        <meta property="og:title" content={title || defaultTitle} />
+        <meta property="og:description" content={description || defaultDescription} />
+        <meta property="og:image" content={ogImage || defaultOgImage} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={canonicalUrl || defaultCanonical} />
+        <meta property="twitter:title" content={title || defaultTitle} />
+        <meta property="twitter:description" content={description || defaultDescription} />
+        <meta property="twitter:image" content={ogImage || defaultOgImage} />
+
+        {/* JSON-LD structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(finalStructuredData) }}
+        />
+      </Head>
+
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
           <Link href="/" className="logo-link">
@@ -78,8 +134,8 @@ const Layout = ({ children }) => {
           </Link>
 
           {/* Hamburger menu per mobile */}
-          <button 
-            className={`hamburger ${isMenuOpen ? 'open' : ''}`} 
+          <button
+            className={`hamburger ${isMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Chiudi menu' : 'Apri menu'}
           >
@@ -103,7 +159,7 @@ const Layout = ({ children }) => {
                 <Link href="/progetto" className="nav-link">Progetto</Link>
               </li>
               <li className={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
-                <button 
+                <button
                   className={`nav-link dropdown-trigger ${isMeetupOpen ? 'open' : ''}`}
                   onClick={() => setIsMeetupOpen(!isMeetupOpen)}
                   aria-expanded={isMeetupOpen}

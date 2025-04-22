@@ -54,20 +54,53 @@ export default function MeetupBiella() {
     }
   };
 
-  return (
-    <Layout>
-      <Head>
-        <title>AI Meetup Biella | Community sull'Intelligenza Artificiale</title>
-        <meta name="description" content="Partecipa agli eventi di AI Meetup a Biella, la community che rende l'intelligenza artificiale accessibile a tutti. Scopri quando e dove si terrà il prossimo incontro." />
-        
-        {/* Open Graph Tags */}
-        <meta property="og:title" content="AI Meetup Biella | Community sull'Intelligenza Artificiale" />
-        <meta property="og:description" content="Partecipa agli eventi di AI Meetup a Biella, la community che rende l'intelligenza artificiale accessibile a tutti. Scopri quando e dove si terrà il prossimo incontro." />
-        <meta property="og:url" content="https://biella.aimeetup.it/meetup/biella" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://biella.aimeetup.it/social-card.png" />
-      </Head>
+  // Dati strutturati specifici per la pagina Meetup Biella
+  const biellaStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "AI Meetup Biella - Community locale sull'Intelligenza Artificiale",
+    "description": "Scopri gli eventi di AI Meetup a Biella. La community locale che ti aiuta a comprendere e utilizzare l'intelligenza artificiale nella tua vita e professione.",
+    "startDate": "2025-09-01T18:00:00+02:00", // Data da aggiornare con evento effettivo
+    "endDate": "2025-09-01T20:00:00+02:00",   // Data da aggiornare con evento effettivo
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Biella",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Biella",
+        "addressRegion": "BI",
+        "addressCountry": "IT"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.aimeetup.it/meetup/biella",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock"
+    },
+    "isPartOf": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    }
+  };
 
+  return (
+    <Layout
+      title="AI Meetup Biella | Eventi e community IA locale"
+      description="Scopri gli eventi di AI Meetup a Biella. La community locale che ti aiuta a comprendere e utilizzare l'intelligenza artificiale nella tua vita e professione."
+      canonicalUrl="https://www.aimeetup.it/meetup/biella"
+      ogImage="https://www.aimeetup.it/social-card.png"
+      structuredData={biellaStructuredData}
+    >
       <div className="meetup-page">
         <main className="main-content">
           {/* Hero Section con titolo grande */}
