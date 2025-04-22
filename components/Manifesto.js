@@ -34,32 +34,31 @@ const Manifesto = () => {
         <div className="title-wrapper">
           <h2 className="manifesto-title">Il nostro manifesto</h2>
           <div className="title-underline"></div>
-          <h4 className="manifesto-subtitle">v0.1 Beta</h4>
+          <h4 className="manifesto-subtitle">AI Meetup Italia</h4>
         </div>
         
         <div className="manifesto-content">
-          <p>L'intelligenza artificiale è già parte della nostra vita.<br />
-          La conoscenza deve superare il timore: capiamola insieme.<br />
-          Non è riservata a pochi esperti: riguarda ognuno di noi.</p>
+          <p>L'intelligenza artificiale è già qui.<br />
+          Nelle nostre ricerche, nei consigli che riceviamo, nelle scelte che facciamo.<br />
+          Non possiamo ignorarla. Possiamo capirla. <span className="highlight">Insieme</span>.</p>
           
-          <p>Crediamo che <span className="highlight">sapere come funziona l'AI sia fare cittadinanza attiva.</span><br />
-          Siamo convinti che <span className="highlight">condividere conoscenza nei territori</span> sia il primo passo per usarla in modo consapevole.</p>
+          <p>Crediamo che <span className="highlight">conoscere l'AI sia un atto di cittadinanza attiva</span>.<br />
+          Per questo portiamo il confronto nei territori, tra persone vere, fuori dalle bolle digitali.</p>
           
-          <p><span className="highlight">Parliamo con tutti</span>:<br />
-          esperti, studenti, imprenditori, artigiani, genitori, sindaci, docenti, freelance, curiosi.<br />
-          Se vuoi capire e condividere, sei dei nostri.</p>
+          <p>Parliamo con tutti:<br />
+          studenti, esperti, freelance, artigiani, imprenditori, genitori, insegnanti, curiosi.<br />
+          <span className="highlight">Se vuoi capire, sperimentare e condividere: sei dei nostri</span>.</p>
           
-          <p><span className="highlight">Scegliamo l'AI Europea.</span><br />
-          Un'AI etica, trasparente, accessibile, al servizio delle persone.<br />
-          Per questo promuoviamo l'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" className="ai-pact-link"><span className="highlight-green">AI Pact dell'Unione Europea</span></a>:<br />
-          perché servono scelte chiare per generare fiducia.</p>
+          <p>Scegliamo un'AI europea, etica, trasparente, accessibile.<br />
+          Sosteniamo l'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" className="ai-pact-link"><span className="highlight-green">AI Pact dell'Unione Europea</span></a>.<br />
+          Perché servono scelte coraggiose per costruire fiducia.</p>
           
           <p>Facciamo domande.<br />
           Sperimentiamo strumenti.<br />
-          Condividiamo idee.<br />
+          Coltiviamo idee.<br />
           Un meetup alla volta.</p>
           
-          <p className="manifesto-conclusion"><span className="highlight">AI Meetup è dove la tecnologia incontra la comunità.</span></p>
+          <p className="manifesto-conclusion"><span className="highlight">AI Meetup Italia:<br />Dove l'intelligenza artificiale incontra le persone</span>.</p>
         </div>
       </div>
       
@@ -173,6 +172,7 @@ const Manifesto = () => {
         .manifesto-conclusion {
           margin-top: 2rem;
           font-size: 1.1rem;
+          text-align: center;
         }
         
         @media (max-width: 768px) {

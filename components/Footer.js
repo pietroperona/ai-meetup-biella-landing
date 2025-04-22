@@ -5,19 +5,19 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-links">
-        <a href="https://www.linkedin.com/groups/10083428/" target="_blank" rel="noopener noreferrer" className="footer-link">
+        <a href="https://www.linkedin.com/company/ai-meetup-italia/" target="_blank" rel="noopener noreferrer" className="footer-link">
           LinkedIn
         </a>
-        <a href="https://www.instagram.com/biella.aimeetup/" target="_blank" rel="noopener noreferrer" className="footer-link">
+        <a href="https://www.instagram.com/aimeetupitalia/" target="_blank" rel="noopener noreferrer" className="footer-link">
           Instagram
         </a>
-        <a href="mailto:biella@aimeetup.it" className="footer-link">
-          Become a partner
+        <a href="mailto:contact@aimeetup.it" className="footer-link">
+          Contattaci
         </a>
       </div>
 
       <div className="copyright">
-        © {new Date().getFullYear()} AI Meetup Biella è un'iniziativa di AI Meetup.
+        © {new Date().getFullYear()} AI Meetup Italia
       </div>
 
       <div className="footer-info">
@@ -62,12 +62,6 @@ const Footer = () => {
           margin: 0 auto;
         }
         
-        .initiative-text {
-          font-size: 0.9rem;
-          margin: 0;
-          color: #2B2828;
-        }
-        
         .mission-text {
           font-size: 0.9rem;
           margin: 0.5rem 0 1rem;
@@ -97,7 +91,6 @@ const Footer = () => {
             gap: 1rem;
           }
           
-          .initiative-text,
           .mission-text {
             font-size: 0.85rem;
           }

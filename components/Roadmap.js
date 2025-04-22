@@ -20,7 +20,7 @@ const Roadmap = () => {
     },
     { 
       date: 'Aprile 2025', 
-      title: 'Manifesto Beta 0.1', 
+      title: 'Manifesto (Beta)', 
       status: 'completed',
       description: "Pubblicazione della prima versione del manifesto con gli intenti e gli obiettivi strategici della community.",
       hasDetails: true
@@ -54,9 +54,9 @@ const Roadmap = () => {
     },
     { 
       date: 'Novembre 2025', 
-      title: 'Primo meetup (Milano)', 
+      title: 'Sviluppo community locali', 
       status: 'upcoming',
-      description: "Espansione delle attività con il primo evento nella città di Milano, punto di partenza per la rete nazionale.",
+      description: "Espansione delle attività nelle città Italiane.",
       hasDetails: true
     }
   ];

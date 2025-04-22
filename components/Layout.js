@@ -102,19 +102,25 @@ const Layout = ({ children }) => {
               <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
                 <Link href="/progetto" className="nav-link">Progetto</Link>
               </li>
-              <li claSsName={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
+              <li className={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
                 <button 
                   className={`nav-link dropdown-trigger ${isMeetupOpen ? 'open' : ''}`}
                   onClick={() => setIsMeetupOpen(!isMeetupOpen)}
+                  aria-expanded={isMeetupOpen}
+                  aria-haspopup="true"
                 >
                   Meetup <span className="dropdown-arrow"></span>
                 </button>
                 <ul className={`dropdown-menu ${isMeetupOpen ? 'open' : ''}`}>
                   <li className="dropdown-item">
-                    <Link href="/meetup/biella" className="dropdown-link">Biella</Link>
+                    <Link href="/meetup/biella" className="dropdown-link">
+                      <span className="city-dot"></span>Biella
+                    </Link>
                   </li>
                   <li className="dropdown-item">
-                    <Link href="/contatti" className="dropdown-link">Candida la tua città</Link>
+                    <Link href="/contatti" className="dropdown-link add-city">
+                      <span className="add-icon">+</span>Candida la tua città
+                    </Link>
                   </li>
                 </ul>
               </li>
@@ -122,7 +128,7 @@ const Layout = ({ children }) => {
                 <Link href="/diventa-partner" className="nav-link">Diventa Partner</Link>
               </li> */}
               <li className={`nav-item ${isActive('/contatti') ? 'active' : ''}`}>
-                <Link href="/contatti" className="nav-link">Contatti</Link>
+                <Link href="/contatti" className="nav-link contact-link">Contatti</Link>
               </li>
             </ul>
           </nav>
@@ -147,7 +153,7 @@ const Layout = ({ children }) => {
           top: 0;
           left: 0;
           width: 100%;
-          background-color: rgba(245, 245, 245, 0.9);
+          background-color: rgba(245, 245, 245, 0.96);
           backdrop-filter: blur(10px);
           z-index: 1000;
           transition: all 0.3s ease;
@@ -228,7 +234,6 @@ const Layout = ({ children }) => {
           gap: 2rem;
           align-items: center;
         }
-        }
 
         .nav-item {
           position: relative;
@@ -240,7 +245,7 @@ const Layout = ({ children }) => {
           color: #2B2828;
           font-size: 0.95rem;
           text-decoration: none;
-          font-weight: 400; /* Cambiato da 500 a 400 per un font normale */
+          font-weight: 400;
           padding: 0.5rem 0;
           transition: color 0.2s ease;
           display: flex;
@@ -258,7 +263,7 @@ const Layout = ({ children }) => {
         .nav-item.active .nav-link:not(.dropdown-trigger) {
           color: #D43D3D;
           position: relative;
-          font-weight: 500; /* Applicato il font-weight 500 solo alle voci attive */
+          font-weight: 500;
         }
 
         .nav-item.active .nav-link:not(.dropdown-trigger)::after {
@@ -271,12 +276,13 @@ const Layout = ({ children }) => {
           background-color: #D43D3D;
         }
 
+        /* Stile migliorato per il dropdown */
         .dropdown-container {
           position: relative;
         }
 
         .dropdown-trigger {
-          padding-right: 20px;
+          padding-right: 24px;
           position: relative;
         }
 
@@ -290,7 +296,7 @@ const Layout = ({ children }) => {
           border-left: 5px solid transparent;
           border-right: 5px solid transparent;
           border-top: 5px solid #2B2828;
-          transition: transform 0.2s ease;
+          transition: transform 0.3s ease;
         }
 
         .dropdown-trigger.open .dropdown-arrow {
@@ -300,24 +306,39 @@ const Layout = ({ children }) => {
         .dropdown-menu {
           position: absolute;
           top: 100%;
-          left: 0;
+          left: 50%;
+          transform: translateX(-50%) translateY(10px);
           background-color: white;
-          border-radius: 4px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-          min-width: 180px;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+          min-width: 200px;
           opacity: 0;
           visibility: hidden;
-          transform: translateY(10px);
           transition: all 0.3s ease;
           z-index: 1000;
           padding: 0.5rem 0;
-          margin-top: 0.5rem;
+          margin-top: 0.7rem;
+          overflow: hidden;
+        }
+
+        .dropdown-menu::before {
+          content: '';
+          position: absolute;
+          top: -5px;
+          left: 50%;
+          transform: translateX(-50%) rotate(45deg);
+          width: 10px;
+          height: 10px;
+          background-color: white;
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+          border-left: 1px solid rgba(0, 0, 0, 0.05);
+          z-index: 0;
         }
 
         .dropdown-menu.open {
           opacity: 1;
           visibility: visible;
-          transform: translateY(0);
+          transform: translateX(-50%) translateY(0);
         }
 
         .dropdown-item {
@@ -325,17 +346,60 @@ const Layout = ({ children }) => {
         }
 
         .dropdown-link {
-          display: block;
+          display: flex;
+          align-items: center;
           color: #2B2828;
-          padding: 0.7rem 1.5rem;
+          padding: 0.8rem 1.5rem;
           text-decoration: none;
           font-size: 0.9rem;
           transition: all 0.2s ease;
           width: 100%;
+          position: relative;
         }
 
         .dropdown-link:hover {
-          background-color: rgba(212, 61, 61, 0.05);
+          background-color: rgba(212, 61, 61, 0.07);
+          color: #D43D3D;
+        }
+
+        .city-dot {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          background-color: #4BB543;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+
+        .add-icon {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 16px;
+          height: 16px;
+          font-size: 14px;
+          font-weight: bold;
+          color: #2B2828;
+          margin-right: 8px;
+          transition: all 0.2s ease;
+        }
+
+        .add-city:hover .add-icon {
+          color: #D43D3D;
+        }
+
+        /* Stile speciale per il link "Contatti" */
+        .contact-link {
+          padding: 0.4rem 0.9rem;
+          border: 1px solid rgba(43, 40, 40, 0.3);
+          border-radius: 4px;
+          transition: all 0.25s ease;
+        }
+
+        .contact-link:hover {
+          background-color: #D43D3D;
+          color: white;
+          border-color: #D43D3D;
         }
 
         .main-content {
@@ -390,6 +454,15 @@ const Layout = ({ children }) => {
             font-size: 1.1rem;
           }
 
+          .contact-link {
+            display: inline-block;
+            padding: 0.8rem 1.2rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(43, 40, 40, 0.3);
+            text-align: center;
+          }
+
+          /* Dropdown su mobile */
           .dropdown-menu {
             position: static;
             box-shadow: none;
@@ -398,18 +471,25 @@ const Layout = ({ children }) => {
             transform: none;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease, padding 0.3s ease;
             padding: 0;
-            margin: 0;
-            background-color: transparent;
+            margin: 0.5rem 0 0 0;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
+            width: 100%;
+          }
+
+          .dropdown-menu::before {
+            display: none;
           }
 
           .dropdown-menu.open {
             max-height: 200px;
+            padding: 0.5rem 0;
           }
 
           .dropdown-link {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 1.2rem;
           }
         }
       `}</style>
