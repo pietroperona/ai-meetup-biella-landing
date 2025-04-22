@@ -13,9 +13,11 @@ export default function PrivacyPolicy() {
     "url": "https://www.aimeetup.it/privacy-policy",
     "name": "Privacy Policy | AI Meetup Italia",
     "description": "Informativa sulla privacy di AI Meetup Italia. Come raccogliamo, trattiamo e proteggiamo i tuoi dati personali durante l'utilizzo del nostro sito e servizi.",
-    "isPartOf": {
-      "@id": "https://www.aimeetup.it/#website"
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://www.aimeetup.it/#organization"
     },
+    // resto del codice
     "inLanguage": "it-IT",
     "datePublished": "2025-04-10T10:00:00+00:00",
     "dateModified": "2025-04-22T10:00:00+00:00"

@@ -79,7 +79,7 @@ export default function Progetto() {
     "name": "Il nostro Progetto | AI Meetup Italia",
     "description": "Scopri la missione e i valori di AI Meetup: costruiamo ponti tra persone e intelligenza artificiale, abbattendo barriere tecniche e culturali in tutta Italia.",
     "url": "https://www.aimeetup.it/progetto",
-    "isPartOf": {
+    "publisher": {
       "@type": "Organization",
       "name": "AI Meetup Italia",
       "url": "https://www.aimeetup.it"

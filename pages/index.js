@@ -73,11 +73,12 @@ export default function Home() {
     "name": "AI Meetup | Community italiana sull'Intelligenza Artificiale",
     "description": "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane. Unisciti al movimento.",
     "url": "https://www.aimeetup.it/",
-    "isPartOf": {
+    "publisher": {
       "@type": "Organization",
       "name": "AI Meetup Italia",
       "url": "https://www.aimeetup.it"
     },
+    // resto del codice
     "mainEntity": {
       "@type": "Organization",
       "name": "AI Meetup Italia",

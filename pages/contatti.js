@@ -10,15 +10,17 @@ export default function Contatti() {
     "name": "Contattaci | AI Meetup Italia",
     "description": "Vuoi portare AI Meetup nella tua città o collaborare con noi? Contatta la community italiana sull'intelligenza artificiale per informazioni e partnership.",
     "url": "https://www.aimeetup.it/contatti",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    },
     "mainEntity": {
       "@type": "Organization",
       "name": "AI Meetup Italia",
       "email": "contact@aimeetup.it",
       "url": "https://www.aimeetup.it",
-      "sameAs": [
-        "https://www.linkedin.com/company/ai-meetup-italia/",
-        "https://www.instagram.com/aimeetupitalia/"
-      ]
+      // resto del codice
     }
   };
 
