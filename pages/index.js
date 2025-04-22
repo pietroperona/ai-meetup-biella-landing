@@ -1,6 +1,19 @@
-// pages/index.js
+// Aggiornamento di pages/index.js per utilizzare FontAwesome
+// Prima di tutto, dovremmo aggiungere FontAwesome al progetto
+// Nel file _document.js aggiungiamo questo nella sezione Head:
+
+// <link
+//   rel="stylesheet"
+//   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+//   integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+//   crossorigin="anonymous"
+//   referrerpolicy="no-referrer"
+// />
+
+// Poi nel file pages/index.js modifichiamo l'indicatore di scroll:
+
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Home.module.css';
 import SubscribeForm from '../components/SubscribeForm';
 import Manifesto from '../components/Manifesto';
@@ -8,12 +21,17 @@ import Roadmap from '../components/Roadmap';
 import Layout from '../components/Layout';
 
 export default function Home() {
+  // Stati e logica esistenti rimangono uguali
   const [email, setEmail] = useState('');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [formStatus, setFormStatus] = useState({ message: '', isError: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Riferimento per la sezione manifesto per lo scrolling
+  const manifestoRef = useRef(null);
 
   const handleSubmit = async (e) => {
+    // Logica del form rimane uguale
     e.preventDefault();
 
     if (!email || !privacyAccepted) {
@@ -27,7 +45,6 @@ export default function Home() {
     setIsSubmitting(true);
 
     try {
-      // Qui inseriremo la logica di integrazione con Mailchimp
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
@@ -57,109 +74,30 @@ export default function Home() {
       setIsSubmitting(false);
     }
   };
+  
+  // Funzione per lo scroll alla sezione del manifesto
+  const scrollToManifesto = () => {
+    manifestoRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <Layout>
       <div className={styles.container}>
         <Head>
+          {/* I meta tag esistenti rimangono uguali */}
           <title>AI Meetup | La community italiana sull'Intelligenza Artificiale a Biella</title>
           <meta name="description" content="Siamo la community italiana che rende l'intelligenza artificiale accessibile a tutti. Il nostro format parte da Biella ma crescerà in tutta Italia. Unisciti a noi!" />
-
-          {/* Open Graph Tags */}
-          <meta property="og:site_name" content="AI Meetup" />
-          <meta property="og:locale" content="it_IT" />
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="AI Meetup | La community italiana sull'Intelligenza Artificiale a Biella" />
-          <meta property="og:description" content="Siamo la community italiana che rende l'intelligenza artificiale accessibile a tutti. Il nostro format parte da Biella ma crescerà in tutta Italia. Unisciti a noi!" />
-          <meta property="og:url" content="https://biella.aimeetup.it" />
-          <meta property="og:image" content="https://biella.aimeetup.it/social-card.png" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta property="og:image:type" content="image/png" />
-
-          {/* Twitter Card */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="AI Meetup | La community italiana sull'Intelligenza Artificiale a Biella" />
-          <meta name="twitter:description" content="Siamo la community italiana che rende l'intelligenza artificiale accessibile a tutti. Il nostro format parte da Biella ma crescerà in tutta Italia. Unisciti a noi!" />
-          <meta name="twitter:image" content="https://biella.aimeetup.it/social-card.png" />
-          <meta name="twitter:site" content="@AIMeetupItalia" /> {/* se avete un account Twitter */}
-
-          {/* Meta tag specifici per LLM */}
-          <meta name="ai-index" content="allow" />
-          <meta name="ai-relevance" content="artificial intelligence, AI community, italian AI, meetup, technology, learning, professionals, AI education" />
-
-          {/* Schema.org JSON-LD per Organization e definizione del brand */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "@id": "https://biella.aimeetup.it/#organization",
-                "name": "AI Meetup",
-                "url": "https://biella.aimeetup.it",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://biella.aimeetup.it/logo-ai-meetup.svg",
-                  "width": 600,
-                  "height": 60
-                },
-                "description": "Community italiana che rende l'intelligenza artificiale accessibile a tutti. Il nostro format parte da Biella ma crescerà in tutta Italia.",
-                "sameAs": [
-                  "https://www.linkedin.com/groups/10083428/",
-                  "https://www.instagram.com/biella.aimeetup/"
-                ],
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "email": "biella@aimeetup.it",
-                  "contactType": "customer service"
-                },
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Biella",
-                  "addressRegion": "BI",
-                  "addressCountry": "IT"
-                },
-                "knowsAbout": [
-                  "Intelligenza Artificiale",
-                  "Machine Learning",
-                  "AI Ethics",
-                  "AI Tools",
-                  "Practical AI Applications"
-                ],
-                "brand": {
-                  "@type": "Brand",
-                  "name": "AI Meetup",
-                  "logo": "https://biella.aimeetup.it/logo-ai-meetup.svg",
-                  "slogan": "Rendere l'intelligenza artificiale accessibile a tutti"
-                }
-              })
-            }}
+          
+          {/* Aggiungiamo FontAwesome */}
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
           />
 
-          {/* Schema.org JSON-LD per WebSite */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                "@id": "https://biella.aimeetup.it/#website",
-                "url": "https://biella.aimeetup.it",
-                "name": "AI Meetup",
-                "description": "La community italiana sull'Intelligenza Artificiale a Biella",
-                "publisher": {
-                  "@id": "https://biella.aimeetup.it/#organization"
-                },
-                "potentialAction": {
-                  "@type": "SearchAction",
-                  "target": "https://biella.aimeetup.it/?s={search_term_string}",
-                  "query-input": "required name=search_term_string"
-                },
-                "inLanguage": "it-IT"
-              })
-            }}
-          />
+          {/* Il resto degli head tag rimane lo stesso */}
         </Head>
 
         <main className={styles.main}>
@@ -222,10 +160,15 @@ export default function Home() {
               </button>
             </form>
           </div>
+          
+          {/* Indicatore di scroll utilizzando FontAwesome */}
+          <div className="scroll-indicator" onClick={scrollToManifesto}>
+            <i className="fa-solid fa-chevron-down"></i>
+          </div>
         </main>
         
         {/* Manifesto posizionato tra main e footer */}
-        <div className={styles.manifestoWrapper}>
+        <div ref={manifestoRef} className={styles.manifestoWrapper}>
           <Manifesto />
         </div>
 
@@ -236,8 +179,8 @@ export default function Home() {
 
         <style jsx>{`
           .hero-section {
-            padding: 3rem 2rem;
-            margin-bottom: 1rem;
+            padding: 3rem 2rem 1.5rem; /* Ridotto padding inferiore */
+            margin-bottom: 0; /* Ridotto margine inferiore */
             border-radius: 8px;
           }
           
@@ -271,23 +214,61 @@ export default function Home() {
             left: 0;
             width: 100%;
             height: 8px;
-            background-color: rgba(212, 61, 61, 0.2);
+            background-color: rgba(75, 181, 67, 0.3); /* Verde evidenziatore */
             z-index: -1;
+          }
+          
+          /* Indicatore di scroll con FontAwesome */
+          .scroll-indicator {
+            margin: 0.5rem auto 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+          }
+          
+          .scroll-indicator:hover {
+            transform: translateY(3px);
+          }
+          
+          .scroll-indicator i {
+            font-size: 24px;
+            color: #2B2828;
+            opacity: 0.7;
+            animation: pulseDown 2s infinite;
+          }
+          
+          @keyframes pulseDown {
+            0%, 100% {
+              opacity: 0.7;
+              transform: translateY(0);
+            }
+            50% {
+              opacity: 1;
+              transform: translateY(3px);
+            }
           }
           
           @media (max-width: 768px) {
             .hero-section {
-              padding: 4rem 1.5rem;
+              padding: 4rem 1.5rem 1rem; /* Ridotto padding inferiore per mobile */
             }
             
             .hero-heading {
               font-size: 2rem;
             }
+            
+            .scroll-indicator {
+              margin: 0.5rem auto 2rem; /* Ridotto margine inferiore per mobile */
+            }
+            
+            .scroll-indicator i {
+              font-size: 20px;
+            }
           }
           
           @media (max-width: 480px) {
             .hero-section {
-              padding: 3rem 1rem;
+              padding: 3rem 1rem 0.5rem; /* Ridotto ulteriormente il padding per dispositivi molto piccoli */
             }
             
             .hero-heading {

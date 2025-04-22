@@ -3,17 +3,18 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
-import Hero from '../components/Hero'; // Importa il componente Hero
 
 export default function Progetto() {
-  // Riferimenti per le animazioni al momento dello scroll
-  const storyRef = useRef(null);
+  // Usiamo un approccio più semplice con useRef per gli elementi DOM
+  const heroRef = useRef(null);
   const missionRef = useRef(null);
-  const impactRef = useRef(null);
   const valuesRef = useRef(null);
+  const nationalRef = useRef(null);
+  const howRef = useRef(null);
+  const evolutionRef = useRef(null);
   const ctaRef = useRef(null);
 
-  // Funzione per l'animazione degli elementi al momento dello scroll
+  // Animazione elementi al scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -26,7 +27,17 @@ export default function Progetto() {
       { threshold: 0.1 }
     );
     
-    const elements = [storyRef.current, missionRef.current, impactRef.current, valuesRef.current, ctaRef.current];
+    // Colleghiamo l'observer a tutti i refs
+    const elements = [
+      heroRef.current,
+      missionRef.current,
+      valuesRef.current,
+      nationalRef.current,
+      howRef.current,
+      evolutionRef.current,
+      ctaRef.current
+    ];
+    
     elements.forEach(el => {
       if (el) observer.observe(el);
     });
@@ -42,291 +53,115 @@ export default function Progetto() {
     <Layout>
       <Head>
         <title>Il Progetto | AI Meetup - La community italiana sull'Intelligenza Artificiale</title>
-        <meta name="description" content="Scopri come nasce AI Meetup, la community italiana che rende l'intelligenza artificiale accessibile a tutti. La nostra missione, i nostri valori e l'impatto che vogliamo avere." />
-        
-        {/* Open Graph Tags */}
-        <meta property="og:title" content="Il Progetto | AI Meetup" />
-        <meta property="og:description" content="Scopri come nasce AI Meetup, la community italiana che rende l'intelligenza artificiale accessibile a tutti. La nostra missione, i nostri valori e l'impatto che vogliamo avere." />
-        <meta property="og:url" content="https://biella.aimeetup.it/progetto" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://biella.aimeetup.it/social-card.png" />
+        <meta name="description" content="AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale. Inclusivo, aperto, locale." />
       </Head>
 
       <div className="project-page">
-        {/* Hero Section */}
-        <Hero
-          title="Scopri AI Meetup"
-          description="Costruiamo ponti tra le persone e l'intelligenza artificiale, abbattendo barriere tecniche e culturali."
-        />
+        {/* SEZIONE 1 - HERO/MANIFESTO */}
+        <section ref={heroRef} className="section hero-section fade-in">
+          <div className="container">
+            <h1 className="hero-title">
+              AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale.
+            </h1>
+            <p className="hero-tagline">Inclusivo, aperto, locale.</p>
+          </div>
+        </section>
 
-        <div className="container">
-          {/* Sezione Storia */}
-          <section ref={storyRef} className="section story-section fade-in">
-            <h2 className="section-title">Come nasce AI Meetup</h2>
-            
-            <div className="timeline">
-              <div className="timeline-item">
-                <div className="timeline-date">Ottobre 2024</div>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">L'idea</h3>
-                  <p className="timeline-text">
-                    L'idea di AI Meetup nasce dall'osservazione di un paradosso: mentre l'intelligenza artificiale trasforma rapidamente ogni aspetto della nostra vita, la maggior parte delle persone non ha gli strumenti per comprenderla e utilizzarla. Da qui, l'intuizione di creare una community che faccia da ponte tra la tecnologia più avanzata e le persone comuni.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="timeline-item">
-                <div className="timeline-date">Gennaio 2025</div>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">La squadra</h3>
-                  <p className="timeline-text">
-                    Un gruppo eterogeneo di professionisti del settore tecnologico, educatori e appassionati di AI si unisce con l'obiettivo di creare un format innovativo di divulgazione dell'intelligenza artificiale. L'idea è quella di partire da Biella per poi espandersi in tutta Italia.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="timeline-item">
-                <div className="timeline-date">Febbraio 2025</div>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">La struttura</h3>
-                  <p className="timeline-text">
-                    Viene definita la struttura organizzativa di AI Meetup: un network nazionale che supporta lo sviluppo di comunità locali autonome ma interconnesse, con l'obiettivo di rendere l'intelligenza artificiale comprensibile, accessibile e utile per tutti.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="timeline-item">
-                <div className="timeline-date">Aprile 2025</div>
-                <div className="timeline-content">
-                  <h3 className="timeline-title">Il manifesto</h3>
-                  <p className="timeline-text">
-                    Viene pubblicato il manifesto che definisce i principi fondamentali di AI Meetup, con un forte focus sull'accessibilità, l'etica e l'impatto sociale positivo dell'intelligenza artificiale. Contestualmente, viene avviata la ricerca di partner che condividano questi valori.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+        {/* SEZIONE 2 - MISSIONE */}
+        <section ref={missionRef} className="section mission-section fade-in">
+          <div className="container">
+            <h2 className="section-title">La nostra missione</h2>
+            <p className="paragraph">
+              Costruiamo ponti tra le persone e l'intelligenza artificiale, abbattendo barriere tecniche e culturali.
+            </p>
+            <p className="paragraph">
+              Crediamo in un futuro dove l'AI non sia solo per pochi, ma per chiunque voglia capirla, sperimentarla, farne parte.
+            </p>
+          </div>
+        </section>
 
-          {/* Sezione Missione */}
-          <section ref={missionRef} className="section mission-section fade-in">
-            <h2 className="section-title">La Nostra Missione</h2>
-            
-            <div className="mission-content">
-              <div className="mission-statement">
-                <p className="statement-text">
-                  Rendere l'intelligenza artificiale <span className="highlight-text">accessibile, comprensibile e utile</span> per tutte le persone, indipendentemente dal loro background tecnico.
-                </p>
-              </div>
-              
-              <div className="mission-details">
-                <div className="mission-card">
-                  <div className="mission-icon">🔍</div>
-                  <h3 className="mission-title">Divulgazione</h3>
-                  <p className="mission-description">
-                    Spieghiamo l'AI in modo semplice ma rigoroso, traducendo concetti complessi in esempi pratici e comprensibili.
-                  </p>
-                </div>
-                
-                <div className="mission-card">
-                  <div className="mission-icon">🤝</div>
-                  <h3 className="mission-title">Connessione</h3>
-                  <p className="mission-description">
-                    Creiamo una rete di persone, aziende e istituzioni che collaborano per promuovere un uso consapevole e benefico dell'AI.
-                  </p>
-                </div>
-                
-                <div className="mission-card">
-                  <div className="mission-icon">💡</div>
-                  <h3 className="mission-title">Formazione</h3>
-                  <p className="mission-description">
-                    Forniamo conoscenze pratiche per utilizzare l'AI nella vita quotidiana e professionale, senza necessità di competenze tecniche avanzate.
-                  </p>
-                </div>
-                
-                <div className="mission-card">
-                  <div className="mission-icon">🛡️</div>
-                  <h3 className="mission-title">Responsabilità</h3>
-                  <p className="mission-description">
-                    Promuoviamo un approccio etico e responsabile all'AI, allineato con l'AI Pact Europeo e centrato sul benessere delle persone.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Sezione Valori */}
-          <section ref={valuesRef} className="section values-section fade-in">
-            <h2 className="section-title">I Nostri Valori</h2>
-            
+        {/* SEZIONE 3 - VALORI */}
+        <section ref={valuesRef} className="section values-section fade-in">
+          <div className="container">
+            <h2 className="section-title">I nostri valori</h2>
             <div className="values-content">
-              <div className="values-image">
-                <img src="/images/values-illustration.jpg" alt="I valori di AI Meetup" className="values-img" />
-              </div>
-              
-              <div className="values-list">
-                <div className="value-item">
-                  <h3 className="value-title">
-                    <span className="value-emoji">🌟</span> Inclusività
-                  </h3>
-                  <p className="value-description">
-                    Crediamo che l'intelligenza artificiale debba essere comprensibile e accessibile a tutti, indipendentemente dalla formazione tecnica.
-                  </p>
-                </div>
-                
-                <div className="value-item">
-                  <h3 className="value-title">
-                    <span className="value-emoji">🔄</span> Connessione
-                  </h3>
-                  <p className="value-description">
-                    Lavoriamo per connettere persone diverse, unendo esperienze e competenze per creare un dialogo ricco e costruttivo sull'AI.
-                  </p>
-                </div>
-                
-                <div className="value-item">
-                  <h3 className="value-title">
-                    <span className="value-emoji">⚖️</span> Etica
-                  </h3>
-                  <p className="value-description">
-                    Promuoviamo un'intelligenza artificiale etica e centrata sull'umano, che rispetti i diritti fondamentali e migliori la vita delle persone.
-                  </p>
-                </div>
-                
-                <div className="value-item">
-                  <h3 className="value-title">
-                    <span className="value-emoji">🌱</span> Crescita
-                  </h3>
-                  <p className="value-description">
-                    Crediamo nell'apprendimento continuo e nella condivisione di conoscenze come motori di crescita personale e collettiva.
-                  </p>
-                </div>
-                
-                <div className="value-item">
-                  <h3 className="value-title">
-                    <span className="value-emoji">🔎</span> Trasparenza
-                  </h3>
-                  <p className="value-description">
-                    Operiamo con massima trasparenza, spiegando in modo chiaro come funziona l'AI e le sue potenziali implicazioni.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Sezione Impatto */}
-          <section ref={impactRef} className="section impact-section fade-in">
-            <h2 className="section-title">L'Impatto che vogliamo avere</h2>
-            
-            <div className="impact-intro">
-              <p>
-                Crediamo che l'intelligenza artificiale possa trasformare positivamente la società, ma solo se resa accessibile, comprensibile e governabile da tutti. Ecco l'impatto che vogliamo generare:
+              <p className="paragraph">
+                AI Meetup promuove un uso etico, aperto e accessibile dell'intelligenza artificiale.
+              </p>
+              <p className="paragraph">
+                Abbiamo scelto di firmare l'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" className="link-highlight">AI Pact europeo</a>, impegnandoci a diffondere un'adozione responsabile e trasparente dell'AI.
+              </p>
+              <p className="paragraph">
+                Stiamo costituendo una organizzazione no profit, perché crediamo in un progetto indipendente, costruito per durare e appartenere alla comunità.
               </p>
             </div>
-            
-            <div className="impact-grid">
-              <div className="impact-card">
-                <div className="impact-icon">👥</div>
-                <h3 className="impact-title">Cittadinanza Digitale</h3>
-                <p className="impact-text">
-                  Formare cittadini consapevoli, capaci di comprendere, utilizzare e contribuire a plasmare la società digitale del futuro.
-                </p>
-              </div>
-              
-              <div className="impact-card">
-                <div className="impact-icon">🏙️</div>
-                <h3 className="impact-title">Comunità Territoriali</h3>
-                <p className="impact-text">
-                  Creare e sostenere comunità locali attive, che fungano da punto di riferimento per l'apprendimento e la sperimentazione dell'AI nel territorio.
-                </p>
-              </div>
-              
-              <div className="impact-card">
-                <div className="impact-icon">🔄</div>
-                <h3 className="impact-title">Ecosistema di Innovazione</h3>
-                <p className="impact-text">
-                  Favorire la creazione di connessioni e collaborazioni tra persone, aziende e istituzioni per accelerare l'innovazione responsabile.
-                </p>
-              </div>
-              
-              <div className="impact-card">
-                <div className="impact-icon">💼</div>
-                <h3 className="impact-title">Competitività</h3>
-                <p className="impact-text">
-                  Contribuire a rendere le persone e le organizzazioni più competitive attraverso l'acquisizione di competenze pratiche sull'AI.
-                </p>
-              </div>
-              
-              <div className="impact-card">
-                <div className="impact-icon">⚖️</div>
-                <h3 className="impact-title">Equità Digitale</h3>
-                <p className="impact-text">
-                  Ridurre il divario digitale, garantendo che i benefici dell'AI siano accessibili a tutti, indipendentemente dal background socio-economico o tecnico.
-                </p>
-              </div>
-              
-              <div className="impact-card">
-                <div className="impact-icon">🌍</div>
-                <h3 className="impact-title">Italia nell'AI</h3>
-                <p className="impact-text">
-                  Contribuire a posizionare l'Italia come un paese all'avanguardia nell'adozione consapevole e responsabile dell'intelligenza artificiale.
-                </p>
-              </div>
-            </div>
-          </section>
+          </div>
+        </section>
 
-          {/* Sezione CTA */}
-          <section ref={ctaRef} className="section cta-section fade-in">
-            <div className="cta-box">
-              <h2 className="cta-title">Unisciti a noi. Costruiamo il futuro insieme.</h2>
-              <p className="cta-description">
-                AI Meetup è un'iniziativa aperta che cresce grazie all'energia e al contributo di persone che credono nell'importanza di rendere l'intelligenza artificiale un'opportunità per tutti.
-              </p>
-              
-              <div className="cta-options">
-                <div className="cta-option">
-                  <h3 className="option-title">Partecipa</h3>
-                  <p className="option-description">
-                    Vieni ai nostri eventi, entra nella community e scopri come l'AI può trasformare la tua vita personale e professionale.
-                  </p>
-                  <Link href="/meetup/biella" className="cta-button secondary">
-                    Scopri gli eventi
-                  </Link>
-                </div>
-                
-                <div className="cta-option">
-                  <h3 className="option-title">Contribuisci</h3>
-                  <p className="option-description">
-                    Hai competenze o idee da condividere? Vuoi portare AI Meetup nella tua città o diventare partner del progetto?
-                  </p>
-                  <Link href="/contatti" className="cta-button primary">
-                    Contattaci
-                  </Link>
-                </div>
-              </div>
-              
-              <div className="cta-quote">
-                <p>"L'intelligenza artificiale è troppo importante per lasciarla solo agli esperti. È tempo che tutti possano capirla, utilizzarla e partecipare a definirne il futuro."</p>
-                <cite>— Il team di AI Meetup</cite>
-              </div>
-            </div>
-          </section>
-        </div>
+        {/* SEZIONE 4 - PROGETTI NAZIONALI */}
+        <section ref={nationalRef} className="section national-section fade-in">
+          <div className="container">
+            <h2 className="section-title">Un progetto nazionale, radicato nei territori</h2>
+            <p className="paragraph">
+              Vogliamo portare l'intelligenza artificiale anche dove non arriva mai:
+              nelle città meno centrali, nelle scuole, nelle biblioteche, nei coworking locali.
+            </p>
+            <p className="paragraph">
+              Lavoriamo per costruire una rete nazionale che agisce localmente,
+              mettendo in connessione esperti, curiosi, studenti e imprenditori.
+            </p>
+          </div>
+        </section>
+
+        {/* SEZIONE 5 - COME */}
+        <section ref={howRef} className="section how-section fade-in">
+          <div className="container">
+            <h2 className="section-title">Come lo facciamo</h2>
+            <ul className="how-list">
+              <li>Eventi locali accessibili a tutti</li>
+              <li>Workshop pratici e momenti divulgativi</li>
+              <li>Incontri tra esperti, cittadini, imprese e scuole</li>
+              <li>Coinvolgimento delle comunità locali</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* SEZIONE 6 - EVOLUZIONE */}
+        <section ref={evolutionRef} className="section evolution-section fade-in">
+          <div className="container">
+            <h2 className="section-title">Un progetto in evoluzione</h2>
+            <p className="paragraph">
+              AI Meetup cresce con le persone che lo vivono.
+            </p>
+            <p className="paragraph">
+              Ogni evento, ogni città, ogni idea contribuisce a scrivere la prossima pagina del progetto.
+            </p>
+            <p className="paragraph">
+              Siamo sempre alla ricerca di nuove collaborazioni, territori da esplorare, e idee da condividere.
+            </p>
+          </div>
+        </section>
+
+        {/* SEZIONE 7 - CTA */}
+        <section ref={ctaRef} className="section cta-section fade-in">
+          <div className="container">
+            <h2 className="cta-title">Vuoi portare AI Meetup nella tua città?</h2>
+            <p className="cta-description">Scrivici e costruiamo qualcosa insieme.</p>
+            <Link href="/contatti" className="cta-button">Contattaci</Link>
+          </div>
+        </section>
       </div>
 
       <style jsx>{`
         .project-page {
           background-color: #F5F5F5;
-        }
-        
-        .container {
-          max-width: 1000px;
-          margin: 0 auto;
-          padding: 4rem 2rem;
+          color: #333;
         }
         
         .section {
-          margin-bottom: 6rem;
+          padding: 4rem 1.5rem;
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(20px);
           transition: opacity 0.8s ease, transform 0.8s ease;
         }
         
@@ -335,437 +170,221 @@ export default function Progetto() {
           transform: translateY(0);
         }
         
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          width: 100%;
+        }
+        
         .section-title {
           font-size: 1.8rem;
           margin-bottom: 2.5rem;
-          text-align: center;
-          position: relative;
           font-weight: 500;
+          position: relative;
+          display: inline-block;
         }
         
         .section-title::after {
           content: '';
           position: absolute;
           bottom: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 70px;
+          left: 0;
+          width: 40px;
           height: 3px;
           background-color: #D43D3D;
         }
         
-        /* Timeline styles */
-        .timeline {
-          position: relative;
-          padding: 2rem 0;
-          max-width: 900px;
-          margin: 0 auto;
+        .paragraph {
+          font-size: 1.15rem;
+          line-height: 1.8;
+          margin-bottom: 1.8rem;
+          color: #333;
+          max-width: 680px;
         }
         
-        .timeline::before {
-          content: '';
-          position: absolute;
-          height: calc(100% - 4rem);
-          width: 2px;
-          background-color: rgba(43, 40, 40, 0.1);
-          left: 120px;
-          top: 2rem;
-        }
-        
-        .timeline-item {
-          display: flex;
-          margin-bottom: 3rem;
-          position: relative;
-        }
-        
-        .timeline-item:last-child {
-          margin-bottom: 0;
-        }
-        
-        .timeline-date {
-          width: 120px;
-          padding-right: 2rem;
-          text-align: right;
-          font-weight: 500;
-          color: #D43D3D;
-          position: relative;
-        }
-        
-        .timeline-date::after {
-          content: '';
-          position: absolute;
-          right: -10px;
-          top: 8px;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          background-color: #D43D3D;
-          z-index: 1;
-        }
-        
-        .timeline-content {
-          flex: 1;
-          padding-left: 2.5rem;
-        }
-        
-        .timeline-title {
-          margin-bottom: 0.8rem;
-          font-weight: 500;
-          font-size: 1.2rem;
-        }
-        
-        .timeline-text {
-          line-height: 1.6;
-          color: #2B2828;
-        }
-        
-        /* Mission styles */
-        .mission-content {
-          display: flex;
-          flex-direction: column;
-          gap: 3rem;
-        }
-        
-        .mission-statement {
-          max-width: 800px;
-          margin: 0 auto;
+        /* Hero section */
+        .hero-section {
+          padding: 8rem 1.5rem 6rem;
           text-align: center;
-          padding: 2.5rem;
-          background-color: white;
-          border-radius: 8px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          position: relative;
         }
         
-        .statement-text {
-          font-size: 1.6rem;
-          line-height: 1.5;
+        .hero-section::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 140px;
+          height: 2px;
+          background: linear-gradient(to right, rgba(212, 61, 61, 0), rgba(212, 61, 61, 0.5), rgba(212, 61, 61, 0));
+        }
+        
+        .hero-title {
+          font-size: 2.2rem;
+          line-height: 1.4;
+          font-weight: 500;
+          margin-bottom: 2.5rem;
+          color: #222;
+        }
+        
+        .hero-tagline {
+          font-size: 1.7rem;
           font-weight: 400;
+          margin-bottom: 0;
+          color: #333;
         }
         
-        .highlight-text {
+        /* Values section */
+        .values-section {
+          background-color: #f7f7f7;
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .values-content {
+          position: relative;
+          padding-left: 2rem;
+          border-left: 2px solid rgba(212, 61, 61, 0.2);
+        }
+        
+        .link-highlight {
+          color: #2B2828;
+          text-decoration: underline;
+          text-decoration-color: #D43D3D;
+          text-underline-offset: 3px;
+          transition: all 0.2s ease;
           font-weight: 500;
+        }
+        
+        .link-highlight:hover {
           color: #D43D3D;
         }
         
-        .mission-details {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 2rem;
+        /* How section */
+        .how-section {
+          background-color: #f7f7f7;
         }
         
-        .mission-card {
-          background-color: white;
-          padding: 2rem;
-          border-radius: 8px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .how-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          max-width: 680px;
         }
         
-        .mission-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .mission-icon {
-          font-size: 2.5rem;
+        .how-list li {
+          position: relative;
+          padding-left: 2rem;
           margin-bottom: 1.5rem;
-        }
-        
-        .mission-title {
-          margin-bottom: 1rem;
-          font-weight: 500;
-          font-size: 1.2rem;
-        }
-        
-        .mission-description {
+          font-size: 1.15rem;
           line-height: 1.6;
-          color: #2B2828;
+          color: #333;
         }
         
-        /* Values styles */
-        .values-content {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 3rem;
-          align-items: center;
-        }
-        
-        .values-image {
-          flex: 1;
-          min-width: 300px;
-          max-width: 450px;
-        }
-        
-        .values-img {
-          width: 100%;
-          height: auto;
-          border-radius: 8px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .values-list {
-          flex: 1;
-          min-width: 300px;
-        }
-        
-        .value-item {
-          margin-bottom: 2rem;
-        }
-        
-        .value-title {
-          display: flex;
-          align-items: center;
-          margin-bottom: 0.8rem;
-          font-size: 1.2rem;
+        .how-list li::before {
+          content: "—";
+          position: absolute;
+          left: 0;
+          color: #D43D3D;
           font-weight: 500;
         }
         
-        .value-emoji {
-          margin-right: 0.8rem;
-          font-size: 1.8rem;
-        }
-        
-        .value-description {
-          line-height: 1.6;
-          color: #2B2828;
-          padding-left: 2.8rem;
-        }
-        
-        /* Impact styles */
-        .impact-intro {
-          max-width: 800px;
-          margin: 0 auto 3rem;
+        /* CTA section */
+        .cta-section {
+          background-color: #2B2828;
           text-align: center;
-        }
-        
-        .impact-intro p {
-          font-size: 1.1rem;
-          line-height: 1.6;
-        }
-        
-        .impact-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 2rem;
-        }
-        
-        .impact-card {
-          background-color: white;
-          padding: 2rem;
-          border-radius: 8px;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .impact-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .impact-icon {
-          font-size: 2.5rem;
-          margin-bottom: 1.5rem;
-        }
-        
-        .impact-title {
-          margin-bottom: 1rem;
-          font-weight: 500;
-          font-size: 1.2rem;
-        }
-        
-        .impact-text {
-          line-height: 1.6;
-          color: #2B2828;
-        }
-        
-        /* CTA styles */
-        .cta-box {
-          background: linear-gradient(135deg, #2B2828, #444);
           color: white;
-          padding: 3.5rem;
-          border-radius: 8px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          padding: 5rem 1.5rem;
         }
         
         .cta-title {
-          font-size: 1.8rem;
-          text-align: center;
-          margin-bottom: 1.5rem;
+          font-size: 1.9rem;
           font-weight: 500;
+          margin-bottom: 1.5rem;
+          color: white;
         }
         
         .cta-description {
-          text-align: center;
-          max-width: 800px;
-          margin: 0 auto 3rem;
-          font-size: 1.1rem;
-          line-height: 1.6;
-        }
-        
-        .cta-options {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 2rem;
-          margin-bottom: 3rem;
-        }
-        
-        .cta-option {
-          flex: 1;
-          min-width: 300px;
-          background-color: rgba(255, 255, 255, 0.1);
-          padding: 2rem;
-          border-radius: 8px;
-          display: flex;
-          flex-direction: column;
-        }
-        
-        .option-title {
-          margin-bottom: 1rem;
-          font-weight: 500;
-          font-size: 1.2rem;
-        }
-        
-        .option-description {
-          line-height: 1.6;
-          margin-bottom: 1.5rem;
-          flex: 1;
+          font-size: 1.3rem;
+          margin-bottom: 2.5rem;
+          color: rgba(255, 255, 255, 0.9);
+          line-height: 1.5;
         }
         
         .cta-button {
           display: inline-block;
-          padding: 0.8rem 1.5rem;
-          font-size: 1rem;
-          border-radius: 4px;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          font-weight: 500;
-          text-decoration: none;
-          font-family: 'Azeret Mono', monospace;
-        }
-        
-        .cta-button.primary {
           background-color: #D43D3D;
           color: white;
-          border: none;
+          padding: 1rem 2.5rem;
+          font-size: 1.05rem;
+          border-radius: 2px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        .cta-button.primary:hover {
+        .cta-button:hover {
           background-color: #C13434;
-          transform: translateY(-3px);
-        }
-        
-        .cta-button.secondary {
-          background-color: transparent;
-          color: white;
-          border: 2px solid white;
-        }
-        
-        .cta-button.secondary:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-          transform: translateY(-3px);
-        }
-        
-        .cta-quote {
-          margin-top: 2rem;
-          font-style: italic;
-          position: relative;
-          padding-left: 2rem;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        
-        .cta-quote::before {
-          content: '"';
-          position: absolute;
-          left: 0;
-          top: -10px;
-          font-size: 3rem;
-          line-height: 1;
-          font-family: serif;
-          opacity: 0.5;
-        }
-        
-        .cta-quote p {
-          font-size: 1.1rem;
-          line-height: 1.6;
-        }
-        
-        .cta-quote cite {
-          display: block;
-          margin-top: 1rem;
-          opacity: 0.8;
-          font-style: normal;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
         
         /* Media queries */
-        @media (max-width: 768px) {
-          .container {
-            padding: 3rem 1.5rem;
+        @media (min-width: 768px) {
+          .section {
+            padding: 5rem 2rem;
           }
           
           .section-title {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 3rem;
           }
           
-          .timeline::before {
-            left: 80px;
+          .section-title::after {
+            width: 60px;
+            height: 4px;
           }
           
-          .timeline-date {
-            width: 80px;
+          .hero-section {
+            padding: 10rem 2rem 8rem;
           }
           
-          .timeline-content {
-            padding-left: 2rem;
+          .hero-title {
+            font-size: 2.8rem;
           }
           
-          .statement-text {
-            font-size: 1.3rem;
+          .hero-tagline {
+            font-size: 1.9rem;
           }
           
-          .cta-box {
-            padding: 2.5rem 1.5rem;
+          .paragraph {
+            font-size: 1.2rem;
+            line-height: 1.9;
           }
           
-          .cta-title {
-            font-size: 1.5rem;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .timeline {
-            padding-left: 1rem;
-          }
-          
-          .timeline::before {
-            left: 1rem;
-          }
-          
-          .timeline-item {
-            flex-direction: column;
-          }
-          
-          .timeline-date {
-            width: auto;
-            text-align: left;
-            padding-left: 2rem;
-            padding-right: 0;
-            margin-bottom: 0.5rem;
-          }
-          
-          .timeline-date::after {
-            left: 0;
-            right: auto;
-          }
-          
-          .timeline-content {
-            padding-left: 2rem;
+          .how-list li {
+            font-size: 1.2rem;
+            line-height: 1.7;
           }
           
           .cta-button {
-            width: 100%;
+            padding: 1.1rem 3rem;
+            font-size: 1.1rem;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .section {
+            padding: 6rem 2rem;
+          }
+          
+          .hero-section {
+            padding: 12rem 2rem 10rem;
+          }
+          
+          .hero-title {
+            font-size: 3.2rem;
           }
         }
       `}</style>

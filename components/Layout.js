@@ -99,10 +99,10 @@ const Layout = ({ children }) => {
                   Roadmap
                 </a>
               </li>
-              {/* <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
+              <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
                 <Link href="/progetto" className="nav-link">Progetto</Link>
-              </li> */}
-              <li className={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
+              </li>
+              <li claSsName={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
                 <button 
                   className={`nav-link dropdown-trigger ${isMeetupOpen ? 'open' : ''}`}
                   onClick={() => setIsMeetupOpen(!isMeetupOpen)}
