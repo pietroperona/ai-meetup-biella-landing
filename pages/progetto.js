@@ -1,7 +1,7 @@
 // pages/progetto.js
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Layout from '../components/Layout';
 
 export default function Progetto() {
@@ -9,10 +9,35 @@ export default function Progetto() {
   const heroRef = useRef(null);
   const missionRef = useRef(null);
   const valuesRef = useRef(null);
-  const nationalRef = useRef(null);
-  const howRef = useRef(null);
-  const evolutionRef = useRef(null);
+  const blocksRef = useRef(null);
   const ctaRef = useRef(null);
+  
+  // Stato per gestire l'apertura/chiusura delle fisarmoniche su mobile
+  const [expandedSection, setExpandedSection] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Verifica se è mobile quando il componente monta
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Esegui subito e aggiungi event listener
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  // Funzione per gestire l'espansione delle sezioni su mobile
+  const toggleSection = (section) => {
+    if (expandedSection === section) {
+      setExpandedSection(null);
+    } else {
+      setExpandedSection(section);
+    }
+  };
 
   // Animazione elementi al scroll
   useEffect(() => {
@@ -32,9 +57,7 @@ export default function Progetto() {
       heroRef.current,
       missionRef.current,
       valuesRef.current,
-      nationalRef.current,
-      howRef.current,
-      evolutionRef.current,
+      blocksRef.current,
       ctaRef.current
     ];
     
@@ -98,52 +121,95 @@ export default function Progetto() {
           </div>
         </section>
 
-        {/* SEZIONE 4 - PROGETTI NAZIONALI */}
-        <section ref={nationalRef} className="section national-section fade-in">
+        {/* SEZIONE 4 - BLOCCHI AFFIANCATI / FISARMONICHE */}
+        <section ref={blocksRef} className="section blocks-section fade-in">
           <div className="container">
-            <h2 className="section-title">Un progetto nazionale, radicato nei territori</h2>
-            <p className="paragraph">
-              Vogliamo portare l'intelligenza artificiale anche dove non arriva mai:
-              nelle città meno centrali, nelle scuole, nelle biblioteche, nei coworking locali.
-            </p>
-            <p className="paragraph">
-              Lavoriamo per costruire una rete nazionale che agisce localmente,
-              mettendo in connessione esperti, curiosi, studenti e imprenditori.
-            </p>
+            <div className="blocks-grid">
+              {/* BLOCCO 1 - UN PROGETTO NAZIONALE */}
+              <div className={`block ${isMobile && expandedSection === 'national' ? 'expanded' : ''}`}>
+                <div 
+                  className="block-header"
+                  onClick={() => isMobile && toggleSection('national')}
+                >
+                  <h3 className="block-title">Radici locali, visione globale</h3>
+                  {isMobile && (
+                    <button className="accordion-toggle">
+                      {expandedSection === 'national' ? '−' : '+'}
+                    </button>
+                  )}
+                </div>
+                <div className="block-content">
+                  <p className="block-paragraph">
+                    Vogliamo portare l'intelligenza artificiale anche dove non arriva mai:
+                    nelle città meno centrali, nelle scuole, nelle biblioteche, nei coworking locali.
+                  </p>
+                  <p className="block-paragraph">
+                    Creiamo spazi di incontro tra mondo accademico, imprese, istituzioni, scuole e cittadini di ogni età e background.
+                  </p>
+                </div>
+              </div>
+              
+              {/* BLOCCO 2 - COME LO FACCIAMO */}
+              <div className={`block ${isMobile && expandedSection === 'how' ? 'expanded' : ''}`}>
+                <div 
+                  className="block-header"
+                  onClick={() => isMobile && toggleSection('how')}
+                >
+                  <h3 className="block-title">Come lo facciamo</h3>
+                  {isMobile && (
+                    <button className="accordion-toggle">
+                      {expandedSection === 'how' ? '−' : '+'}
+                    </button>
+                  )}
+                </div>
+                <div className="block-content">
+                  <p className="block-paragraph">
+                    Il nostro approccio si basa sulla divulgazione pratica e sul coinvolgimento diretto:
+                  </p>
+                  <ul className="how-list">
+                    <li>Eventi locali accessibili a tutti</li>
+                    <li>Workshop pratici e momenti divulgativi</li>
+                    <li>Incontri tra esperti, cittadini, imprese e scuole</li>
+                    <li>Coinvolgimento delle comunità locali</li>
+                  </ul>
+                  <p className="block-paragraph">
+                    Ogni incontro è pensato per creare connessioni significative e condividere conoscenza pratica.
+                  </p>
+                </div>
+              </div>
+              
+              {/* BLOCCO 3 - UN PROGETTO IN EVOLUZIONE */}
+              <div className={`block ${isMobile && expandedSection === 'evolution' ? 'expanded' : ''}`}>
+                <div 
+                  className="block-header"
+                  onClick={() => isMobile && toggleSection('evolution')}
+                >
+                  <h3 className="block-title">Un progetto in evoluzione</h3>
+                  {isMobile && (
+                    <button className="accordion-toggle">
+                      {expandedSection === 'evolution' ? '−' : '+'}
+                    </button>
+                  )}
+                </div>
+                <div className="block-content">
+                  <p className="block-paragraph">
+                    AI Meetup cresce con le persone che lo vivono.
+                  </p>
+                  <p className="block-paragraph">
+                    Ogni evento, ogni città, ogni idea contribuisce a scrivere la prossima pagina del progetto.
+                  </p>
+                  <p className="block-paragraph">
+                    Siamo sempre alla ricerca di nuove collaborazioni, territori da esplorare, e idee da condividere.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* SEZIONE 5 - COME */}
-        <section ref={howRef} className="section how-section fade-in">
-          <div className="container">
-            <h2 className="section-title">Come lo facciamo</h2>
-            <ul className="how-list">
-              <li>Eventi locali accessibili a tutti</li>
-              <li>Workshop pratici e momenti divulgativi</li>
-              <li>Incontri tra esperti, cittadini, imprese e scuole</li>
-              <li>Coinvolgimento delle comunità locali</li>
-            </ul>
-          </div>
-        </section>
-
-        {/* SEZIONE 6 - EVOLUZIONE */}
-        <section ref={evolutionRef} className="section evolution-section fade-in">
-          <div className="container">
-            <h2 className="section-title">Un progetto in evoluzione</h2>
-            <p className="paragraph">
-              AI Meetup cresce con le persone che lo vivono.
-            </p>
-            <p className="paragraph">
-              Ogni evento, ogni città, ogni idea contribuisce a scrivere la prossima pagina del progetto.
-            </p>
-            <p className="paragraph">
-              Siamo sempre alla ricerca di nuove collaborazioni, territori da esplorare, e idee da condividere.
-            </p>
-          </div>
-        </section>
-
-        {/* SEZIONE 7 - CTA */}
+        {/* SEZIONE 7 - CTA CON SFONDO GRAINY */}
         <section ref={ctaRef} className="section cta-section fade-in">
+          <div className="grain-overlay"></div>
           <div className="container">
             <h2 className="cta-title">Vuoi portare AI Meetup nella tua città?</h2>
             <p className="cta-description">Scrivici e costruiamo qualcosa insieme.</p>
@@ -163,6 +229,7 @@ export default function Progetto() {
           opacity: 0;
           transform: translateY(20px);
           transition: opacity 0.8s ease, transform 0.8s ease;
+          position: relative;
         }
         
         .section.visible {
@@ -171,9 +238,11 @@ export default function Progetto() {
         }
         
         .container {
-          max-width: 800px;
+          max-width: 1100px;
           margin: 0 auto;
           width: 100%;
+          position: relative;
+          z-index: 2;
         }
         
         .section-title {
@@ -202,22 +271,25 @@ export default function Progetto() {
           max-width: 680px;
         }
         
-        /* Hero section */
+        /* Hero section semplice */
         .hero-section {
           padding: 8rem 1.5rem 6rem;
           text-align: center;
           position: relative;
+          background-color: #F5F5F5;
         }
         
-        .hero-section::after {
-          content: '';
+        .grain-overlay {
           position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
           bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 140px;
-          height: 2px;
-          background: linear-gradient(to right, rgba(212, 61, 61, 0), rgba(212, 61, 61, 0.5), rgba(212, 61, 61, 0));
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+          z-index: 1;
+          opacity: 0.5;
+          mix-blend-mode: overlay;
+          pointer-events: none;
         }
         
         .hero-title {
@@ -261,23 +333,82 @@ export default function Progetto() {
           color: #D43D3D;
         }
         
-        /* How section */
-        .how-section {
-          background-color: #f7f7f7;
+        /* Blocchi affiancati / fisarmoniche */
+        .blocks-section {
+          padding: 5rem 1.5rem;
+        }
+        
+        .blocks-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+        }
+        
+        .block {
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          overflow: hidden;
+          transition: all 0.3s ease;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-top: 3px solid #D43D3D; /* Linea rossa in cima per sottolineare l'importanza */
+        }
+        
+        .block:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .block-header {
+          padding: 1.8rem 1.5rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: pointer;
+        }
+        
+        .block-title {
+          font-size: 1.3rem;
+          margin: 0;
+          font-weight: 500;
+          color: #2B2828;
+          flex: 1;
+        }
+        
+        .block-content {
+          padding: 1.5rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          min-height: 220px; /* Altezza minima per uniformità */
+        }
+        
+        .block-paragraph {
+          font-size: 1rem;
+          line-height: 1.7;
+          margin-bottom: 1rem;
+          color: #333;
+        }
+        
+        .block-paragraph:last-child {
+          margin-bottom: 0;
         }
         
         .how-list {
           list-style: none;
           padding: 0;
-          margin: 0;
-          max-width: 680px;
+          margin: 0.5rem 0 1rem 0;
         }
         
         .how-list li {
           position: relative;
-          padding-left: 2rem;
-          margin-bottom: 1.5rem;
-          font-size: 1.15rem;
+          padding-left: 1.5rem;
+          margin-bottom: 1rem;
+          font-size: 1rem;
           line-height: 1.6;
           color: #333;
         }
@@ -290,25 +421,63 @@ export default function Progetto() {
           font-weight: 500;
         }
         
-        /* CTA section */
+        .how-list li:last-child {
+          margin-bottom: 0;
+        }
+        
+        /* Toggle accordion su mobile */
+        .accordion-toggle {
+          background: none;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          display: none; /* Nascosto di default, visibile solo su mobile */
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #2B2828;
+          transition: all 0.2s ease;
+          padding: 0;
+          line-height: 1;
+        }
+        
+        /* CTA section con sfondo grainy e gradiente come la hero */
         .cta-section {
-          background-color: #2B2828;
+          background: linear-gradient(to right, #E0F7FA, #ECEFF1);
           text-align: center;
-          color: white;
+          color: #2B2828; /* Cambiato in scuro per leggibilità sul background chiaro */
           padding: 5rem 1.5rem;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        .cta-section .grain-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+          z-index: 1;
+          opacity: 0.5;
+          mix-blend-mode: overlay;
+          pointer-events: none;
         }
         
         .cta-title {
           font-size: 1.9rem;
           font-weight: 500;
           margin-bottom: 1.5rem;
-          color: white;
+          color: #2B2828;
         }
         
         .cta-description {
           font-size: 1.3rem;
           margin-bottom: 2.5rem;
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(43, 40, 40, 0.9);
           line-height: 1.5;
         }
         
@@ -331,19 +500,97 @@ export default function Progetto() {
         }
         
         /* Media queries */
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
           .section {
-            padding: 5rem 2rem;
+            padding: 3.5rem 1.5rem;
           }
           
           .section-title {
-            font-size: 2rem;
-            margin-bottom: 3rem;
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
           }
           
-          .section-title::after {
-            width: 60px;
-            height: 4px;
+          .hero-title {
+            font-size: 1.8rem;
+          }
+          
+          .hero-tagline {
+            font-size: 1.4rem;
+          }
+          
+          .paragraph {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+          }
+          
+          /* Trasforma i blocchi in fisarmoniche su mobile */
+          .blocks-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          
+          .block {
+            overflow: hidden;
+          }
+          
+          .block:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          }
+          
+          .block-header {
+            padding: 1.2rem 1rem;
+            cursor: pointer;
+          }
+          
+          .accordion-toggle {
+            display: flex;
+          }
+          
+          .block-title {
+            font-size: 1.1rem;
+            padding-right: 10px;
+          }
+          
+          .block-content {
+            padding: 0;
+            max-height: 0;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            overflow: hidden;
+          }
+          
+          .block.expanded .block-content {
+            padding: 1.5rem;
+            max-height: 1000px; /* Un valore alto per accomodare qualsiasi contenuto */
+          }
+          
+          @media (max-width: 768px) {
+          .cta-title {
+            font-size: 1.5rem;
+          }
+          
+          .cta-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+          }
+        }
+          
+          .cta-button {
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+          }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1024px) {
+          .blocks-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .section {
+            padding: 5rem 2rem;
           }
           
           .hero-section {
@@ -351,40 +598,11 @@ export default function Progetto() {
           }
           
           .hero-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
           }
           
-          .hero-tagline {
-            font-size: 1.9rem;
-          }
-          
-          .paragraph {
-            font-size: 1.2rem;
-            line-height: 1.9;
-          }
-          
-          .how-list li {
-            font-size: 1.2rem;
-            line-height: 1.7;
-          }
-          
-          .cta-button {
-            padding: 1.1rem 3rem;
-            font-size: 1.1rem;
-          }
-        }
-        
-        @media (min-width: 1024px) {
-          .section {
-            padding: 6rem 2rem;
-          }
-          
-          .hero-section {
-            padding: 12rem 2rem 10rem;
-          }
-          
-          .hero-title {
-            font-size: 3.2rem;
+          .blocks-grid {
+            grid-template-columns: repeat(3, 1fr);
           }
         }
       `}</style>
