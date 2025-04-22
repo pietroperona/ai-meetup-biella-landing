@@ -10,6 +10,10 @@ export default function Custom404() {
         <title>Pagina non trovata | AI Meetup</title>
         <meta name="description" content="La pagina che stai cercando non esiste" />
         <link rel="icon" href="/ai-meetup.ico" />
+        
+        {/* Aggiunti meta tag per evitare indicizzazione */}
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
       </Head>
 
       <main className={styles.main}>

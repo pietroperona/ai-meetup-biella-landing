@@ -31,9 +31,8 @@ export default function PrivacyPolicy() {
     >
       <div className={styles.container}>
         <Head>
-          {/* Istruzioni per non indicizzare */}
-          <meta name="robots" content="noindex, follow" />
-          <meta name="googlebot" content="noindex, follow" />
+          {/* Rimozione dei meta tag noindex per consentire l'indicizzazione della privacy policy */}
+          {/* La privacy policy è una pagina importante che gli utenti dovrebbero poter trovare */}
         </Head>
         <main className={styles.main}>
           <div className={styles.header}>

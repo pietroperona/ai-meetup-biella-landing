@@ -30,11 +30,15 @@ User-agent: Bingbot
 User-agent: Baiduspider
 User-agent: Yandex
 Allow: /
+Disallow: /404.html
+Disallow: /404/
 
 # Default per tutti gli altri robot
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /404.html
+Disallow: /404/
 
 # Sitemap
 Sitemap: https://www.aimeetup.it/sitemap.xml
