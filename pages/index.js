@@ -202,12 +202,14 @@ export default function Home() {
           <div className="hero-section">
             <div className="hero-content">
               <h1 className="hero-heading">
-                <span>AI Meetup è un progetto</span> <span className="highlight">indipendente</span> <span>di</span> <span className="highlight">divulgazione</span> <span>sull'</span><span className="highlight">intelligenza artificiale</span><span>.</span>
+                <span>AI Meetup è un progetto</span> <span className="highlight">indipendente</span> <span>di</span> <span className="highlight">divulgazione</span> <span>sull'</span><span className="highlight">intelligenza artificiale.</span>
               </h1>
               <p className="hero-tagline">Inclusivo, aperto, locale.</p>
 
-              <div className="hero-events">
-                {events.map((event, index) => {
+              <div className="events-section">
+                <span className="events-label">Prossimi eventi</span>
+                <div className="hero-events">
+                  {events.map((event, index) => {
                   const isPending = event.date === 'TBD';
                   const CardTag = event.url ? 'a' : 'div';
                   return (
@@ -237,6 +239,7 @@ export default function Home() {
                     </CardTag>
                   );
                 })}
+                </div>
               </div>
             </div>
           </div>
@@ -395,6 +398,22 @@ export default function Home() {
             line-height: 1.4;
           }
 
+          .events-section {
+            margin-top: 3rem;
+          }
+
+          .events-label {
+            display: inline-block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2B2828;
+            opacity: 0.7;
+            margin-bottom: 0.75rem;
+          }
+
           .hero-heading span {
             display: inline;
             margin: 0 0.2rem;
@@ -417,7 +436,6 @@ export default function Home() {
           }
 
           .hero-events {
-            margin-top: 3rem;
             padding: 1.5rem 1.75rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -596,8 +614,17 @@ export default function Home() {
               font-size: 2rem;
             }
 
+            .events-section {
+              margin-top: 2rem;
+            }
+
+            .events-label {
+              font-size: 0.75rem;
+              letter-spacing: 1.2px;
+              margin-bottom: 0.6rem;
+            }
+
             .hero-events {
-              margin-top: 1.5rem;
               padding: 1rem 1.1rem 1.2rem;
               grid-template-columns: 1fr;
               gap: 1rem;
