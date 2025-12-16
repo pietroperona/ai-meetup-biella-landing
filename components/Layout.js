@@ -535,7 +535,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           /* Stile per tutti i link (escluso CTA) */
           .nav-item:not(.cta-item) .nav-link {
             width: 100%;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 500;
             padding: 0;
             border: none;
