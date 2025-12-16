@@ -525,7 +525,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             padding: 0 !important;
             margin: 0 !important;
             display: flex !important;
-            align-items: stretch !important;
+            align-items: center !important;
           }
 
           .nav-item:not(.cta-item) {
@@ -535,22 +535,21 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             overflow: hidden !important;
           }
 
-          /* Forza tutti i link e i loro nested elements ad avere lo stesso stile */
-          .nav-list li,
-          .nav-list .nav-item,
+          /* Forza tutti i testi ad avere lo stesso stile */
+          .nav-list li *,
+          .nav-list .nav-item *,
           .nav-list .nav-link,
           .nav-list .contact-link,
-          .nav-list a,
-          .nav-list a > *,
-          .nav-list * {
+          .nav-list a {
             font-size: 1.3rem !important;
             font-weight: 500 !important;
             font-family: 'Syne', sans-serif !important;
             line-height: 1.95rem !important;
             letter-spacing: 0 !important;
-            display: block !important;
           }
 
+          /* Forza tutti i link e wrapper a occupare tutto lo spazio e centrare */
+          .nav-list .nav-item > *,
           .nav-list .nav-link,
           .nav-list .contact-link,
           .nav-list a {
@@ -558,6 +557,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             padding: 0 !important;
             display: flex !important;
             align-items: center !important;
+            justify-content: flex-start !important;
             text-align: left !important;
             border: none !important;
             border-radius: 0 !important;
@@ -566,6 +566,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             box-shadow: none !important;
             transform: none !important;
             height: 100% !important;
+            flex: 1 !important;
           }
 
           /* CTA button in basso su mobile */
