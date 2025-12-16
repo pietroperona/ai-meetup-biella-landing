@@ -535,12 +535,14 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           /* Stile per tutti i link (escluso CTA) */
           .nav-item:not(.cta-item) .nav-link {
             width: 100%;
-            font-size: 1.7rem;
+            font-size: 1.9rem;
             font-weight: 500;
             padding: 0;
             border: none;
             background: transparent;
             border-radius: 0;
+            text-align: center;
+            justify-content: center;
           }
 
           /* Reset stile contact-link su mobile */
