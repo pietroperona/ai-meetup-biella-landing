@@ -541,12 +541,12 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             overflow: hidden !important;
           }
 
-          /* Forza tutti i testi ad avere lo stesso stile */
-          .nav-list li *,
-          .nav-list .nav-item *,
-          .nav-list .nav-link,
+          /* Forza tutti i testi ad avere lo stesso stile (escluso CTA) */
+          .nav-list li:not(.cta-item) *,
+          .nav-list .nav-item:not(.cta-item) *,
+          .nav-list .nav-link:not(.cta-button),
           .nav-list .contact-link,
-          .nav-list a {
+          .nav-list a:not(.cta-button) {
             font-size: 1.3rem !important;
             font-weight: 500 !important;
             font-family: 'Syne', sans-serif !important;
@@ -554,11 +554,11 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             letter-spacing: 0 !important;
           }
 
-          /* Forza tutti i link e wrapper a occupare tutto lo spazio e centrare */
-          .nav-list .nav-item > *,
-          .nav-list .nav-link,
+          /* Forza tutti i link e wrapper a occupare tutto lo spazio e centrare (escluso CTA) */
+          .nav-list .nav-item:not(.cta-item) > *,
+          .nav-list .nav-link:not(.cta-button),
           .nav-list .contact-link,
-          .nav-list a {
+          .nav-list a:not(.cta-button) {
             width: 100% !important;
             padding: 0 !important;
             display: flex !important;
