@@ -12,9 +12,36 @@ export default function Home() {
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [formStatus, setFormStatus] = useState({ message: '', isError: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isFormFixed, setIsFormFixed] = useState(false);
+  const [formHeight, setFormHeight] = useState(0);
+  const [isAtFooter, setIsAtFooter] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Riferimento per la sezione manifesto per lo scrolling
   const manifestoRef = useRef(null);
+  const heroRef = useRef(null);
+  const stickyFormRef = useRef(null);
+  const events = [
+    {
+      title: "Light Talk's + Networking",
+      date: '15/01',
+      location: 'Sellalab',
+      city: 'Biella',
+      url: 'https://luma.com/3q3dwtgt'
+    },
+    {
+      title: "Light Talk's + Networking",
+      date: 'TBD',
+      location: 'Sellalab',
+      city: 'Biella'
+    },
+    {
+      title: 'Community Meetup',
+      date: 'TBD',
+      location: 'Sellalab',
+      city: 'Biella'
+    }
+  ];
 
   const handleSubmit = async (e) => {
     // Logica del form rimane uguale
@@ -66,6 +93,60 @@ export default function Home() {
     manifestoRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Gestisce comportamento sticky del form
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const measure = () => {
+      if (stickyFormRef.current) {
+        setFormHeight(stickyFormRef.current.getBoundingClientRect().height);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  useEffect(() => {
+    if (stickyFormRef.current) {
+      setFormHeight(stickyFormRef.current.getBoundingClientRect().height);
+    }
+  }, [formStatus.message]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroRef.current) return;
+
+      const footerEl = document.querySelector('footer.footer');
+      const footerTop = footerEl ? footerEl.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
+      const footerVisible = footerTop <= window.innerHeight;
+
+      setIsAtFooter(footerVisible);
+
+      if (isMobile) {
+        setIsFormFixed(false);
+        return;
+      }
+
+      // Form appare appena si inizia a scrollare
+      const shouldFix = window.scrollY > 50 && !footerVisible;
+      setIsFormFixed(shouldFix);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [isMobile]);
+
   // Dati strutturati specifici per la homepage
   const homeStructuredData = {
     "@context": "https://schema.org",
@@ -99,101 +180,174 @@ export default function Home() {
       ogImage="https://www.aimeetup.it/social-card.png"
       structuredData={homeStructuredData}
     >
-      <div className={styles.container}>
-        <Head>
-          {/* I meta tag esistenti rimangono uguali */}
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-          />
-          {/* Il resto degli head tag rimane lo stesso */}
-        </Head>
+      <Head>
+        {/* I meta tag esistenti rimangono uguali */}
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
+        {/* Il resto degli head tag rimane lo stesso */}
+      </Head>
 
-        <main className={styles.main}>
+      {/* Hero Section con gradiente - posizionamento assoluto */}
+      <section className="hero-full-section" ref={heroRef}>
+        <div className="hero-wrapper">
           {/* Hero Section con frase principale in evidenza */}
           <div className="hero-section">
             <div className="hero-content">
               <h1 className="hero-heading">
-                <span>Costruiamo</span> 
-                <span className="highlight">ponti</span> 
-                <span>tra le persone e</span> 
+                {/* <span>Costruiamo</span>
+                <span className="highlight">ponti</span>
+                <span>tra le persone e</span>
                 <span className="highlight">l'intelligenza artificiale</span>
-                <span>, abbattendo</span> 
-                <span className="highlight">barriere</span> 
-                <span>tecniche e culturali.</span>
+                <span>, abbattendo</span>
+                <span className="highlight">barriere</span>
+                <span>tecniche e culturali.</span> */}
+                <span>Basta hype,</span><span className="highlight">basta paura</span>. Noi scegliamo <span className="highlight">la curiosità</span>. <span>Scopri insieme a noi</span><span className="highlight">l'intellgenza artificiale</span><span>!</span>
               </h1>
+
+              <div className="hero-events">
+                {events.map((event, index) => {
+                  const isPending = event.date === 'TBD';
+                  const CardTag = event.url ? 'a' : 'div';
+                  return (
+                    <CardTag
+                      key={event.title + index}
+                      className={`event-card ${isPending ? 'pending' : ''} ${event.url ? 'clickable' : ''}`}
+                      href={event.url || undefined}
+                      target={event.url ? '_blank' : undefined}
+                      rel={event.url ? 'noopener noreferrer' : undefined}
+                    >
+                      <div className="event-title">{event.title}</div>
+                      <div className="event-date">{event.date}</div>
+                      <div className="event-location">
+                        <div className="hosted-block">
+                          <span className="hosted-label">Hosted by:</span>
+                          <img
+                            src="/sellalab-dark.svg"
+                            alt="Sellalab"
+                            className="location-logo"
+                          />
+                        </div>
+                        <div className="city-block">
+                          <span className="city-label">City:</span>
+                          <span className="location-city">{`${event.city} (BI)`}</span>
+                        </div>
+                      </div>
+                    </CardTag>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div className={styles.formContainer}>
-            <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
-
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <div className={styles.inputGroup}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="La tua email"
-                  className={styles.emailInput}
-                  required
-                />
-              </div>
-
-              <div className={styles.checkboxGroup}>
-                <input
-                  type="checkbox"
-                  id="privacy"
-                  checked={privacyAccepted}
-                  onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                  className={styles.checkbox}
-                  required
-                />
-                <label htmlFor="privacy" className={styles.privacyLabel}>
-                  Acconsento al trattamento dei miei dati personali come descritto nella <a href="/privacy-policy" className={styles.privacyLink}>Privacy Policy</a>
-                </label>
-              </div>
-
-              {formStatus.message && (
-                <div className={`${styles.formMessage} ${formStatus.isError ? styles.errorMessage : styles.successMessage}`}>
-                  {formStatus.message}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                className={styles.submitButton}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
-              </button>
-            </form>
-          </div>
-          
           {/* Indicatore di scroll utilizzando FontAwesome */}
           <div className="scroll-indicator" onClick={scrollToManifesto}>
             <i className="fa-solid fa-chevron-down"></i>
           </div>
-        </main>
-        
-        {/* Manifesto posizionato tra main e footer */}
-        <div ref={manifestoRef} className={styles.manifestoWrapper}>
-          <Manifesto />
         </div>
+      </section>
 
-        {/* Roadmap posizionata dopo il manifesto con ID per lo scroll */}
-        <div id="roadmap-section" className={styles.roadmapWrapper}>
-          <Roadmap />
+      {/* Form sticky desktop */}
+      <div className={styles.stickyFormPlaceholder} style={{ height: isFormFixed ? formHeight : 0 }} />
+      <div
+        ref={stickyFormRef}
+        className={`${styles.stickyFormWrapper} ${isFormFixed ? styles.isFixed : ''} ${isAtFooter ? styles.isDocked : ''}`}
+      >
+        <div className={`${styles.formContainer} ${styles.stickyFormCard}`}>
+          <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
+
+          <form onSubmit={handleSubmit} className={`${styles.form} ${styles.inlineForm}`}>
+            <div className={styles.inputGroup}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="La tua email"
+                className={styles.emailInput}
+                required
+              />
+            </div>
+
+            <div className={styles.checkboxGroup}>
+              <input
+                type="checkbox"
+                id="privacy"
+                checked={privacyAccepted}
+                onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                className={styles.checkbox}
+                required
+              />
+              <label htmlFor="privacy" className={styles.privacyLabel}>
+                Acconsento al trattamento dei miei dati personali come descritto nella <a href="/privacy-policy" className={styles.privacyLink}>Privacy Policy</a>
+              </label>
+            </div>
+
+            {formStatus.message && (
+              <div className={`${styles.formMessage} ${formStatus.isError ? styles.errorMessage : styles.successMessage}`}>
+                {formStatus.message}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
+            </button>
+          </form>
         </div>
+      </div>
 
-        <style jsx>{`
+      {/* Contenuto normale (Manifesto e Roadmap) */}
+      <div ref={manifestoRef} className={styles.manifestoWrapper}>
+        <Manifesto />
+      </div>
+
+      <div id="roadmap-section" className={styles.roadmapWrapper}>
+        <Roadmap />
+      </div>
+
+    <style jsx>{`
+          .hero-full-section {
+            width: 100%;
+            /* Gradiente organico multi-colore per tutta la hero */
+            background:
+              radial-gradient(circle at 20% 20%, rgba(254, 254, 254, 0.9) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(113, 227, 181, 0.85) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(235, 216, 87, 0.9) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(189, 113, 100, 0.85) 0%, transparent 50%),
+              linear-gradient(135deg, #FEFEFE 0%, #E8DCC8 100%);
+            padding-top: 72px; /* Spazio per la navbar fixed */
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
+          }
+
+          @keyframes gradientShift {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
+          .hero-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem 2rem;
+          }
+
           .hero-section {
-            padding: 3rem 2rem 1.5rem; /* Ridotto padding inferiore */
-            margin-bottom: 0; /* Ridotto margine inferiore */
-            border-radius: 8px;
+            padding: 3rem 2rem 1.5rem;
+            margin-bottom: 0;
           }
           
           .hero-content {
@@ -226,8 +380,145 @@ export default function Home() {
             left: 0;
             width: 100%;
             height: 8px;
-            background-color: rgba(75, 181, 67, 0.3); /* Verde evidenziatore */
+            background-color: rgba(233, 213, 94, 0.4); /* Giallo evidenziatore */
             z-index: -1;
+          }
+
+          .hero-events {
+            margin-top: 3rem;
+            padding: 1.5rem 1.75rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(43, 40, 40, 0.08);
+            border-radius: 14px;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(6px);
+          }
+
+          .event-card {
+            padding: 0.75rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            text-align: left;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+          }
+
+          .event-card:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -0.65rem;
+            top: 12%;
+            bottom: 12%;
+            width: 1px;
+            background: linear-gradient(180deg, rgba(43, 40, 40, 0) 0%, rgba(43, 40, 40, 0.12) 50%, rgba(43, 40, 40, 0) 100%);
+          }
+
+          .event-title {
+            font-size: 1.1rem;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            color: #2B2828;
+          }
+
+          .event-date {
+            font-size: 2.7rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #2B2828;
+          }
+
+          .event-location {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 0.75rem;
+            text-align: left;
+          }
+
+          .hosted-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+          }
+
+          .hosted-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: rgba(43, 40, 40, 0.6);
+          }
+
+          .location-logo {
+            height: 26px;
+            width: auto;
+            display: block;
+          }
+
+          .city-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.15rem;
+          }
+
+          .city-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: rgba(43, 40, 40, 0.6);
+          }
+
+          .location-city {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(43, 40, 40, 0.7);
+            line-height: 1.2;
+          }
+
+          .location-name {
+            text-transform: uppercase;
+          }
+
+          .event-card:not(.pending) .location-city {
+            color: #2B2828;
+          }
+
+          .event-card.pending {
+            opacity: 0.6;
+          }
+
+          .event-card.pending .event-title,
+          .event-card.pending .event-date {
+            color: rgba(43, 40, 40, 0.65);
+          }
+
+          .event-card.pending .location-city {
+            color: rgba(43, 40, 40, 0.5);
+          }
+
+          .event-card.pending .location-logo {
+            opacity: 0.5;
+          }
+
+          .event-card.pending .hosted-label {
+            color: rgba(43, 40, 40, 0.45);
+          }
+
+          .event-card.clickable {
+            cursor: pointer;
+          }
+
+          .event-card.clickable:hover .event-title,
+          .event-card.clickable:hover .event-date {
+            color: #D43D3D;
           }
           
           /* Indicatore di scroll con FontAwesome */
@@ -268,6 +559,34 @@ export default function Home() {
             .hero-heading {
               font-size: 2rem;
             }
+
+            .hero-events {
+              margin-top: 1.5rem;
+              padding: 1rem 1.1rem 1.2rem;
+              grid-template-columns: 1fr;
+              gap: 1rem;
+              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .event-card {
+              padding: 0.25rem 0;
+            }
+
+            .event-card:not(:last-child)::after {
+              display: none;
+            }
+
+            .event-title {
+              font-size: 1.05rem;
+            }
+
+            .event-date {
+              font-size: 2.3rem;
+            }
+
+            .event-location {
+              justify-content: flex-start;
+            }
             
             .scroll-indicator {
               margin: 0.5rem auto 2rem; /* Ridotto margine inferiore per mobile */
@@ -293,7 +612,6 @@ export default function Home() {
             }
           }
         `}</style>
-      </div>
     </Layout>
   );
 }

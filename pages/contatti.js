@@ -41,7 +41,7 @@ export default function Contatti() {
         <div className="container">
           {/* Link email centrale */}
           <div className="email-container">
-            <a href="mailto:contact@aimeetup.it">contact@aimeetup.it</a>
+            <a href="mailto:hello@aimeetup.it">hello@aimeetup.it</a>
           </div>
         </div>
       </div>

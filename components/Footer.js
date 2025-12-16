@@ -4,6 +4,10 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="footer">
+      <div className="footer-logo">
+        <img src="/ai-meetup-logo-black-rounded.svg" alt="AI Meetup Logo" className="logo" />
+      </div>
+
       <div className="footer-links">
         <a href="https://www.linkedin.com/company/ai-meetup-italia/" target="_blank" rel="noopener noreferrer" className="footer-link">
           LinkedIn
@@ -28,13 +32,28 @@ const Footer = () => {
       <style jsx>{`
         .footer {
           width: 100%;
-          padding: 2rem;
+          padding: 3rem 2rem 2rem;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 1.5rem;
           border-top: 1px solid rgba(43, 40, 40, 0.1);
-          background-color: #F5F5F5;
+          background: transparent;
+        }
+
+        .footer-logo {
+          margin-bottom: 1rem;
+        }
+
+        .footer-logo .logo {
+          height: 160px;
+          width: auto;
+          opacity: 0.9;
+          transition: opacity 0.3s ease;
+        }
+
+        .footer-logo .logo:hover {
+          opacity: 1;
         }
         
         .footer-links {
@@ -86,15 +105,19 @@ const Footer = () => {
           .footer {
             padding: 1.5rem 1rem;
           }
-          
+
+          .footer-logo .logo {
+            height: 100px;
+          }
+
           .footer-links {
             gap: 1rem;
           }
-          
+
           .mission-text {
             font-size: 0.85rem;
           }
-          
+
           .disclaimer-text {
             font-size: 0.7rem;
           }
