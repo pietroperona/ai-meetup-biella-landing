@@ -388,10 +388,11 @@ export default function Home() {
           }
 
           .hero-tagline {
-            font-size: 1.7rem;
+            font-size: 2.5rem;
             font-weight: 400;
             margin-bottom: 2.5rem;
             color: #333;
+            line-height: 1.4;
           }
 
           .hero-heading span {
@@ -592,7 +593,7 @@ export default function Home() {
             }
 
             .hero-tagline {
-              font-size: 1.4rem;
+              font-size: 2rem;
             }
 
             .hero-events {
@@ -642,7 +643,7 @@ export default function Home() {
             }
 
             .hero-tagline {
-              font-size: 1.2rem;
+              font-size: 1.5rem;
               margin-bottom: 2rem;
             }
 
