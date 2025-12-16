@@ -533,8 +533,8 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           }
 
           /* Stile per tutti i link (escluso CTA) */
-          .nav-item:not(.cta-item) .nav-link,
-          .nav-item:not(.cta-item) a {
+          .nav-list .nav-item:not(.cta-item) .nav-link,
+          .nav-list .nav-item:not(.cta-item) a {
             width: 100%;
             font-size: 1.9rem !important;
             font-weight: 500 !important;
@@ -546,6 +546,12 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
+          }
+
+          /* Forza anche sugli elementi nested */
+          .nav-list .nav-item:not(.cta-item) .nav-link *,
+          .nav-list .nav-item:not(.cta-item) a * {
+            font-size: inherit !important;
           }
 
           /* Reset stile contact-link su mobile */
