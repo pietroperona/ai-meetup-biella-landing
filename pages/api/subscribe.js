@@ -7,10 +7,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { email } = req.body;
+  const { name, email } = req.body;
 
-  if (!email) {
-    return res.status(400).json({ message: 'Email richiesta' });
+  if (!name || !email) {
+    return res.status(400).json({ message: 'Nome e email richiesti' });
   }
 
   try {
@@ -30,7 +30,10 @@ export default async function handler(req, res) {
     // Prepara i dati per Mailchimp
     const data = {
       email_address: email,
-      status: 'subscribed'
+      status: 'subscribed',
+      merge_fields: {
+        FNAME: name
+      }
     };
 
     // Configura l'autenticazione e la richiesta

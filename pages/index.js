@@ -8,10 +8,12 @@ import Layout from '../components/Layout';
 
 export default function Home() {
   // Stati e logica esistenti rimangono uguali
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [formStatus, setFormStatus] = useState({ message: '', isError: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormFixed, setIsFormFixed] = useState(false);
   const [formHeight, setFormHeight] = useState(0);
   const [isAtFooter, setIsAtFooter] = useState(false);
@@ -47,9 +49,9 @@ export default function Home() {
     // Logica del form rimane uguale
     e.preventDefault();
 
-    if (!email || !privacyAccepted) {
+    if (!name || !email || !privacyAccepted) {
       setFormStatus({
-        message: 'Per favore, inserisci l\'email e accetta la privacy policy.',
+        message: 'Per favore, compila tutti i campi e accetta la privacy policy.',
         isError: true
       });
       return;
@@ -63,16 +65,18 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ name, email })
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        setIsSubmitted(true);
         setFormStatus({
           message: 'Grazie per l\'iscrizione! Ti terremo aggiornato sui prossimi eventi.',
           isError: false
         });
+        setName('');
         setEmail('');
         setPrivacyAccepted(false);
       } else {
@@ -258,48 +262,67 @@ export default function Home() {
         className={`${styles.stickyFormWrapper} ${isFormFixed ? styles.isFixed : ''} ${isAtFooter ? styles.isDocked : ''}`}
       >
         <div className={`${styles.formContainer} ${styles.stickyFormCard}`}>
-          <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
+          {!isSubmitted ? (
+            <>
+              <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
 
-          <form onSubmit={handleSubmit} className={`${styles.form} ${styles.inlineForm}`}>
-            <div className={styles.inputGroup}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="La tua email"
-                className={styles.emailInput}
-                required
-              />
+              <form onSubmit={handleSubmit} className={`${styles.form} ${styles.inlineForm}`}>
+                <div className={styles.inputGroup}>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Il tuo nome"
+                    className={styles.emailInput}
+                    required
+                  />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="La tua email"
+                    className={styles.emailInput}
+                    required
+                  />
+                </div>
+
+                <div className={styles.checkboxGroup}>
+                  <input
+                    type="checkbox"
+                    id="privacy"
+                    checked={privacyAccepted}
+                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                    className={styles.checkbox}
+                    required
+                  />
+                  <label htmlFor="privacy" className={styles.privacyLabel}>
+                    Acconsento al trattamento dei miei dati personali come descritto nella <a href="/privacy-policy" className={styles.privacyLink}>Privacy Policy</a>
+                  </label>
+                </div>
+
+                {formStatus.message && formStatus.isError && (
+                  <div className={`${styles.formMessage} ${styles.errorMessage}`}>
+                    {formStatus.message}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className={styles.successContainer}>
+              <h2 className={styles.successTitle}>Grazie per l'iscrizione! Ti terremo aggiornato sui prossimi eventi.</h2>
             </div>
-
-            <div className={styles.checkboxGroup}>
-              <input
-                type="checkbox"
-                id="privacy"
-                checked={privacyAccepted}
-                onChange={(e) => setPrivacyAccepted(e.target.checked)}
-                className={styles.checkbox}
-                required
-              />
-              <label htmlFor="privacy" className={styles.privacyLabel}>
-                Acconsento al trattamento dei miei dati personali come descritto nella <a href="/privacy-policy" className={styles.privacyLink}>Privacy Policy</a>
-              </label>
-            </div>
-
-            {formStatus.message && (
-              <div className={`${styles.formMessage} ${formStatus.isError ? styles.errorMessage : styles.successMessage}`}>
-                {formStatus.message}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
-            </button>
-          </form>
+          )}
         </div>
       </div>
 

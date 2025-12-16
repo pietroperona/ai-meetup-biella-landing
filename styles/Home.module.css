@@ -207,6 +207,22 @@
   text-align: left;
 }
 
+/* Success container dopo l'iscrizione */
+.successContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2B2828;
+  margin: 0;
+}
+
 /* Nuovo wrapper per il manifesto */
 .manifestoWrapper {
   width: 100%;
