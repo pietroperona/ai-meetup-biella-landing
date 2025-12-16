@@ -1,6 +1,5 @@
 // components/Layout.js
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from './Footer';
 import Head from 'next/head';
@@ -41,6 +40,13 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
       // Se siamo in un'altra pagina, navighiamo alla home e poi scorriamo
       router.push('/#roadmap-section');
     }
+  };
+
+  // Handler per navigazione con tag <a> standard
+  const handleNavClick = (e, path) => {
+    e.preventDefault();
+    router.push(path);
+    setIsMenuOpen(false);
   };
 
   // Controlla se una voce di menu è attiva
@@ -114,9 +120,9 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
 
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
-          <Link href="/" className="logo-link">
+          <a href="/" className="logo-link" onClick={(e) => handleNavClick(e, '/')}>
             <img src="/ai-meetup-logo-nopayoff-black.svg" alt="AI Meetup Logo" className="logo" />
-          </Link>
+          </a>
 
           {/* Hamburger menu per mobile */}
           <button
@@ -133,19 +139,19 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
             <ul className="nav-list">
               <li className={`nav-item ${isActive('/') ? 'active' : ''}`}>
-                <Link href="/" className="nav-link">Home</Link>
+                <a href="/" className="nav-link" onClick={(e) => handleNavClick(e, '/')}>Home</a>
               </li>
               <li className="nav-item">
                 <a href="/#roadmap-section" className="nav-link" onClick={handleRoadmapClick}>Roadmap</a>
               </li>
               <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
-                <Link href="/progetto" className="nav-link">Progetto</Link>
+                <a href="/progetto" className="nav-link" onClick={(e) => handleNavClick(e, '/progetto')}>Progetto</a>
               </li>
               {/* <li className={`nav-item ${isActive('/diventa-partner') ? 'active' : ''}`}>
-                <Link href="/diventa-partner" className="nav-link">Diventa Partner</Link>
+                <a href="/diventa-partner" className="nav-link" onClick={(e) => handleNavClick(e, '/diventa-partner')}>Diventa Partner</a>
               </li> */}
               <li className={`nav-item ${isActive('/contatti') ? 'active' : ''}`}>
-                <Link href="/contatti" className="nav-link contact-link">Contatti</Link>
+                <a href="/contatti" className="nav-link contact-link" onClick={(e) => handleNavClick(e, '/contatti')}>Contatti</a>
               </li>
               <li className="nav-item cta-item">
                 <a href="https://luma.com/user/aimeetup" target="_blank" rel="noopener noreferrer" className="nav-link cta-button">
