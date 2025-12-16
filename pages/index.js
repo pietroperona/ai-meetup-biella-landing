@@ -720,7 +720,7 @@ export default function Home() {
             left: 0;
             width: 100%;
             height: 8px;
-            background-color: rgba(233, 213, 94, 0.4);
+            background-color: #80E5BB;
             z-index: -1;
           }
 
