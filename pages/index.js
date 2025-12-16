@@ -326,7 +326,9 @@ export default function Home() {
       <section ref={projectCtaRef} className="project-cta-section">
         <div className="project-cta-container">
           <h2 className="project-cta-title">
-            <span>Basta hype,</span> <span className="project-highlight">basta paura</span>. Noi scegliamo <span className="project-highlight">la curiosità</span>. <span>Scopri insieme a noi</span> <span className="project-highlight">l'intelligenza artificiale</span><span>!</span>
+            <span>Basta hype,</span> <span className="project-highlight">basta paura</span>.<br />
+            Noi scegliamo <span className="project-highlight">la curiosità</span>.<br />
+            <span>Scopriamo insieme</span> <span className="project-highlight">l'intelligenza artificiale</span><span>!</span>
           </h2>
           <a href="/progetto" className="project-cta-button">
             Scopri i nostri valori
@@ -685,10 +687,11 @@ export default function Home() {
             background-color: #fff;
             padding: 5rem 2rem;
             text-align: center;
+            width: 100%;
           }
 
           .project-cta-container {
-            max-width: 800px;
+            width: 100%;
             margin: 0 auto;
           }
 
