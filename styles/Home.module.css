@@ -61,6 +61,7 @@
 
 .stickyFormPlaceholder {
   width: 100%;
+  height: 0 !important;
   transition: height 0.2s ease;
 }
 
@@ -91,12 +92,14 @@
 
 .emailInput {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid #2B2828;
-  background-color: transparent;
-  font-family: 'Instrument Serif', serif;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(43, 40, 40, 0.18);
+  border-radius: 12px;
+  background-color: #fff;
+  font-family: 'Syne', sans-serif;
   font-size: 1rem;
   color: #2B2828;
+  box-sizing: border-box;
 }
 
 .emailInput::placeholder {
@@ -112,11 +115,13 @@
 .checkboxGroup {
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 
 .checkbox {
-  margin-top: 0.3rem;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.15rem;
   cursor: pointer;
 }
 
@@ -153,7 +158,7 @@
   background-color: #2B2828;
   color: #F5F5F5;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   font-family: 'Syne', sans-serif;
   font-size: 1rem;
   font-weight: 600;
@@ -161,6 +166,7 @@
   transition: background-color 0.2s ease, transform 0.2s ease;
   align-self: center;
   min-width: 150px;
+  border-radius: 12px;
 }
 
 .submitButton:hover {
@@ -261,8 +267,10 @@
   }
   
   .formContainer {
-    padding: 1.25rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    max-width: 100%;
+    padding: 1.25rem 1.1rem;
+    border: 1px solid rgba(43, 40, 40, 0.1);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
   }
 
   .stickyFormPlaceholder {
@@ -284,17 +292,50 @@
   .inlineForm {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   .formTitle {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .inlineForm .submitButton {
     width: 100%;
     align-self: center;
+    padding: 1rem 1.1rem;
+    border-radius: 12px;
+  }
+
+  .form {
+    gap: 0.8rem;
+  }
+
+  .inputGroup {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .checkboxGroup {
+    align-items: flex-start;
+    gap: 0.65rem;
+    width: 100%;
+  }
+
+  .privacyLabel {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .inlineForm .inputGroup,
+  .inlineForm .checkboxGroup,
+  .inlineForm .formMessage {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .stickyFormWrapper {
+    padding: 1rem 0.75rem 0;
   }
 }
 

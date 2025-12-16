@@ -17,11 +17,14 @@ export default function Home() {
   const [formHeight, setFormHeight] = useState(0);
   const [isAtFooter, setIsAtFooter] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
   
   // Riferimento per la sezione CTA progetto per lo scrolling
   const projectCtaRef = useRef(null);
   const heroRef = useRef(null);
   const stickyFormRef = useRef(null);
+  const autoSlideRef = useRef(null);
+  const touchStartXRef = useRef(null);
   const events = [
     {
       title: "Light Talk's + Networking",
@@ -43,6 +46,45 @@ export default function Home() {
       city: 'Biella'
     }
   ];
+
+  const clearAutoSlide = () => {
+    if (autoSlideRef.current) {
+      clearInterval(autoSlideRef.current);
+      autoSlideRef.current = null;
+    }
+  };
+
+  const nextEvent = () => setCurrentEventIndex((prev) => (prev + 1) % events.length);
+  const prevEvent = () => setCurrentEventIndex((prev) => (prev - 1 + events.length) % events.length);
+
+  const startAutoSlide = () => {
+    if (!isMobile || events.length <= 1) return;
+    clearAutoSlide();
+    autoSlideRef.current = setInterval(nextEvent, 4000);
+  };
+
+  const handleTouchStart = (e) => {
+    if (!isMobile) return;
+    touchStartXRef.current = e.touches[0].clientX;
+    clearAutoSlide();
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!isMobile || touchStartXRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const swipeThreshold = 40;
+
+    if (Math.abs(deltaX) > swipeThreshold) {
+      if (deltaX > 0) {
+        prevEvent();
+      } else {
+        nextEvent();
+      }
+    }
+
+    touchStartXRef.current = null;
+    startAutoSlide();
+  };
 
   const handleSubmit = async (e) => {
     // Logica del form rimane uguale
@@ -150,6 +192,17 @@ export default function Home() {
     };
   }, [isMobile]);
 
+  useEffect(() => {
+    if (!isMobile) {
+      clearAutoSlide();
+      setCurrentEventIndex(0);
+      return undefined;
+    }
+
+    startAutoSlide();
+    return clearAutoSlide;
+  }, [isMobile, events.length]);
+
   // Dati strutturati specifici per la homepage
   const homeStructuredData = {
     "@context": "https://schema.org",
@@ -159,7 +212,7 @@ export default function Home() {
     "url": "https://www.aimeetup.it/",
     "publisher": {
       "@type": "Organization",
-      "name": "AI Meetup Italia",
+      "name": "AI Meetup",
       "url": "https://www.aimeetup.it"
     },
     // resto del codice
@@ -202,43 +255,68 @@ export default function Home() {
           <div className="hero-section">
             <div className="hero-content">
               <h1 className="hero-heading">
-                <span>AI Meetup è un progetto</span> <span className="highlight">indipendente</span> <span>di</span> <span className="highlight">divulgazione</span> <span>sull'</span><span className="highlight">intelligenza artificiale.</span>
+                <span>AI Meetup è una community</span> <span className="highlight">indipendente</span> <span>di</span> <span className="highlight">divulgazione</span> <span>sull'</span><span className="highlight">intelligenza artificiale.</span>
               </h1>
-              <p className="hero-tagline">Inclusivo, aperto, locale.</p>
+              <p className="hero-tagline">Inclusiva, aperta, locale.</p>
 
               <div className="events-section">
                 <span className="events-label">Prossimi eventi</span>
-                <div className="hero-events">
-                  {events.map((event, index) => {
-                  const isPending = event.date === 'TBD';
-                  const CardTag = event.url ? 'a' : 'div';
-                  return (
-                    <CardTag
-                      key={event.title + index}
-                      className={`event-card ${isPending ? 'pending' : ''} ${event.url ? 'clickable' : ''}`}
-                      href={event.url || undefined}
-                      target={event.url ? '_blank' : undefined}
-                      rel={event.url ? 'noopener noreferrer' : undefined}
-                    >
-                      <div className="event-title">{event.title}</div>
-                      <div className="event-date">{event.date}</div>
-                      <div className="event-location">
-                        <div className="hosted-block">
-                          <span className="hosted-label">Hosted by:</span>
-                          <img
-                            src="/sellalab-dark.svg"
-                            alt="Sellalab"
-                            className="location-logo"
-                          />
+                <div className={`hero-events ${isMobile ? 'mobile-slider' : ''}`}>
+                  <div
+                    className="hero-events-track"
+                    style={{
+                      transform: isMobile ? `translateX(-${currentEventIndex * 100}%)` : 'none'
+                    }}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                  >
+                    {events.map((event, index) => {
+                    const isPending = event.date === 'TBD';
+                    const CardTag = event.url ? 'a' : 'div';
+                    return (
+                      <CardTag
+                        key={event.title + index}
+                        className={`event-card ${isPending ? 'pending' : ''} ${event.url ? 'clickable' : ''}`}
+                        href={event.url || undefined}
+                        target={event.url ? '_blank' : undefined}
+                        rel={event.url ? 'noopener noreferrer' : undefined}
+                      >
+                        <div className="event-title">{event.title}</div>
+                        <div className="event-date">{event.date}</div>
+                        <div className="event-location">
+                          <div className="hosted-block">
+                            <span className="hosted-label">Hosted by:</span>
+                            <img
+                              src="/sellalab-dark.svg"
+                              alt="Sellalab"
+                              className="location-logo"
+                            />
+                          </div>
+                          <div className="city-block">
+                            <span className="city-label">City:</span>
+                            <span className="location-city">{`${event.city} (BI)`}</span>
+                          </div>
                         </div>
-                        <div className="city-block">
-                          <span className="city-label">City:</span>
-                          <span className="location-city">{`${event.city} (BI)`}</span>
-                        </div>
-                      </div>
-                    </CardTag>
-                  );
-                })}
+                      </CardTag>
+                    );
+                  })}
+                  </div>
+
+                  {isMobile && events.length > 1 && (
+                    <div className="slider-dots">
+                      {events.map((_, dotIndex) => (
+                        <button
+                          key={`dot-${dotIndex}`}
+                          className={`slider-dot ${dotIndex === currentEventIndex ? 'active' : ''}`}
+                          onClick={() => {
+                            setCurrentEventIndex(dotIndex);
+                            startAutoSlide();
+                          }}
+                          aria-label={`Mostra evento ${dotIndex + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -260,7 +338,7 @@ export default function Home() {
         <div className={`${styles.formContainer} ${styles.stickyFormCard}`}>
           {!isSubmitted ? (
             <>
-              <h2 className={styles.formTitle}>Resta aggiornato sui prossimi eventi, unisciti al futuro.👇</h2>
+              <h2 className={styles.formTitle}>Iscriviti alla newsletter</h2>
 
               <form onSubmit={handleSubmit} className={`${styles.form} ${styles.inlineForm}`}>
                 <div className={styles.inputGroup}>
@@ -442,11 +520,15 @@ export default function Home() {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.25rem;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(43, 40, 40, 0.08);
-            border-radius: 14px;
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(6px);
+          background: rgba(255, 255, 255, 0.6);
+          border: 1px solid rgba(43, 40, 40, 0.08);
+          border-radius: 14px;
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(6px);
+        }
+
+          .hero-events-track {
+            display: contents;
           }
 
           .event-card {
@@ -477,6 +559,11 @@ export default function Home() {
             font-weight: 600;
             font-family: 'Syne', sans-serif;
             color: #2B2828;
+            line-height: 1.25;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            white-space: normal;
+            hyphens: auto;
           }
 
           .event-date {
@@ -572,6 +659,28 @@ export default function Home() {
           .event-card.clickable:hover .event-date {
             color: #D43D3D;
           }
+
+          .slider-dots {
+            display: none;
+            justify-content: center;
+            gap: 0.55rem;
+            margin-top: 0.75rem;
+          }
+
+          .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(43, 40, 40, 0.2);
+            transition: all 0.2s ease;
+            padding: 0;
+          }
+
+          .slider-dot.active {
+            width: 18px;
+            background: #2B2828;
+          }
           
           /* Indicatore di scroll con FontAwesome */
           .scroll-indicator {
@@ -633,8 +742,30 @@ export default function Home() {
               box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             }
 
+            .hero-events.mobile-slider {
+              display: block;
+              overflow: hidden;
+              padding: 1rem 1.1rem 1.8rem;
+            }
+
+            .hero-events.mobile-slider .hero-events-track {
+              display: flex;
+              width: 100%;
+              gap: 0;
+              transition: transform 0.35s ease;
+            }
+
             .event-card {
               padding: 0.25rem 0;
+            }
+
+            .hero-events.mobile-slider .event-card {
+              width: 100%;
+              min-width: 100%;
+              flex: 0 0 100%;
+              padding: 0.35rem 0;
+              box-sizing: border-box;
+              margin: 0;
             }
 
             .event-card:not(:last-child)::after {
@@ -651,6 +782,10 @@ export default function Home() {
 
             .event-location {
               justify-content: flex-start;
+            }
+
+            .hero-events.mobile-slider .slider-dots {
+              display: flex;
             }
             
             .scroll-indicator {
@@ -685,13 +820,14 @@ export default function Home() {
           /* Sezione CTA Progetto */
           .project-cta-section {
             background-color: #fff;
-            padding: 5rem 2rem;
+            padding: 5.5rem 2.5rem 5.5rem;
             text-align: center;
             width: 100%;
           }
 
           .project-cta-container {
             width: 100%;
+            max-width: 980px;
             margin: 0 auto;
           }
 
@@ -699,7 +835,7 @@ export default function Home() {
             font-size: 2.2rem;
             line-height: 1.4;
             font-weight: 500;
-            margin-bottom: 3rem;
+            margin-bottom: 2.25rem;
             color: #222;
           }
 
@@ -728,7 +864,7 @@ export default function Home() {
             display: inline-block;
             background-color: #2B2828;
             color: #F5F5F5;
-            padding: 1rem 2.5rem;
+            padding: 0.95rem 2.35rem;
             font-family: 'Syne', sans-serif;
             font-size: 1.1rem;
             font-weight: 600;

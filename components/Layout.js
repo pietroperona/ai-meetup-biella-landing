@@ -255,7 +255,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
 
         .nav-link {
           color: #2B2828;
-          font-size: 1rem;
+          font-size: 1.1rem;
           text-decoration: none;
           font-weight: 500;
           padding: 0.5rem 0;

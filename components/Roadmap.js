@@ -1,80 +1,33 @@
-// components/Roadmap.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const Roadmap = () => {
-  // Dati della roadmap con descrizioni
-  const timelineEvents = [
-    { 
-      date: 'Febbraio 2025', 
-      title: 'Partenza attività', 
-      status: 'completed',
-      description: "Avvio delle attività organizzative e definizione della struttura operativa dell'associazione a livello nazionale.",
-      hasDetails: true
+  const roadmapRef = useRef(null);
+
+  const milestones = [
+    {
+      date: 'Settembre 2025',
+      title: 'Kickoff del team',
+      description: 'Inizio delle attività organizzative per il team di AI Meetup.',
+      status: 'completed'
     },
-    { 
-      date: 'Marzo 2025', 
-      title: 'Call for partner', 
-      status: 'in-progress',
-      description: "Lancio della campagna di ricerca partner per creare una rete di collaborazioni a livello nazionale e locale.",
-      hasDetails: true
+    {
+      date: 'Ottobre 2025',
+      title: 'AI Meetup #0 · Biella',
+      description: 'Primo meetup inaugurale con community locale e presentazione del progetto.',
+      status: 'completed'
     },
-    { 
-      date: 'Aprile 2025', 
-      title: 'Manifesto (Beta)', 
-      status: 'completed',
-      description: "Pubblicazione della prima versione del manifesto con gli intenti e gli obiettivi strategici della community.",
-      hasDetails: true
-    },
-    { 
-      date: 'Aprile 2025', 
-      title: 'Firma AI Pact EU Commission', 
-      status: 'in-progress',
-      description: `Adesione all'<a href="https://digital-strategy.ec.europa.eu/it/policies/ai-pact" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">iniziativa europea</a> che promuove l'implementazione responsabile della normativa sull'IA e l'etica digitale. Adesione al Pillar I e II.`,
-      hasDetails: true
-    },
-    { 
-      date: 'Maggio 2025', 
-      title: 'Primo consiglio direttivo', 
-      status: 'upcoming',
-      hasDetails: false
-    },
-    { 
-      date: 'Maggio 2025', 
-      title: 'Call for sponsor', 
-      status: 'upcoming',
-      description: "Apertura delle candidature per le aziende interessate a supportare le attività e gli eventi della community.",
-      hasDetails: true
-    },
-    { 
-      date: 'Settembre 2025', 
-      title: 'Primo meetup (Biella)', 
-      status: 'upcoming',
-      description: "Organizzazione del primo evento pubblico della community nella città di Biella, con focus sull'IA applicata.",
-      hasDetails: true
-    },
-    { 
-      date: 'Novembre 2025', 
-      title: 'Sviluppo community locali', 
-      status: 'upcoming',
-      description: "Espansione delle attività nelle città Italiane.",
-      hasDetails: true
+    {
+      date: '15 gennaio 2026',
+      title: 'Meetup #1 · Light Talk + aperitivo',
+      description: 'Talk, Q&A e networking aperto con ingresso libero.',
+      status: 'upcoming'
     }
   ];
 
-  // Stato per tenere traccia degli elementi espansi
-  const [expandedItems, setExpandedItems] = useState({});
-  const roadmapRef = useRef(null);
-
-  // Funzione per cambiare lo stato di espansione di un elemento
-  const toggleExpand = (index) => {
-    setExpandedItems(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
-
-  // Semplice fade-in effect quando si fa lo scrolling alla roadmap
   useEffect(() => {
+    const section = roadmapRef.current;
+    if (!section) return undefined;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -83,405 +36,281 @@ const Roadmap = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
-    
-    if (roadmapRef.current) {
-      observer.observe(roadmapRef.current);
-    }
-    
-    return () => {
-      if (roadmapRef.current) {
-        observer.unobserve(roadmapRef.current);
-      }
-    };
+
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section ref={roadmapRef} className="roadmap-section">
       <div className="roadmap-container">
-        <h2 className="roadmap-title">La nostra roadmap</h2>
-        
-        <div className="timeline">
-          {timelineEvents.map((event, index) => (
-            <div key={index} className={`timeline-item ${event.status}`}>
-              <div className="timeline-marker">
-                <div className="marker-outer">
-                  <div className="marker-inner"></div>
-                </div>
+        <div className="roadmap-header">
+          <p className="eyebrow">Roadmap</p>
+          <h2 className="headline">Il percorso di AI Meetup</h2>
+          <p className="lead">
+            Una timeline chiara con le tappe chiave che portano dalla fase organizzativa ai primi eventi aperti.
+          </p>
+        </div>
+
+        <div className="roadmap-track">
+          {milestones.map((item, index) => (
+            <div key={item.date} className={`roadmap-item ${item.status}`}>
+              <div className="marker">
+                <span className="dot" />
               </div>
-              <div className="timeline-content">
-                <div className="event-header">
-                  <div className="event-date">{event.date}</div>
-                  <div className="event-title">{event.title}</div>
-                  {event.hasDetails && (
-                    <button 
-                      className={`expand-button ${expandedItems[index] ? 'expanded' : ''}`}
-                      onClick={() => toggleExpand(index)}
-                      aria-expanded={expandedItems[index]}
-                      aria-label={expandedItems[index] ? "Nascondi dettagli" : "Mostra dettagli"}
-                    >
-                      {expandedItems[index] ? '−' : '+'}
-                    </button>
-                  )}
-                </div>
-                
-                <div className="event-status">
-                  {event.status === 'completed' && (
-                    <span className="status-badge completed">Completato</span>
-                  )}
-                  {event.status === 'in-progress' && (
-                    <span className="status-badge in-progress">In corso</span>
-                  )}
-                  {event.status === 'upcoming' && (
-                    <span className="status-badge upcoming">In arrivo</span>
-                  )}
-                </div>
-                
-                {event.hasDetails && (
-                  <div className={`event-description ${expandedItems[index] ? 'visible' : ''}`}>
-                    <p dangerouslySetInnerHTML={{ __html: event.description }} />
-                  </div>
-                )}
+
+              <div className="card">
+                <div className="date">{item.date}</div>
+                <div className="title">{item.title}</div>
+                <p className="description">{item.description}</p>
               </div>
             </div>
           ))}
-          
-          <div className="timeline-line"></div>
         </div>
       </div>
-      
+
       <style jsx>{`
         .roadmap-section {
-          padding: 4rem 0;
-          margin: 0 auto;
           width: 100%;
-          background-color: #F5F5F5;
+          padding: 5rem 0;
+          background: radial-gradient(circle at 20% 20%, rgba(212, 61, 61, 0.08), transparent 30%),
+            radial-gradient(circle at 80% 10%, rgba(43, 40, 40, 0.08), transparent 25%),
+            #f7f6f2;
           opacity: 0;
           transform: translateY(20px);
-          transition: opacity 0.8s ease, transform 0.8s ease;
+          transition: opacity 0.7s ease, transform 0.7s ease;
         }
-        
+
         .roadmap-section.visible {
           opacity: 1;
           transform: translateY(0);
         }
-        
+
         .roadmap-container {
-          padding: 3rem 2rem;
-          max-width: 900px;
+          max-width: 1100px;
           margin: 0 auto;
-          position: relative;
+          padding: 0 1.5rem;
         }
-        
-        .roadmap-title {
+
+        .roadmap-header {
           text-align: center;
-          font-size: 1.8rem;
-          margin-bottom: 3.5rem;
-          font-weight: 500;
-          position: relative;
+          margin-bottom: 2.5rem;
         }
-        
-        .roadmap-title:after {
+
+        .eyebrow {
+          font-size: 0.85rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(43, 40, 40, 0.65);
+          margin: 0 0 0.5rem;
+          font-weight: 600;
+        }
+
+        .headline {
+          font-size: 2.2rem;
+          margin: 0 0 0.75rem;
+          color: #2b2828;
+        }
+
+        .lead {
+          max-width: 640px;
+          margin: 0 auto;
+          color: rgba(43, 40, 40, 0.75);
+          line-height: 1.6;
+        }
+
+        .roadmap-track {
+          display: flex;
+          gap: 1.75rem;
+          position: relative;
+          padding: 1.5rem 0.25rem 0.5rem;
+          overflow: visible;
+          scroll-snap-type: none;
+          align-items: stretch;
+        }
+
+        .roadmap-track::before {
           content: '';
           position: absolute;
-          bottom: -1rem;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 70px;
-          height: 3px;
-          background-color: #D43D3D;
+          left: 0;
+          right: 0;
+          top: 1.7rem;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(212, 61, 61, 0.5), rgba(43, 40, 40, 0.12));
+          border-radius: 999px;
+          z-index: 0;
         }
-        
-        .timeline {
+
+        .roadmap-item {
+          flex: 1 1 0;
+          min-width: 260px;
+          max-width: 360px;
           position: relative;
-          padding: 1rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 100%;
         }
-        
-        .timeline-line {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 1.25rem;
-          width: 2px;
-          background-color: rgba(43, 40, 40, 0.15);
-          transform: translateX(-50%);
+
+        .roadmap-item.completed .dot {
+          border-color: #2d7a2a;
+          box-shadow: 0 6px 18px rgba(45, 122, 42, 0.25);
+        }
+
+        .roadmap-item.upcoming .dot {
+          border-color: #d43d3d;
+          box-shadow: 0 6px 18px rgba(212, 61, 61, 0.2);
+          opacity: 0.9;
+        }
+
+        .marker {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0 0.5rem;
+          height: 20px;
           z-index: 1;
+          width: 100%;
         }
-        
-        .timeline-item {
-          display: flex;
-          margin-bottom: 2.5rem;
-          position: relative;
+
+        .dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 3px solid #d43d3d;
+          background: #fff;
+          box-shadow: 0 6px 18px rgba(212, 61, 61, 0.25);
           z-index: 2;
         }
-        
-        .timeline-item:last-child {
-          margin-bottom: 0;
+
+        .connector {
+          display: none;
         }
-        
-        .timeline-marker {
-          flex: 0 0 2.5rem;
-          position: relative;
-          display: flex;
-          justify-content: center;
+
+        .card {
+          background: white;
+          border-radius: 16px;
+          padding: 1.25rem 1.35rem;
+          box-shadow: 0 16px 38px rgba(0, 0, 0, 0.08);
+          border: 1px solid rgba(43, 40, 40, 0.06);
+          display: grid;
+          gap: 0.4rem;
+          height: 100%;
+          min-height: 220px;
+          box-sizing: border-box;
+          width: 100%;
+          align-content: start;
         }
-        
-        .marker-outer {
-          width: 1.8rem;
-          height: 1.8rem;
-          border-radius: 50%;
-          display: flex;
+
+        .roadmap-item.completed .card {
+          border-color: rgba(45, 122, 42, 0.14);
+        }
+
+        .roadmap-item.upcoming .card {
+          border-color: rgba(212, 61, 61, 0.2);
+          box-shadow: 0 16px 32px rgba(212, 61, 61, 0.08);
+          background: linear-gradient(135deg, rgba(212, 61, 61, 0.04), rgba(255, 255, 255, 0.9));
+        }
+
+        .date {
+          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          transition: all 0.3s ease;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          position: relative;
-          z-index: 2;
-        }
-        
-        .timeline-item.completed .marker-outer {
-          background-color: #4BB543; /* Verde per completato */
-        }
-        
-        .timeline-item.in-progress .marker-outer {
-          background-color: #F2C94C; /* Giallo per in corso */
-        }
-        
-        .timeline-item.upcoming .marker-outer {
-          background-color: #2B2828;
-          opacity: 0.7;
-        }
-        
-        .marker-inner {
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-          background-color: #F5F5F5;
-        }
-        
-        .timeline-content {
-          flex: 1;
-          background-color: white;
-          padding: 1.25rem 1.5rem;
-          border-radius: 6px;
-          box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
-          margin-left: 1.5rem;
-          position: relative;
-          transition: all 0.3s ease;
-        }
-        
-        .timeline-item.completed .timeline-content {
-          border-left: 4px solid #4BB543; /* Verde per completato */
-        }
-        
-        .timeline-item.in-progress .timeline-content {
-          border-left: 4px solid #F2C94C; /* Giallo per avviato */
-        }
-        
-        .timeline-item.upcoming .timeline-content {
-          border-left: 4px solid #2B2828;
-          opacity: 0.9;
-        }
-        
-        .event-header {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: flex-start;
-          position: relative;
-          margin-bottom: 0.75rem;
-        }
-        
-        .event-date {
+          gap: 0.45rem;
+          padding: 0.35rem 0.75rem;
+          background: rgba(212, 61, 61, 0.08);
+          color: #d43d3d;
+          font-weight: 700;
+          border-radius: 999px;
           font-size: 0.9rem;
-          font-weight: 500;
-          color: #2B2828;
-          opacity: 0.8;
-          margin-bottom: 0.5rem;
-          flex: 0 0 100%;
+          letter-spacing: 0.3px;
+          width: fit-content;
         }
-        
-        .timeline-item.completed .event-date {
-          color: #4BB543; /* Verde per completato */
-          opacity: 1;
+
+        .title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          font-family: 'Syne', sans-serif;
+          color: #2b2828;
+          line-height: 1.35;
         }
-        
-        .timeline-item.in-progress .event-date {
-          color: #F2C94C; /* Giallo per avviato */
-          opacity: 1;
-        }
-        
-        .event-title {
-          font-size: 1.2rem;
-          font-weight: 500;
-          margin-bottom: 0.5rem;
-          margin-right: auto;
-          flex: 1;
-        }
-        
-        .expand-button {
-          background: none;
-          border: 1px solid rgba(43, 40, 40, 0.15);
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          font-size: 1.5rem;
-          font-weight: bold;
-          color: #2B2828;
-          transition: all 0.2s ease;
-          margin-left: 10px;
-          background-color: rgba(0, 0, 0, 0.05);
-          padding-bottom: 4px; /* Aggiustamento per centrare meglio il simbolo + */
-        }
-        
-        .expand-button:hover {
-          background-color: rgba(0, 0, 0, 0.1);
-          transform: scale(1.1);
-        }
-        
-        .expand-button.expanded {
-          transform: rotate(0deg);
-          background-color: rgba(212, 61, 61, 0.15);
-          color: #D43D3D;
-          border-color: rgba(212, 61, 61, 0.3);
-        }
-        
-        .event-status {
-          margin-top: 0.75rem;
-          margin-bottom: 0.75rem;
-        }
-        
-        .status-badge {
-          display: inline-block;
-          font-size: 0.75rem;
-          padding: 0.25rem 0.75rem;
-          border-radius: 2rem;
-          font-weight: 500;
-        }
-        
-        .status-badge.completed {
-          background-color: rgba(75, 181, 67, 0.1);
-          color: #4BB543;
-        }
-        
-        .status-badge.in-progress {
-          background-color: rgba(242, 201, 76, 0.1);
-          color: #D4A03D;
-        }
-        
-        .status-badge.upcoming {
-          background-color: rgba(43, 40, 40, 0.1);
-          color: #2B2828;
-        }
-        
-        .event-description {
-          max-height: 0;
-          overflow: hidden;
-          opacity: 0;
-          transition: all 0.3s ease;
-          margin-top: 0;
-          border-top: 1px solid transparent;
-        }
-        
-        .event-description.visible {
-          max-height: 200px;
-          opacity: 1;
-          margin-top: 1rem;
-          padding-top: 1rem;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .event-description p {
+
+        .description {
           margin: 0;
-          font-size: 0.95rem;
+          color: rgba(43, 40, 40, 0.72);
           line-height: 1.6;
-          color: #2B2828;
-          opacity: 0.9;
+          font-size: 1rem;
         }
-        
-        /* Media query per schermi più piccoli */
-        @media (max-width: 768px) {
-          .roadmap-container {
-            padding: 2rem 1.5rem;
+
+        @media (max-width: 900px) {
+          .headline {
+            font-size: 1.9rem;
           }
-          
-          .roadmap-title {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-          }
-          
-          .roadmap-title:after {
-            width: 60px;
-            height: 3px;
-          }
-          
-          .timeline-item {
-            margin-bottom: 2rem;
-          }
+
         }
-        
-        @media (max-width: 600px) {
-          .roadmap-container {
-            padding: 2rem 1rem;
+
+        @media (max-width: 640px) {
+          .roadmap-section {
+            padding: 4rem 0;
           }
-          
-          .roadmap-title {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
+
+          .headline {
+            font-size: 1.65rem;
           }
-          
-          .roadmap-title:after {
-            width: 50px;
-            height: 2px;
+
+          .lead {
+            font-size: 0.95rem;
           }
-          
-          /* Aggiustamenti specifici per mobile */
-          .timeline-line {
-            left: 1rem;
+
+          .roadmap-track {
+            position: relative;
+            display: flex;
+            padding: 0.25rem 0.25rem 0.75rem;
+            flex-direction: column;
+            gap: 1.25rem;
           }
-          
-          .timeline-marker {
-            flex: 0 0 2rem;
+
+          .roadmap-track::before {
+            top: 0;
+            bottom: 0;
+            left: 14px;
+            right: auto;
+            width: 2px;
+            height: auto;
+            background: linear-gradient(180deg, rgba(212, 61, 61, 0.5), rgba(43, 40, 40, 0.12));
           }
-          
-          .marker-outer {
-            width: 1.5rem;
-            height: 1.5rem;
+
+          .roadmap-item {
+            width: 100%;
+            flex-direction: row;
+            gap: 0.75rem;
+            max-width: none;
           }
-          
-          .marker-inner {
-            width: 0.4rem;
-            height: 0.4rem;
+
+          .marker {
+            padding: 0.5rem 0 0.35rem;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
           }
-          
-          .timeline-content {
-            padding: 1rem;
-            margin-left: 1rem;
+
+          .connector {
+            margin-left: 0;
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(180deg, rgba(212, 61, 61, 0.65), rgba(43, 40, 40, 0.15));
           }
-          
-          .event-title {
-            font-size: 1rem;
+
+          .card {
+            padding: 1.1rem 1.1rem;
+            min-height: 200px;
+            width: 100%;
           }
-          
-          .expand-button {
-            width: 24px;
-            height: 24px;
+
+          .title {
             font-size: 1.2rem;
-          }
-          
-          .status-badge {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-          }
-          
-          .event-description p {
-            font-size: 0.85rem;
-            line-height: 1.5;
           }
         }
       `}</style>
