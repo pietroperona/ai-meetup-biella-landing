@@ -202,15 +202,9 @@ export default function Home() {
           <div className="hero-section">
             <div className="hero-content">
               <h1 className="hero-heading">
-                {/* <span>Costruiamo</span>
-                <span className="highlight">ponti</span>
-                <span>tra le persone e</span>
-                <span className="highlight">l'intelligenza artificiale</span>
-                <span>, abbattendo</span>
-                <span className="highlight">barriere</span>
-                <span>tecniche e culturali.</span> */}
-                <span>Basta hype,</span><span className="highlight">basta paura</span>. Noi scegliamo <span className="highlight">la curiosità</span>. <span>Scopri insieme a noi</span><span className="highlight">l'intellgenza artificiale</span><span>!</span>
+                <span>AI Meetup è un progetto</span> <span className="highlight">indipendente</span> <span>di</span> <span className="highlight">divulgazione</span> <span>sull'</span><span className="highlight">intelligenza artificiale</span><span>.</span>
               </h1>
+              <p className="hero-tagline">Inclusivo, aperto, locale.</p>
 
               <div className="hero-events">
                 {events.map((event, index) => {
@@ -329,9 +323,8 @@ export default function Home() {
       <section ref={projectCtaRef} className="project-cta-section">
         <div className="project-cta-container">
           <h2 className="project-cta-title">
-            AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale.
+            <span>Basta hype,</span> <span className="project-highlight">basta paura</span>. Noi scegliamo <span className="project-highlight">la curiosità</span>. <span>Scopri insieme a noi</span> <span className="project-highlight">l'intelligenza artificiale</span><span>!</span>
           </h2>
-          <p className="project-cta-tagline">Inclusivo, aperto, locale.</p>
           <a href="/progetto" className="project-cta-button">
             Scopri i nostri valori
           </a>
@@ -391,18 +384,26 @@ export default function Home() {
             line-height: 1.4;
             font-weight: 500;
             letter-spacing: -0.5px;
+            margin-bottom: 2rem;
           }
-          
+
+          .hero-tagline {
+            font-size: 1.7rem;
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            color: #333;
+          }
+
           .hero-heading span {
             display: inline;
             margin: 0 0.2rem;
           }
-          
+
           .highlight {
             position: relative;
             z-index: 1;
           }
-          
+
           .highlight::after {
             content: '';
             position: absolute;
@@ -585,9 +586,13 @@ export default function Home() {
             .hero-section {
               padding: 4rem 1.5rem 1rem; /* Ridotto padding inferiore per mobile */
             }
-            
+
             .hero-heading {
               font-size: 2rem;
+            }
+
+            .hero-tagline {
+              font-size: 1.4rem;
             }
 
             .hero-events {
@@ -636,6 +641,11 @@ export default function Home() {
               font-size: 1.5rem;
             }
 
+            .hero-tagline {
+              font-size: 1.2rem;
+              margin-bottom: 2rem;
+            }
+
             .highlight::after {
               height: 6px;
               bottom: 3px;
@@ -658,15 +668,29 @@ export default function Home() {
             font-size: 2.2rem;
             line-height: 1.4;
             font-weight: 500;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             color: #222;
           }
 
-          .project-cta-tagline {
-            font-size: 1.7rem;
-            font-weight: 400;
-            margin-bottom: 3rem;
-            color: #333;
+          .project-cta-title span {
+            display: inline;
+            margin: 0 0.2rem;
+          }
+
+          .project-highlight {
+            position: relative;
+            z-index: 1;
+          }
+
+          .project-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(233, 213, 94, 0.4);
+            z-index: -1;
           }
 
           .project-cta-button {
