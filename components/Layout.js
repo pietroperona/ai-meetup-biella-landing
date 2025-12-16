@@ -8,7 +8,6 @@ import Head from 'next/head';
 const Layout = ({ children, title, description, canonicalUrl, ogImage, structuredData }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMeetupOpen, setIsMeetupOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Gestisce lo scroll della pagina per aggiungere effetti all'header
@@ -55,20 +54,6 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
   useEffect(() => {
     setIsMenuOpen(false);
   }, [router.pathname]);
-
-  // Gestisce il click fuori dal menu meetup per chiuderlo
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isMeetupOpen && !event.target.closest('.dropdown-container')) {
-        setIsMeetupOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [isMeetupOpen]);
 
   const defaultTitle = "AI Meetup | Community italiana sull'Intelligenza Artificiale";
   const defaultDescription = "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane.";
@@ -130,7 +115,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
           <Link href="/" className="logo-link">
-            <img src="/logo-ai-meetup.svg" alt="AI Meetup Logo" className="logo" />
+            <img src="/ai-meetup-logo-nopayoff-black.svg" alt="AI Meetup Logo" className="logo" />
           </Link>
 
           {/* Hamburger menu per mobile */}
@@ -151,34 +136,10 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
                 <Link href="/" className="nav-link">Home</Link>
               </li>
               <li className="nav-item">
-                <a href="/#roadmap-section" className="nav-link" onClick={handleRoadmapClick}>
-                  Roadmap
-                </a>
+                <a href="/#roadmap-section" className="nav-link" onClick={handleRoadmapClick}>Roadmap</a>
               </li>
               <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
                 <Link href="/progetto" className="nav-link">Progetto</Link>
-              </li>
-              <li className={`nav-item dropdown-container ${isActive('/meetup') ? 'active' : ''}`}>
-                <button
-                  className={`nav-link dropdown-trigger ${isMeetupOpen ? 'open' : ''}`}
-                  onClick={() => setIsMeetupOpen(!isMeetupOpen)}
-                  aria-expanded={isMeetupOpen}
-                  aria-haspopup="true"
-                >
-                  Meetup <span className="dropdown-arrow"></span>
-                </button>
-                <ul className={`dropdown-menu ${isMeetupOpen ? 'open' : ''}`}>
-                  <li className="dropdown-item">
-                    <Link href="/meetup/biella" className="dropdown-link">
-                      <span className="city-dot"></span>Biella
-                    </Link>
-                  </li>
-                  <li className="dropdown-item">
-                    <Link href="/contatti" className="dropdown-link add-city">
-                      <span className="add-icon">+</span>Candida la tua città
-                    </Link>
-                  </li>
-                </ul>
               </li>
               {/* <li className={`nav-item ${isActive('/diventa-partner') ? 'active' : ''}`}>
                 <Link href="/diventa-partner" className="nav-link">Diventa Partner</Link>
@@ -186,12 +147,17 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
               <li className={`nav-item ${isActive('/contatti') ? 'active' : ''}`}>
                 <Link href="/contatti" className="nav-link contact-link">Contatti</Link>
               </li>
+              <li className="nav-item cta-item">
+                <a href="https://luma.com/user/aimeetup" target="_blank" rel="noopener noreferrer" className="nav-link cta-button">
+                  Scopri i prossimi eventi
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
       </header>
 
-      <main className="main-content">
+      <main className={`main-content ${router.pathname === '/' ? 'home-page' : ''}`}>
         {children}
       </main>
 
@@ -209,23 +175,25 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           top: 0;
           left: 0;
           width: 100%;
-          background-color: rgba(245, 245, 245, 0.96);
-          backdrop-filter: blur(10px);
+          background: transparent;
+          backdrop-filter: none;
           z-index: 1000;
           transition: all 0.3s ease;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+          box-shadow: none;
         }
 
         .header.scrolled {
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
         }
 
         .header-container {
-          display: flex;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
           align-items: center;
           padding: 1rem 2rem;
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
           width: 100%;
         }
@@ -233,6 +201,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
         .logo-link {
           display: block;
           z-index: 1001;
+          justify-self: start;
         }
 
         .logo {
@@ -277,31 +246,18 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           transform: translateY(-9px) rotate(-45deg);
         }
 
-        .nav {
-          display: flex;
-          align-items: center;
-        }
-
-        .nav-list {
-          display: flex;
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          gap: 2rem;
-          align-items: center;
-        }
-
         .nav-item {
           position: relative;
           display: flex;
           align-items: center;
+          font-family: 'Syne', sans-serif;
         }
 
         .nav-link {
           color: #2B2828;
-          font-size: 0.95rem;
+          font-size: 1rem;
           text-decoration: none;
-          font-weight: 400;
+          font-weight: 500;
           padding: 0.5rem 0;
           transition: color 0.2s ease;
           display: flex;
@@ -309,7 +265,11 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           cursor: pointer;
           border: none;
           background: none;
-          font-family: 'Azeret Mono', monospace;
+          font-family: 'Syne', sans-serif !important;
+        }
+
+        .nav-link * {
+          font-family: 'Syne', sans-serif !important;
         }
 
         .nav-link:hover, .dropdown-link:hover {
@@ -408,9 +368,15 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           padding: 0.8rem 1.5rem;
           text-decoration: none;
           font-size: 0.9rem;
+          font-family: 'Syne', sans-serif !important;
+          font-weight: 500;
           transition: all 0.2s ease;
           width: 100%;
           position: relative;
+        }
+
+        .dropdown-link * {
+          font-family: 'Syne', sans-serif !important;
         }
 
         .dropdown-link:hover {
@@ -458,18 +424,73 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           border-color: #D43D3D;
         }
 
+        .nav {
+          grid-column: 2;
+          display: flex;
+          align-items: center;
+          font-family: 'Syne', sans-serif;
+        }
+
+        .nav-list {
+          display: flex;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          gap: 2rem;
+          align-items: center;
+          font-family: 'Syne', sans-serif;
+        }
+
+        /* Pulsante CTA "Scopri i prossimi eventi" */
+        .cta-item {
+          position: absolute;
+          right: 2rem;
+        }
+
+        .cta-button {
+          padding: 0.6rem 1.2rem !important;
+          background: #2B2828;
+          color: white !important;
+          border-radius: 6px;
+          font-weight: 600 !important;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(43, 40, 40, 0.3);
+        }
+
+        .cta-button:hover {
+          background: #D43D3D;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(212, 61, 61, 0.4);
+          color: white !important;
+        }
+
         .main-content {
-          margin-top: 72px; /* Altezza dell'header */
           flex: 1;
+        }
+
+        .main-content:not(.home-page) {
+          margin-top: 72px; /* Altezza dell'header */
         }
 
         @media (max-width: 768px) {
           .header-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
             padding: 1rem;
+            position: relative;
+          }
+
+          .logo-link {
+            position: static;
+            justify-self: unset;
           }
 
           .hamburger {
             display: flex;
+            position: relative;
+            z-index: 1001;
           }
 
           .nav {
@@ -501,21 +522,75 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           .nav-item {
             width: 100%;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 0.5rem 0;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: stretch !important;
           }
 
-          .nav-link {
-            width: 100%;
-            padding: 1rem 0;
-            font-size: 1.1rem;
+          .nav-item:not(.cta-item) {
+            height: 65px !important;
+            min-height: 65px !important;
+            max-height: 65px !important;
+            overflow: hidden !important;
           }
 
-          .contact-link {
-            display: inline-block;
-            padding: 0.8rem 1.2rem;
-            margin-top: 1rem;
-            border: 1px solid rgba(43, 40, 40, 0.3);
-            text-align: center;
+          /* Forza tutti i link e i loro nested elements ad avere lo stesso stile */
+          .nav-list li,
+          .nav-list .nav-item,
+          .nav-list .nav-link,
+          .nav-list .contact-link,
+          .nav-list a,
+          .nav-list a > *,
+          .nav-list * {
+            font-size: 1.3rem !important;
+            font-weight: 500 !important;
+            font-family: 'Syne', sans-serif !important;
+            line-height: 1.95rem !important;
+            letter-spacing: 0 !important;
+            display: block !important;
+          }
+
+          .nav-list .nav-link,
+          .nav-list .contact-link,
+          .nav-list a {
+            width: 100% !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            text-align: left !important;
+            border: none !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            transform: none !important;
+            height: 100% !important;
+          }
+
+          /* CTA button in basso su mobile */
+          .cta-item {
+            position: static !important;
+            margin-top: auto !important;
+            padding-top: 2rem !important;
+            width: 100% !important;
+          }
+
+          .cta-item .cta-button {
+            width: 100% !important;
+            display: block !important;
+            text-align: center !important;
+            padding: 1.2rem 0 !important;
+            font-size: 1.3rem !important;
+            font-weight: 500 !important;
+            font-family: 'Syne', sans-serif !important;
+            line-height: 1.5 !important;
+            letter-spacing: 0 !important;
+            background: #2B2828 !important;
+            border-radius: 6px !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            transform: none !important;
           }
 
           /* Dropdown su mobile */
