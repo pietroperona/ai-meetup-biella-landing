@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/Home.module.css';
 import SubscribeForm from '../components/SubscribeForm';
-import Manifesto from '../components/Manifesto';
 import Roadmap from '../components/Roadmap';
 import Layout from '../components/Layout';
 
@@ -19,8 +18,8 @@ export default function Home() {
   const [isAtFooter, setIsAtFooter] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Riferimento per la sezione manifesto per lo scrolling
-  const manifestoRef = useRef(null);
+  // Riferimento per la sezione CTA progetto per lo scrolling
+  const projectCtaRef = useRef(null);
   const heroRef = useRef(null);
   const stickyFormRef = useRef(null);
   const events = [
@@ -92,9 +91,9 @@ export default function Home() {
     }
   };
   
-  // Funzione per lo scroll alla sezione del manifesto
-  const scrollToManifesto = () => {
-    manifestoRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // Funzione per lo scroll alla sezione CTA progetto
+  const scrollToProjectCta = () => {
+    projectCtaRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   // Gestisce comportamento sticky del form
@@ -249,7 +248,7 @@ export default function Home() {
           </div>
 
           {/* Indicatore di scroll utilizzando FontAwesome */}
-          <div className="scroll-indicator" onClick={scrollToManifesto}>
+          <div className="scroll-indicator" onClick={scrollToProjectCta}>
             <i className="fa-solid fa-chevron-down"></i>
           </div>
         </div>
@@ -326,10 +325,18 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Contenuto normale (Manifesto e Roadmap) */}
-      <div ref={manifestoRef} className={styles.manifestoWrapper}>
-        <Manifesto />
-      </div>
+      {/* Sezione CTA Progetto */}
+      <section ref={projectCtaRef} className="project-cta-section">
+        <div className="project-cta-container">
+          <h2 className="project-cta-title">
+            AI Meetup è un progetto indipendente di divulgazione sull'intelligenza artificiale.
+          </h2>
+          <p className="project-cta-tagline">Inclusivo, aperto, locale.</p>
+          <a href="/progetto" className="project-cta-button">
+            Scopri i nostri valori
+          </a>
+        </div>
+      </section>
 
       <div id="roadmap-section" className={styles.roadmapWrapper}>
         <Roadmap />
@@ -624,14 +631,96 @@ export default function Home() {
             .hero-section {
               padding: 3rem 1rem 0.5rem; /* Ridotto ulteriormente il padding per dispositivi molto piccoli */
             }
-            
+
             .hero-heading {
               font-size: 1.5rem;
             }
-            
+
             .highlight::after {
               height: 6px;
               bottom: 3px;
+            }
+          }
+
+          /* Sezione CTA Progetto */
+          .project-cta-section {
+            background-color: #fff;
+            padding: 5rem 2rem;
+            text-align: center;
+          }
+
+          .project-cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+          }
+
+          .project-cta-title {
+            font-size: 2.2rem;
+            line-height: 1.4;
+            font-weight: 500;
+            margin-bottom: 2.5rem;
+            color: #222;
+          }
+
+          .project-cta-tagline {
+            font-size: 1.7rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            color: #333;
+          }
+
+          .project-cta-button {
+            display: inline-block;
+            background-color: #2B2828;
+            color: #F5F5F5;
+            padding: 1rem 2.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(43, 40, 40, 0.3);
+          }
+
+          .project-cta-button:hover {
+            background-color: #D43D3D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 61, 61, 0.4);
+          }
+
+          @media (max-width: 768px) {
+            .project-cta-section {
+              padding: 4rem 1.5rem;
+            }
+
+            .project-cta-title {
+              font-size: 1.8rem;
+            }
+
+            .project-cta-tagline {
+              font-size: 1.4rem;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .project-cta-section {
+              padding: 3rem 1rem;
+            }
+
+            .project-cta-title {
+              font-size: 1.5rem;
+              margin-bottom: 2rem;
+            }
+
+            .project-cta-tagline {
+              font-size: 1.2rem;
+              margin-bottom: 2.5rem;
+            }
+
+            .project-cta-button {
+              padding: 0.9rem 2rem;
+              font-size: 1rem;
             }
           }
         `}</style>
