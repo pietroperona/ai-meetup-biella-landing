@@ -1,5 +1,6 @@
 // components/Layout.js
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from './Footer';
 import Head from 'next/head';
@@ -25,29 +26,17 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
     };
   }, []);
 
-  // Gestisce il click sul link Roadmap per scorrere alla sezione
-  const handleRoadmapClick = (e) => {
-    e.preventDefault();
-
-    // Se siamo nella home, scorriamo alla sezione roadmap
-    if (router.pathname === '/') {
-      const roadmapSection = document.getElementById('roadmap-section');
-      if (roadmapSection) {
-        roadmapSection.scrollIntoView({ behavior: 'smooth' });
-      }
-      setIsMenuOpen(false); // Chiude il menu su mobile
-    } else {
-      // Se siamo in un'altra pagina, navighiamo alla home e poi scorriamo
-      router.push('/#roadmap-section');
+  // Gestisce lo scroll alla sezione roadmap quando l'URL cambia
+  useEffect(() => {
+    if (router.asPath.includes('#roadmap-section')) {
+      setTimeout(() => {
+        const roadmapSection = document.getElementById('roadmap-section');
+        if (roadmapSection) {
+          roadmapSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
-  };
-
-  // Handler per navigazione con tag <a> standard
-  const handleNavClick = (e, path) => {
-    e.preventDefault();
-    router.push(path);
-    setIsMenuOpen(false);
-  };
+  }, [router.asPath]);
 
   // Controlla se una voce di menu è attiva
   const isActive = (path) => {
@@ -120,9 +109,9 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
 
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
-          <a href="/" className="logo-link" onClick={(e) => handleNavClick(e, '/')}>
+          <Link href="/" className="logo-link">
             <img src="/ai-meetup-logo-nopayoff-black.svg" alt="AI Meetup Logo" className="logo" />
-          </a>
+          </Link>
 
           {/* Hamburger menu per mobile */}
           <button
@@ -139,22 +128,27 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
           <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
             <ul className="nav-list">
               <li className={`nav-item ${isActive('/') ? 'active' : ''}`}>
-                <a href="/" className="nav-link" onClick={(e) => handleNavClick(e, '/')}>Home</a>
+                <Link href="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="/#roadmap-section" className="nav-link" onClick={handleRoadmapClick}>Roadmap</a>
+                <Link href="/#roadmap-section" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+                  Roadmap
+                </Link>
               </li>
               <li className={`nav-item ${isActive('/progetto') ? 'active' : ''}`}>
-                <a href="/progetto" className="nav-link" onClick={(e) => handleNavClick(e, '/progetto')}>Progetto</a>
+                <Link href="/progetto" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+                  Progetto
+                </Link>
               </li>
-              {/* <li className={`nav-item ${isActive('/diventa-partner') ? 'active' : ''}`}>
-                <a href="/diventa-partner" className="nav-link" onClick={(e) => handleNavClick(e, '/diventa-partner')}>Diventa Partner</a>
-              </li> */}
               <li className={`nav-item ${isActive('/contatti') ? 'active' : ''}`}>
-                <a href="/contatti" className="nav-link contact-link" onClick={(e) => handleNavClick(e, '/contatti')}>Contatti</a>
+                <Link href="/contatti" className="nav-link contact-link" onClick={() => setIsMenuOpen(false)}>
+                  Contatti
+                </Link>
               </li>
               <li className="nav-item cta-item">
-                <a href="https://luma.com/user/aimeetup" target="_blank" rel="noopener noreferrer" className="nav-link cta-button">
+                <a href="https://luma.com/user/aimeetup" target="_blank" rel="noopener noreferrer" className="cta-button">
                   Scopri i prossimi eventi
                 </a>
               </li>
@@ -525,109 +519,60 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
             width: 100%;
           }
 
+          /* Stile base per tutti i nav-item */
           .nav-item {
             width: 100%;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 0 !important;
-            margin: 0 !important;
-            display: flex !important;
-            align-items: center !important;
           }
 
+          /* Altezza fissa per i menu items normali */
           .nav-item:not(.cta-item) {
-            height: 65px !important;
-            min-height: 65px !important;
-            max-height: 65px !important;
-            overflow: hidden !important;
+            height: 60px;
+            display: flex;
+            align-items: center;
           }
 
-          /* Forza tutti i testi ad avere lo stesso stile (escluso CTA) */
-          .nav-list li:not(.cta-item) *,
-          .nav-list .nav-item:not(.cta-item) *,
-          .nav-list .nav-link:not(.cta-button),
-          .nav-list .contact-link,
-          .nav-list a:not(.cta-button) {
-            font-size: 1.3rem !important;
-            font-weight: 500 !important;
-            font-family: 'Syne', sans-serif !important;
-            line-height: 1.95rem !important;
-            letter-spacing: 0 !important;
+          /* Stile per tutti i link (escluso CTA) */
+          .nav-item:not(.cta-item) .nav-link {
+            width: 100%;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 0;
+            border: none;
+            background: transparent;
+            border-radius: 0;
           }
 
-          /* Forza tutti i link e wrapper a occupare tutto lo spazio e centrare (escluso CTA) */
-          .nav-list .nav-item:not(.cta-item) > *,
-          .nav-list .nav-link:not(.cta-button),
-          .nav-list .contact-link,
-          .nav-list a:not(.cta-button) {
-            width: 100% !important;
-            padding: 0 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            text-align: left !important;
+          /* Reset stile contact-link su mobile */
+          .contact-link {
             border: none !important;
-            border-radius: 0 !important;
-            margin: 0 !important;
             background: transparent !important;
-            box-shadow: none !important;
-            transform: none !important;
-            height: 100% !important;
-            flex: 1 !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+          }
+
+          .contact-link:hover {
+            background: transparent !important;
+            color: #D43D3D !important;
           }
 
           /* CTA button in basso su mobile */
           .cta-item {
-            position: static !important;
-            margin-top: auto !important;
-            padding-top: 2rem !important;
-            width: 100% !important;
-          }
-
-          .cta-item .cta-button {
-            width: 100% !important;
-            display: block !important;
-            text-align: center !important;
-            padding: 1.2rem 0 !important;
-            font-size: 1.3rem !important;
-            font-weight: 500 !important;
-            font-family: 'Syne', sans-serif !important;
-            line-height: 1.5 !important;
-            letter-spacing: 0 !important;
-            background: #2B2828 !important;
-            border-radius: 6px !important;
-            margin: 0 !important;
-            box-shadow: none !important;
-            transform: none !important;
-          }
-
-          /* Dropdown su mobile */
-          .dropdown-menu {
             position: static;
-            box-shadow: none;
-            opacity: 1;
-            visibility: visible;
-            transform: none;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            padding: 0;
-            margin: 0.5rem 0 0 0;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-radius: 4px;
+            margin-top: auto;
+            padding-top: 2rem;
+            border: none;
+          }
+
+          .cta-button {
             width: 100%;
-          }
-
-          .dropdown-menu::before {
-            display: none;
-          }
-
-          .dropdown-menu.open {
-            max-height: 200px;
-            padding: 0.5rem 0;
-          }
-
-          .dropdown-link {
-            padding: 0.8rem 1.2rem;
+            display: block;
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            background: #2B2828;
+            color: white;
+            border-radius: 6px;
           }
         }
       `}</style>
