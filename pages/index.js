@@ -381,7 +381,7 @@ export default function Home() {
         <div className={`${styles.formContainer} ${styles.stickyFormCard}`}>
           {!isSubmitted ? (
             <>
-              <h2 className={styles.formTitle}>Iscriviti alla newsletter</h2>
+              <h2 className={styles.formTitle}>Rimani aggiornato sui nostri eventi👇🏼</h2>
 
               <form onSubmit={handleSubmit} className={`${styles.form} ${styles.inlineForm}`}>
                 <div className={styles.inputGroup}>
