@@ -57,8 +57,39 @@ export default function DiventaPartner() {
     };
   }, []);
 
+  const partnerStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Diventa Partner | AI Meetup Italia",
+    "description": "Opportunità di sponsorship nazionale e partnership locali per supportare AI Meetup in Italia.",
+    "url": "https://www.aimeetup.it/diventa-partner",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Meetup Italia",
+      "url": "https://www.aimeetup.it"
+    },
+    "about": [
+      {
+        "@type": "Offer",
+        "name": "Sponsor Nazionali",
+        "description": "Supporto al progetto AI Meetup a livello nazionale con visibilità, contenuti e speaker opportunities."
+      },
+      {
+        "@type": "Offer",
+        "name": "Community Partner",
+        "description": "Partnership locali per lo sviluppo della community e degli eventi in città italiane."
+      }
+    ]
+  };
+
   return (
-    <Layout>
+    <Layout
+      title="Diventa Partner | AI Meetup - La community italiana sull'Intelligenza Artificiale"
+      description="Diventa partner di AI Meetup e contribuisci alla diffusione della conoscenza sull'intelligenza artificiale in Italia."
+      canonicalUrl="https://www.aimeetup.it/diventa-partner"
+      ogImage="https://www.aimeetup.it/social-card.png"
+      structuredData={partnerStructuredData}
+    >
       <Head>
         <title>Diventa Partner | AI Meetup - La community italiana sull'Intelligenza Artificiale</title>
         <meta name="description" content="Diventa partner di AI Meetup e contribuisci alla diffusione della conoscenza sull'intelligenza artificiale in Italia. Scopri come diventare sponsor nazionale o community partner locale." />

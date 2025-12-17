@@ -18,9 +18,14 @@ export default function Contatti() {
     "mainEntity": {
       "@type": "Organization",
       "name": "AI Meetup Italia",
-      "email": "contact@aimeetup.it",
+      "email": "hello@aimeetup.it",
       "url": "https://www.aimeetup.it",
-      // resto del codice
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "hello@aimeetup.it",
+        "availableLanguage": ["it-IT", "en-GB"]
+      }
     }
   };
 

@@ -17,7 +17,6 @@ export default function PrivacyPolicy() {
       "@type": "Organization",
       "@id": "https://www.aimeetup.it/#organization"
     },
-    // resto del codice
     "inLanguage": "it-IT",
     "datePublished": "2025-04-10T10:00:00+00:00",
     "dateModified": "2025-04-22T10:00:00+00:00"

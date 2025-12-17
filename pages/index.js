@@ -47,6 +47,45 @@ export default function Home() {
     }
   ];
 
+  const baseEventYear = 2026;
+  const toIsoDate = (dateStr) => {
+    if (!dateStr || dateStr === 'TBD') return null;
+    const [day, month] = dateStr.split('/');
+    if (!day || !month) return null;
+    return `${baseEventYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  };
+
+  const structuredEvents = events
+    .map((event) => {
+      const isoDate = toIsoDate(event.date);
+      if (!isoDate) return null;
+
+      return {
+        "@type": "Event",
+        "name": event.title,
+        "startDate": isoDate,
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "Place",
+          "name": `${event.location}, ${event.city} (BI)`,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": event.city,
+            "addressRegion": "BI",
+            "addressCountry": "IT"
+          }
+        },
+        "url": event.url || "https://www.aimeetup.it/",
+        "organizer": {
+          "@type": "Organization",
+          "name": "AI Meetup Italia",
+          "url": "https://www.aimeetup.it"
+        }
+      };
+    })
+    .filter(Boolean);
+
   const clearAutoSlide = () => {
     if (autoSlideRef.current) {
       clearInterval(autoSlideRef.current);
@@ -210,12 +249,12 @@ export default function Home() {
     "name": "AI Meetup | Community italiana sull'Intelligenza Artificiale",
     "description": "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane. Unisciti al movimento.",
     "url": "https://www.aimeetup.it/",
+    "inLanguage": "it-IT",
     "publisher": {
       "@type": "Organization",
       "name": "AI Meetup",
       "url": "https://www.aimeetup.it"
     },
-    // resto del codice
     "mainEntity": {
       "@type": "Organization",
       "name": "AI Meetup Italia",
@@ -227,6 +266,10 @@ export default function Home() {
       }
     }
   };
+
+  if (structuredEvents.length > 0) {
+    homeStructuredData.event = structuredEvents;
+  }
 
   return (
     <Layout
