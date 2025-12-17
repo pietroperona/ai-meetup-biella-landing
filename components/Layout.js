@@ -54,6 +54,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
   const defaultDescription = "La community italiana che rende l'intelligenza artificiale accessibile a tutti. Eventi, formazione e networking nelle città italiane.";
   const defaultOgImage = "https://www.aimeetup.it/social-card.png";
   const defaultCanonical = "https://www.aimeetup.it" + router.pathname;
+  const ogImageUrl = ogImage || defaultOgImage;
 
   // Crea lo structured data di base (con fallback al default)
   const baseStructuredData = {
@@ -91,14 +92,19 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
         <meta property="og:url" content={canonicalUrl || defaultCanonical} />
         <meta property="og:title" content={title || defaultTitle} />
         <meta property="og:description" content={description || defaultDescription} />
-        <meta property="og:image" content={ogImage || defaultOgImage} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:secure_url" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="AI Meetup Italia - Artificial Intelligence is for all" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={canonicalUrl || defaultCanonical} />
         <meta property="twitter:title" content={title || defaultTitle} />
         <meta property="twitter:description" content={description || defaultDescription} />
-        <meta property="twitter:image" content={ogImage || defaultOgImage} />
+        <meta property="twitter:image" content={ogImageUrl} />
+        <meta property="twitter:image:alt" content="AI Meetup Italia - Artificial Intelligence is for all" />
 
         {/* JSON-LD structured data */}
         <script

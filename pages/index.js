@@ -756,16 +756,20 @@ export default function Home() {
           }
           
           @media (max-width: 768px) {
+            .hero-full-section {
+              padding-top: 56px; /* riduce lo spazio bianco sopra il titolo */
+            }
+
             .hero-section {
-              padding: 4rem 1.5rem 1rem; /* Ridotto padding inferiore per mobile */
+              padding: 2.5rem 1.5rem 0.75rem; /* Ridotto padding superiore per compattezza */
             }
 
             .hero-heading {
-              font-size: 2rem;
+              font-size: 2.2rem;
             }
 
             .hero-tagline {
-              font-size: 2rem;
+              font-size: 1.9rem;
             }
 
             .events-section {
@@ -842,15 +846,15 @@ export default function Home() {
           
           @media (max-width: 480px) {
             .hero-section {
-              padding: 3rem 1rem 0.5rem; /* Ridotto ulteriormente il padding per dispositivi molto piccoli */
+              padding: 2rem 1rem 0.5rem; /* Ridotto ulteriormente il padding per dispositivi molto piccoli */
             }
 
             .hero-heading {
-              font-size: 1.5rem;
+              font-size: 1.7rem;
             }
 
             .hero-tagline {
-              font-size: 1.5rem;
+              font-size: 1.6rem;
               margin-bottom: 2rem;
             }
 
