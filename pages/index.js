@@ -757,11 +757,15 @@ export default function Home() {
           
           @media (max-width: 768px) {
             .hero-full-section {
-              padding-top: 56px; /* riduce lo spazio bianco sopra il titolo */
+              padding-top: 56px;
+            }
+
+            .hero-wrapper {
+              padding: 1.5rem 1.5rem 1.5rem;
             }
 
             .hero-section {
-              padding: 2.5rem 1.5rem 0.75rem; /* Ridotto padding superiore per compattezza */
+              padding: 2rem 1.5rem 0.75rem;
             }
 
             .hero-heading {
@@ -845,8 +849,12 @@ export default function Home() {
           }
           
           @media (max-width: 480px) {
+            .hero-wrapper {
+              padding: 1rem 1rem 1rem;
+            }
+
             .hero-section {
-              padding: 2rem 1rem 0.5rem; /* Ridotto ulteriormente il padding per dispositivi molto piccoli */
+              padding: 1.5rem 1rem 0.5rem;
             }
 
             .hero-heading {
