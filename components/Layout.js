@@ -154,7 +154,7 @@ const Layout = ({ children, title, description, canonicalUrl, ogImage, structure
                 </Link>
               </li>
               <li className="nav-item cta-item">
-                <a href="https://luma.com/user/aimeetup" target="_blank" rel="noopener noreferrer" className="cta-button">
+                <a href="http://eepurl.com/jbF8FI" target="_blank" rel="noopener noreferrer" className="cta-button">
                   Scopri i prossimi eventi
                 </a>
               </li>

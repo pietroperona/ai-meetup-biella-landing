@@ -15,9 +15,10 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormFixed, setIsFormFixed] = useState(false);
   const [formHeight, setFormHeight] = useState(0);
-  const [isAtFooter, setIsAtFooter] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
+  const [showStickyForm, setShowStickyForm] = useState(false);
+  const [isFormDismissed, setIsFormDismissed] = useState(false);
   
   // Riferimento per la sezione CTA progetto per lo scrolling
   const projectCtaRef = useRef(null);
@@ -171,6 +172,12 @@ export default function Home() {
       setIsSubmitting(false);
     }
   };
+
+  const handleDismissForm = () => {
+    setIsFormDismissed(true);
+    setShowStickyForm(false);
+    setIsFormFixed(false);
+  };
   
   // Funzione per lo scroll alla sezione CTA progetto
   const scrollToProjectCta = () => {
@@ -206,19 +213,26 @@ export default function Home() {
     const handleScroll = () => {
       if (!heroRef.current) return;
 
-      const footerEl = document.querySelector('footer.footer');
-      const footerTop = footerEl ? footerEl.getBoundingClientRect().top : Number.POSITIVE_INFINITY;
-      const footerVisible = footerTop <= window.innerHeight;
+      if (isFormDismissed) {
+        setShowStickyForm(false);
+        setIsFormFixed(false);
+        return;
+      }
 
-      setIsAtFooter(footerVisible);
+      const docHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+      const scrollRatio = docHeight === 0 ? 0 : window.scrollY / docHeight;
+      const threshold = isMobile ? 0.15 : 0.7; // mobile prima, desktop verso 3/4 pagina
+      const hasPassedThreshold = scrollRatio >= threshold;
+
+      setShowStickyForm(hasPassedThreshold);
 
       if (isMobile) {
         setIsFormFixed(false);
         return;
       }
 
-      // Form appare appena si inizia a scrollare
-      const shouldFix = window.scrollY > 50 && !footerVisible;
+      // Form appare solo dopo aver superato la soglia
+      const shouldFix = hasPassedThreshold;
       setIsFormFixed(shouldFix);
     };
 
@@ -229,7 +243,7 @@ export default function Home() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [isMobile]);
+  }, [isMobile, isFormDismissed]);
 
   useEffect(() => {
     if (!isMobile) {
@@ -285,8 +299,8 @@ export default function Home() {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
         {/* Il resto degli head tag rimane lo stesso */}
       </Head>
@@ -373,12 +387,24 @@ export default function Home() {
       </section>
 
       {/* Form sticky desktop */}
-      <div className={styles.stickyFormPlaceholder} style={{ height: isFormFixed ? formHeight : 0 }} />
+      <div
+        className={styles.stickyFormPlaceholder}
+        style={{ height: showStickyForm && isFormFixed ? formHeight : 0 }}
+      />
       <div
         ref={stickyFormRef}
-        className={`${styles.stickyFormWrapper} ${isFormFixed ? styles.isFixed : ''} ${isAtFooter ? styles.isDocked : ''}`}
+        className={`${styles.stickyFormWrapper} ${isFormFixed ? styles.isFixed : ''} ${isFormDismissed ? styles.isDismissed : ''}`}
+        style={{ display: showStickyForm || isFormDismissed ? 'block' : 'none' }}
       >
         <div className={`${styles.formContainer} ${styles.stickyFormCard}`}>
+          <button
+            type="button"
+            className={styles.closeStickyButton}
+            onClick={handleDismissForm}
+            aria-label="Chiudi il banner di iscrizione"
+          >
+            ×
+          </button>
           {!isSubmitted ? (
             <>
               <h2 className={styles.formTitle}>Rimani aggiornato sui nostri eventi👇🏼</h2>
