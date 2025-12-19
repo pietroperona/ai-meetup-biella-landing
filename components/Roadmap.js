@@ -13,13 +13,13 @@ const Roadmap = () => {
     {
       date: 'Ottobre 2025',
       title: 'AI Meetup #0 · Biella',
-      description: 'Primo meetup inaugurale con community locale e presentazione del progetto.',
+      description: 'Primo meetup inaugurale a porte chiuse.',
       status: 'completed'
     },
     {
       date: '15 gennaio 2026',
-      title: 'Meetup #1 · Light Talk + aperitivo',
-      description: 'Talk, Q&A e networking aperto con ingresso libero.',
+      title: 'AI Meetup #1 · Biella',
+      description: 'Evento ospitato da Il Mondo a Venire: light Talk a cura di: Daniele Parlamento, Wagan Diamè e Pasquale Errico. Q&A e networking con ingresso libero.',
       status: 'upcoming'
     }
   ];

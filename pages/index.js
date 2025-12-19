@@ -330,14 +330,14 @@ export default function Home() {
                           <div className="hosted-block">
                             <span className="hosted-label">Hosted by:</span>
                             <img
-                              src="/sellalab-dark.svg"
-                              alt="Sellalab"
+                              src="/logo-MAV-esteso-black.png"
+                              alt="Il Mondo a venire:formazione, ispirazione e confronto"
                               className="location-logo"
                             />
                           </div>
                           <div className="city-block">
-                            <span className="city-label">City:</span>
-                            <span className="location-city">{`${event.city} (BI)`}</span>
+                            <span className="city-label">Location:</span>
+                            <span className="location-city">Sellalab Biella</span>
                           </div>
                         </div>
                       </CardTag>
@@ -619,7 +619,7 @@ export default function Home() {
           .event-location {
             display: flex;
             flex-direction: row;
-            align-items: flex-end;
+            align-items: flex-start;
             gap: 0.75rem;
             text-align: left;
           }
