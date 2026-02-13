@@ -751,8 +751,8 @@ export default function Home() {
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            background: rgba(43, 40, 40, 0.1);
-            color: rgba(43, 40, 40, 0.6);
+            background: rgba(43, 40, 40, 0.15);
+            color: rgba(43, 40, 40, 0.85);
             padding: 0.2rem 0.55rem;
             border-radius: 999px;
             margin-left: 0.6rem;
