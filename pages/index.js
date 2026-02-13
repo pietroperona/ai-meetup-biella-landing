@@ -32,17 +32,19 @@ export default function Home() {
       date: '15/01',
       location: 'Sellalab',
       city: 'Biella',
-      url: 'https://luma.com/3q3dwtgt'
+      url: 'https://luma.com/3q3dwtgt',
+      past: true
     },
     {
-      title: "Light Talk's + Networking",
-      date: 'TBD',
+      title: 'Round Table + Networking',
+      date: '26/02',
       location: 'Sellalab',
-      city: 'Biella'
+      city: 'Biella',
+      url: 'https://luma.com/9wrh71wm'
     },
     {
       title: 'Community Meetup',
-      date: 'TBD',
+      date: '16/04',
       location: 'Sellalab',
       city: 'Biella'
     }
@@ -329,17 +331,18 @@ export default function Home() {
                   >
                     {events.map((event, index) => {
                     const isPending = event.date === 'TBD';
+                    const isPast = event.past === true;
                     const CardTag = event.url ? 'a' : 'div';
                     return (
                       <CardTag
                         key={event.title + index}
-                        className={`event-card ${isPending ? 'pending' : ''} ${event.url ? 'clickable' : ''}`}
+                        className={`event-card ${isPending ? 'pending' : ''} ${isPast ? 'past' : ''} ${event.url ? 'clickable' : ''}`}
                         href={event.url || undefined}
                         target={event.url ? '_blank' : undefined}
                         rel={event.url ? 'noopener noreferrer' : undefined}
                       >
                         <div className="event-title">{event.title}</div>
-                        <div className="event-date">{event.date}</div>
+                        <div className="event-date">{event.date}{isPast && <span className="past-badge">Concluso</span>}</div>
                         <div className="event-location">
                           <div className="hosted-block">
                             <span className="hosted-label">Hosted by:</span>
@@ -718,6 +721,42 @@ export default function Home() {
 
           .event-card.pending .hosted-label {
             color: rgba(43, 40, 40, 0.45);
+          }
+
+          .event-card.past {
+            opacity: 0.5;
+          }
+
+          .event-card.past .event-title,
+          .event-card.past .event-date {
+            color: rgba(43, 40, 40, 0.55);
+          }
+
+          .event-card.past .location-city {
+            color: rgba(43, 40, 40, 0.45);
+          }
+
+          .event-card.past .location-logo {
+            opacity: 0.45;
+            filter: grayscale(100%);
+          }
+
+          .event-card.past .hosted-label {
+            color: rgba(43, 40, 40, 0.4);
+          }
+
+          .past-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            background: rgba(43, 40, 40, 0.1);
+            color: rgba(43, 40, 40, 0.6);
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            margin-left: 0.6rem;
+            vertical-align: middle;
           }
 
           .event-card.clickable {

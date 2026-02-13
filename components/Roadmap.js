@@ -20,7 +20,7 @@ const Roadmap = () => {
       date: '15 gennaio 2026',
       title: 'AI Meetup #1 · Biella',
       description: 'Evento ospitato da Il Mondo a Venire: light Talk a cura di: Daniele Parlamento, Wagan Diamè e Pasquale Errico. Q&A e networking con ingresso libero.',
-      status: 'upcoming'
+      status: 'completed'
     }
   ];
 
