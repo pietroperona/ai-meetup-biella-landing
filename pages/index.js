@@ -28,23 +28,23 @@ export default function Home() {
   const touchStartXRef = useRef(null);
   const events = [
     {
-      title: "Light Talk's + Networking",
-      date: '15/01',
-      location: 'Sellalab',
-      city: 'Biella',
-      url: 'https://luma.com/3q3dwtgt',
-      past: true
-    },
-    {
       title: 'Round Table + Networking',
       date: '26/02',
       location: 'Sellalab',
       city: 'Biella',
-      url: 'https://luma.com/9wrh71wm'
+      url: 'https://luma.com/9wrh71wm',
+      past: true
     },
     {
       title: 'Community Meetup',
-      date: '16/04',
+      date: '23/04',
+      location: 'Sellalab',
+      city: 'Biella',
+      url: 'https://luma.com/tgjjse7n'
+    },
+    {
+      title: 'Community Meetup',
+      date: '21/05',
       location: 'Sellalab',
       city: 'Biella'
     }
