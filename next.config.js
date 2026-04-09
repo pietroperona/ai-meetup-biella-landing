@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/press-kit',
+        destination: '/press-kit-aprile-2026.pdf',
+        permanent: false,
+      },
+    ];
+  },
   reactStrictMode: true,
   i18n: {
     locales: ['it'],

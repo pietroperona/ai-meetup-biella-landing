@@ -1,7 +1,6 @@
 {
     "routes": [
-      { "src": "/press-kit", "status": 302, "headers": { "Location": "/press-kit-aprile-2026.pdf" } },
-      { "src": "/api/(.*)", "dest": "/api/$1" }
+{ "src": "/api/(.*)", "dest": "/api/$1" }
     ],
     "builds": [
       { "src": "package.json", "use": "@vercel/next" }
