@@ -1,4 +1,7 @@
 {
+    "redirects": [
+      { "source": "/press-kit", "destination": "/press-kit-aprile-2026.pdf", "permanent": false }
+    ],
     "routes": [
       { "src": "/api/(.*)", "dest": "/api/$1" }
     ],

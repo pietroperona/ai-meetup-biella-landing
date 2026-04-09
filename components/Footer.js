@@ -18,6 +18,9 @@ const Footer = () => {
         <a href="mailto:contact@aimeetup.it" className="footer-link">
           Contattaci
         </a>
+        <a href="/press-kit-aprile-2026.pdf" target="_blank" rel="noopener noreferrer" className="footer-link">
+          Press Kit
+        </a>
       </div>
 
       <div className="copyright">
