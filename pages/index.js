@@ -49,7 +49,7 @@ export default function Home() {
       logoAlt: 'SmarttValley'
     },
     {
-      title: 'Open Workshop',
+      title: 'Open\nWorkshop',
       date: '06/06',
       location: 'Sellalab',
       city: 'Biella',
@@ -643,6 +643,7 @@ export default function Home() {
             line-height: 1.25;
             word-break: break-word;
             overflow-wrap: anywhere;
+            white-space: pre-line;
             white-space: normal;
             hyphens: auto;
           }
