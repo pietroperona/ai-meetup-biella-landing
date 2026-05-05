@@ -350,7 +350,7 @@ export default function Home() {
                         target={event.url ? '_blank' : undefined}
                         rel={event.url ? 'noopener noreferrer' : undefined}
                       >
-                        <div className="event-title">{event.title}</div>
+                        <div className="event-title">{event.title.split('\n').map((line, i, arr) => (<span key={i}>{line}{i < arr.length - 1 && <br />}</span>))}</div>
                         <div className="event-date">{event.date}{isPast && <span className="past-badge">Concluso</span>}</div>
                         <div className="event-location">
                           <div className="hosted-block">
