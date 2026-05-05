@@ -40,7 +40,7 @@ export default function Home() {
     },
     {
       title: 'Community Meetup',
-      date: '25/05',
+      date: '26/05',
       location: 'SmarttValley',
       city: 'Varese',
       region: 'VA',
