@@ -28,25 +28,34 @@ export default function Home() {
   const touchStartXRef = useRef(null);
   const events = [
     {
-      title: 'Round Table + Networking',
-      date: '26/02',
-      location: 'Sellalab',
-      city: 'Biella',
-      url: 'https://luma.com/9wrh71wm',
-      past: true
-    },
-    {
       title: 'Community Meetup',
       date: '23/04',
       location: 'Sellalab',
       city: 'Biella',
-      url: 'https://luma.com/tgjjse7n'
+      region: 'BI',
+      url: 'https://luma.com/tgjjse7n',
+      logo: '/logo-MAV-esteso-black.png',
+      logoAlt: 'Il Mondo a venire',
+      past: true
     },
     {
       title: 'Community Meetup',
-      date: '21/05',
+      date: '25/05',
+      location: 'SmarttValley',
+      city: 'Varese',
+      region: 'VA',
+      url: 'https://luma.com/ifc6yi0r',
+      logo: '/smarttvalley-dark.png',
+      logoAlt: 'SmarttValley'
+    },
+    {
+      title: 'Open Workshop',
+      date: '06/06',
       location: 'Sellalab',
-      city: 'Biella'
+      city: 'Biella',
+      region: 'BI',
+      logo: '/logo-MAV-esteso-black.png',
+      logoAlt: 'Il Mondo a venire'
     }
   ];
 
@@ -71,11 +80,11 @@ export default function Home() {
         "eventStatus": "https://schema.org/EventScheduled",
         "location": {
           "@type": "Place",
-          "name": `${event.location}, ${event.city} (BI)`,
+          "name": `${event.location}, ${event.city} (${event.region || 'BI'})`,
           "address": {
             "@type": "PostalAddress",
             "addressLocality": event.city,
-            "addressRegion": "BI",
+            "addressRegion": event.region || 'BI',
             "addressCountry": "IT"
           }
         },
@@ -347,14 +356,14 @@ export default function Home() {
                           <div className="hosted-block">
                             <span className="hosted-label">Hosted by:</span>
                             <img
-                              src="/logo-MAV-esteso-black.png"
-                              alt="Il Mondo a venire:formazione, ispirazione e confronto"
+                              src={event.logo}
+                              alt={event.logoAlt}
                               className="location-logo"
                             />
                           </div>
                           <div className="city-block">
                             <span className="city-label">Location:</span>
-                            <span className="location-city">Sellalab Biella</span>
+                            <span className="location-city">{event.location} {event.city}</span>
                           </div>
                         </div>
                       </CardTag>
