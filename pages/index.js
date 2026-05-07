@@ -41,7 +41,7 @@ export default function Home() {
     {
       title: 'Community Meetup',
       date: '26/05',
-      location: 'SmarttValley',
+      location: 'SMARTT VAlley',
       city: 'Varese',
       region: 'VA',
       url: 'https://luma.com/ifc6yi0r',
